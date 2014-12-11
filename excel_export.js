@@ -9,112 +9,153 @@
   Styles must have headings
   Styles all have arrays for each main object. This corresponds to specific worksheets
   Sub-object arrays sometimes correspond to headings, or image number or cell locations.
+  cells have a ws prop which is the worksheet number, computer readable
 
   custStyles are linked directly at the cell level
 
   NB TODO: color is Colour in styles.json perhaps change this to American?
 
-  TODO: Add Log Levels
-  TODO: Make tests
-  TODO: Setup TravisCi
-  TODO: Default Styles
-  TODO: Error Catching
-  TODO: stylizer
-  TODO: Type Setting
-  TODO: Excel Functions
-  TODO: error log file
-  TODO: built in server POSTS and GETS
-  TODO: heading options like special styles and location.
-  TODO: Move whole data and order
-  TODO: add more styles
-  TODO: add ability for external config for testing purposes
-  TODO: add proper log messages when debug is off
-  TODO: add cnfig row col or col row
-  TODO: allow wb.debug
-  TODO: create tables from inputted data
-  TODO: add documentation, wiki
-  TODO: add proper build status for each branch
-
 */
 
-"use strict";
-console.log("Excel converter");
+log("Excel converter has started.");
 //requirements
 var xl = require('excel4node');
 var fs = require('fs');
 var http = require('http');
 
 /*config*/
-var config = JSON.parse(fs.readFileSync("config.json"));
+var config;
+var debug = false;
 
+function create(reports, styleObj, configuration) {
+  if (configuration) {
+    config = configuration;
+    debug = config.debug;
+  } else {
+    config = JSON.parse(fs.readFileSync("excel_export/config.json"));
+    debug = config.debug;
+  }
 
-function init(data) {
   if (config.fileWriter) {
     /*Save directory for files*/
     var file = config.dir + config.filename;
   }
 
-  var reports;
-  var styleObj;
-
   if (config.testData) {
     /*Test Data*/
-    reports = JSON.parse(fs.readFileSync("" + config.dir + config.reportsFile));
-    styleObj = JSON.parse(fs.readFileSync("" + config.dir + config.stylesFile));
-  } else {
-    var reports = data.reports;
-    var styleObj = data.styleObj;
+    var reports = JSON.parse(fs.readFileSync("" + config.dir + config.reportsFile));
+    var styleObj = JSON.parse(fs.readFileSync("" + config.dir + config.stylesFile));
   }
-  makeExcelDocument(reports, styleObj, file);
-};
+  return makeExcelDocument(reports, styleObj, file);
+}
 
 
 function makeExcelDocument(reports, styleObj, file) {
   var wb = new xl.WorkBook();
-  //print headings first
-  var custStyles = getCustomStyles(styleObj, wb);
-  if (isEmptyObject(styleObj)) {
-    throw ("Styles Object is Empty."); //TODO JMC add try-catches
-  }
+  // print headings first
+
   var worksheets = getWorksheets(wb, reports, styleObj);
   if (isEmptyObject(styleObj)) {
-    throw ("Reports Object is Empty.");
+    log("Reports Object is Empty.");
   }
   //if worksheets or styles is null then cry
   log("------------Raw Data Done------------");
 
-  //check if styles contains any style objects
+  // run stylizer
+  if (!isEmptyObject(styleObj)) {
+    stylizer(styleObj, wb, worksheets);
+  } else {
+    log("Styles Object is Empty."); //TODO JMC add try-catches
+  }
 
-  //run stylizer
 
   if (config.fileWriter) {
     wb.write(file);
     console.log("file written.");
-  } else {
-
-    var req = http.request(function(res) {
-      wb.write(file, res);
-      console.log('STATUS: ' + res.statusCode);
-      res.on('data', function(chunk) {
-        console.log('BODY: ' + chunk);
-      });
-    });
-
-    req.on('error', function(e) {
-      console.log('problem with request: ' + e.message);
-    });
-
-    req.write('data\n');
-    req.end();
-
-    log("------------Response------------\n" + req);
-    return req;
+    return null;
   }
-};
 
+  log("------------Response------------\n" + wb);
+  return wb;
+}
+
+function stylizer(styleObj, wb, worksheets) {
+  //if no type is specified assume string
+  //TODO update when excel4node has more type capabilities
+
+  var custStyles = getCustomStyles(styleObj, wb);
+
+  setColWidth(worksheets, styleObj);
+  setRowHeight(worksheets, styleObj);
+
+  for (var i = 0; i < styleObj.data.cells.length; i++) {
+    var ws = styleObj.data.cells[i].ws;
+    var col = styleObj.data.cells[i].col;
+    var row = styleObj.data.cells[i].row;
+    var style = styleObj.data.cells[i].style;
+    var type = styleObj.data.cells[i].type;
+    var numberFormat = styleObj.data.cells[i].numberFormat;
+
+    log("custStyle: " + findFromName(custStyles, style).data);
+    log("custStyle name: " + findFromName(custStyles, style).name);
+    var custStyle = findFromName(custStyles, style).data;
+    log("worksheet: " + worksheets[ws]);
+
+    var worksheet = worksheets.pop(ws);
+    worksheet.Cell(row, col).Style(custStyle);
+
+    //types - string already implicitly set
+    if (type === "Number")
+      worksheet.Cell(row, col).Number();
+    if (type === "Formula")
+      worksheet.Cell(row, col).Formula();
+    //if (type === "Date") //special
+    if (numberFormat)
+      worksheet.Cell(row, col).Format.Number(numberFormat);
+
+  }
+  log("------------Stylizer Complete------------");
+}
+
+function setColWidth(worksheets, styleObj) {
+  for (var i = 0; i < styleObj.data.columnWidth.length; i++) {
+    var p = styleObj.data.columnWidth[i];
+    var prop;
+    var k = 0;
+    for (prop in p) {
+      if (!p.hasOwnProperty(prop)) {
+        //The current property is not a direct property of p
+        log("alert! " + prop + " -> " + p[prop]);
+        continue;
+      }
+      log("col: " + prop + " : " + p[prop]);
+
+      worksheets[i].Column(prop).Width(p[prop]);
+    }
+  }
+}
+
+function setRowHeight(worksheets, styleObj) {
+  for (var i = 0; i < styleObj.data.rowHeight.length; i++) {
+    var p = styleObj.data.rowHeight[i];
+    var prop;
+    var k = 0;
+    for (prop in p) {
+      if (!p.hasOwnProperty(prop)) {
+        //The current property is not a direct property of p
+        log("alert! " + prop + " -> " + p[prop]);
+        continue;
+      }
+      log("row " + prop + " : " + p[prop]);
+
+      worksheets[i].Row(prop).Height(p[prop]);
+    }
+  }
+}
 
 function getCustomStyles(styleObj, wb) {
   var styles = [];
+
   //If there is not style then the data should just be pushed to the file as plain text.
   //This will only get the custStyles object
   for (var i = 0; i < styleObj.data.custStyles.length; i++) {
@@ -122,48 +163,50 @@ function getCustomStyles(styleObj, wb) {
     var prop;
     var k = 0;
     for (prop in p) {
-      log("prop: " + prop);
       if (!p.hasOwnProperty(prop)) {
         //The current property is not a direct property of p
         log("alert! " + prop + " -> " + p[prop]);
         continue;
       }
       log(prop + " : " + p[prop]);
-
-      var style = wb.Style();
+      var data = wb.Style();
 
       if (prop === ("bold")) {
         if (p[prop])
-          style.Font.Bold();
+          data.Font.Bold();
       }
       if (prop === ("italics")) {
         if (p[prop])
-          style.Font.Italics();
+          data.Font.Italics();
       }
       if (prop === ("underline")) {
         if (p[prop])
-          style.Font.Underline();
+          data.Font.Underline();
       }
 
       if (prop === ("font.family"))
-        style.Font.Family(p[prop]);
+        data.Font.Family(p[prop]);
       if (prop === ("colour"))
-        style.Font.Color(p[prop]);
+        data.Font.Color(p[prop]);
       if (prop === ("size"))
-        style.Font.Size(p[prop]);
+        data.Font.Size(p[prop]);
       if (prop === ("alignmentVertical"))
-        style.Font.Alignment.Vertical(p[prop]);
+        data.Font.Alignment.Vertical(p[prop]);
       if (prop === ("alignmentHorizontal"))
-        style.Font.Alignment.Horizontal(p[prop]);
+        data.Font.Alignment.Horizontal(p[prop]);
       if (prop === ("wrapText"))
-        style.Font.WrapText(p[prop]);
+        data.Font.WrapText(p[prop]);
 
+      var style = {
+        name: styleObj.data.custStyles[i].name,
+        data: data
+      };
     }
     styles.push(style);
   }
   log("------------Custom Styles Done------------")
   return styles;
-};
+}
 
 function getWorksheets(wb, reports, styleObj) {
   //check if null
@@ -184,7 +227,6 @@ function getWorksheets(wb, reports, styleObj) {
       //take heading names from reports property names
       p = reports[i].data[0]; //only need the first data point
       for (prop in p) {
-        log("prop: " + prop);
         if (!p.hasOwnProperty(prop)) {
           //The current property is not a direct property of p
           log("alert! " + prop + " -> " + p[prop]);
@@ -199,7 +241,6 @@ function getWorksheets(wb, reports, styleObj) {
       }
     } else {
       for (prop in p) {
-        log("prop: " + prop);
         if (!p.hasOwnProperty(prop)) {
           //The current property is not a direct property of p
           log("alert! " + prop + " -> " + p[prop]);
@@ -221,7 +262,6 @@ function getWorksheets(wb, reports, styleObj) {
       var prop; //property in p
       var k = 0;
       for (prop in p) {
-        log("prop: " + prop);
         if (!p.hasOwnProperty(prop)) {
           //The current property is not a direct property of p
           log("alert! " + prop + " -> " + p[prop]);
@@ -239,7 +279,7 @@ function getWorksheets(wb, reports, styleObj) {
     worksheets.push(ws);
   }
   return worksheets;
-};
+}
 
 
 void
@@ -248,7 +288,7 @@ function saveExcelFile(xlsBuf, outputFile) {
   // build file
   makeAFile(outputFile);
   fs.writeFileSync(outputFile, xlsBuf);
-};
+}
 
 void
 
@@ -260,25 +300,32 @@ function makeAFile(file) {
       console.log("The file was created!");
     }
   });
-};
+}
 
 function log(p, prop) {
-  if (config.debug)
+  if (debug)
     log(prop + " : " + p[prop]);
 }
 
 function log(str) {
-  if (config.debug)
+  if (debug)
     console.log("log: " + str);
-};
+}
 
 function isEmptyObject(obj) {
   return !Object.keys(obj).length;
-};
+}
+
+function findFromName(arr, obj) {
+  for (var i = 0; i < arr.length; i++) {
+    if (arr[i].name === obj) return arr[i];
+    else return null;
+  }
+}
 
 var exposed = {
-  init: init
-};
+  create: create
+}
 
 
 module.exports = exposed;

@@ -1,7 +1,7 @@
 {
   "debug": true,
   "fileWriter": true,
-  "testData": true,
+  "testData": false,
   "dir": "data/",
   "filename": "reports.xlsx",
   "reportsFile": "test-data.json",
