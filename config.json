@@ -1,0 +1,10 @@
+{
+  "debug": true,
+  "fileWriter": false,
+  "testData": true,
+  "dir": "data/",
+  "filename": "reports.xlsx",
+  "reportsFile": "test-data.json",
+  "stylesFile": "test-styles.json",
+  "useStylesHeadings": false
+}
