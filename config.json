@@ -1,6 +1,6 @@
 {
   "debug": true,
-  "fileWriter": false,
+  "fileWriter": true,
   "testData": true,
   "dir": "data/",
   "filename": "reports.xlsx",
