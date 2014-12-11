@@ -14,12 +14,10 @@
 
   NB TODO: color is Colour in styles.json perhaps change this to American?
 
-  TODO: Find TODOs
   TODO: Add Log Levels
   TODO: Make tests
   TODO: Setup TravisCi
   TODO: Default Styles
-  TODO: Headings either from styles or by default properties from the data json
   TODO: Error Catching
   TODO: stylizer
   TODO: Type Setting
@@ -35,6 +33,7 @@
   TODO: allow wb.debug
   TODO: create tables from inputted data
   TODO: add documentation, wiki
+  TODO: add proper build status for each branch
 
 */
 
