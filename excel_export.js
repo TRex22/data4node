@@ -33,8 +33,9 @@
   TODO: add proper log messages when debug is off
   TODO: add cnfig row col or col row
   TODO: allow wb.debug
+  TODO: create tables from inputted data
+  TODO: add documentation, wiki
 
-  **There are some todos
 */
 
 "use strict";
@@ -42,25 +43,11 @@ console.log("Excel converter");
 //requirements
 var xl = require('excel4node');
 var fs = require('fs');
+var http = require('http');
 
 /*config*/
 var config = JSON.parse(fs.readFileSync("config.json"));
 
-var res = {
-  app: function(req, res) {},
-  chunkedEncoding: Boolean,
-  connection: Socket,
-  finished: Boolean,
-  output: [],
-  outputEncodings: [],
-  req: IncomingMessage,
-  sendDate: Boolean,
-  shouldkeepAlive: Boolean,
-  socket: Socket,
-  useChunkedEncdoingByDefault: Boolean,
-  viewCallbacks: [],
-  writable: Boolean
-}
 
 function init(data) {
   if (config.fileWriter) {
@@ -95,7 +82,7 @@ function makeExcelDocument(reports, styleObj, file) {
     throw ("Reports Object is Empty.");
   }
   //if worksheets or styles is null then cry
-  log("------------Raw Data Done------------")
+  log("------------Raw Data Done------------");
 
   //check if styles contains any style objects
 
@@ -105,9 +92,24 @@ function makeExcelDocument(reports, styleObj, file) {
     wb.write(file);
     console.log("file written.");
   } else {
-    wb.write(file, res);
-    log("------------Response------------\n" + res);
-    return res;
+
+    var req = http.request(function(res) {
+      wb.write(file, res);
+      console.log('STATUS: ' + res.statusCode);
+      res.on('data', function(chunk) {
+        console.log('BODY: ' + chunk);
+      });
+    });
+
+    req.on('error', function(e) {
+      console.log('problem with request: ' + e.message);
+    });
+
+    req.write('data\n');
+    req.end();
+
+    log("------------Response------------\n" + req);
+    return req;
   }
 };
 
