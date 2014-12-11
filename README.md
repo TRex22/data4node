@@ -21,29 +21,5 @@ custStyles are linked directly at the cell level
 
 NB TODO: color is Colour in styles.json perhaps change this to American?
 
-TODO:
------ 
-  Find TODOs
-  Add Log Levels
-  Make tests
-  Setup TravisCi
-  Default Styles
-  Headings either from styles or by default properties from the data json
-  Error Catching
-  stylizer
-  Type Setting
-  Excel Functions
-  error log file
-  built in server POSTS and GETS
-  heading options like special styles and location.
-  Move whole data and order
-  add more styles
-  add ability for external config for testing purposes
-  add proper log messages when debug is off
-  add cnfig row col or col row
-  allow wb.debug
-  create tables from inputted data
-  add documentation, wiki
-  add proper build status for each branch
-
+TODOs see Waffle.io or Github issues
 
