@@ -33,8 +33,9 @@
   TODO: add proper log messages when debug is off
   TODO: add cnfig row col or col row
   TODO: allow wb.debug
+  TODO: create tables from inputted data
+  TODO: add documentation, wiki
 
-  **There are some todos
 */
 
 "use strict";
