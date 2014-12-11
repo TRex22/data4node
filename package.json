@@ -4,7 +4,7 @@
   "description": "use a lib to make xlsx",
   "main": "app.js",
   "scripts": {
-    "test": "test.js"
+    "test": "node test.js"
   },
   "author": "Jason Chalom",
   "license": "MIT",
