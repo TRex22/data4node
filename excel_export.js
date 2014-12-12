@@ -52,6 +52,7 @@ function create(reports, styleObj, configuration) {
 
 function makeExcelDocument(reports, styleObj, file) {
   var wb = new xl.WorkBook();
+  wb.debug = config.internalWbLibDebug;
   // print headings first
 
   var worksheets = getWorksheets(wb, reports, styleObj);
@@ -83,42 +84,35 @@ function stylizer(styleObj, wb, worksheets) {
   //if no type is specified assume string
   //TODO update when excel4node has more type capabilities
 
-  var custStyles = getCustomStyles(styleObj, wb);
-
   setColWidth(worksheets, styleObj);
   setRowHeight(worksheets, styleObj);
+  var custStyles = getCustomStyles(styleObj, wb);
+  //logObj(custStyles);
+  setCustStyles(worksheets, styleObj, custStyles);
 
-  for (var i = 0; i < styleObj.data.cells.length; i++) {
-    var ws = styleObj.data.cells[i].ws;
-    var col = styleObj.data.cells[i].col;
-    var row = styleObj.data.cells[i].row;
-    var style = styleObj.data.cells[i].style;
-    var type = styleObj.data.cells[i].type;
-    var numberFormat = styleObj.data.cells[i].numberFormat;
-
-    log("custStyle: " + findFromName(custStyles, style).data);
-    log("custStyle name: " + findFromName(custStyles, style).name);
-    var custStyle = findFromName(custStyles, style).data;
-    log("worksheet: " + worksheets[ws]);
-
-    var worksheet = worksheets.pop(ws);
-    worksheet.Cell(row, col).Style(custStyle);
-
-    //types - string already implicitly set
-    if (type === "Number")
-      worksheet.Cell(row, col).Number();
-    if (type === "Formula")
-      worksheet.Cell(row, col).Formula();
-    //if (type === "Date") //special
-    if (numberFormat)
-      worksheet.Cell(row, col).Format.Number(numberFormat);
-
-  }
   log("------------Stylizer Complete------------");
+}
+
+function typeCast(type, row, col, worksheet, numberFormat) {
+  //types - string already implicitly set
+  if (type === "Number") {
+    log("Type is Number.");
+    worksheet.Cell(row, col).Number();
+  }
+  if (type === "Formula") {
+    log("Type is Formula.");
+    worksheet.Cell(row, col).Formula();
+  }
+  //if (type === "Date") //special
+  if (numberFormat) {
+    log("Setting number format");
+    worksheet.Cell(row, col).Format.Number(numberFormat);
+  }
 }
 
 function setColWidth(worksheets, styleObj) {
   for (var i = 0; i < styleObj.data.columnWidth.length; i++) {
+    log("setting col width");
     var p = styleObj.data.columnWidth[i];
     var prop;
     var k = 0;
@@ -129,7 +123,7 @@ function setColWidth(worksheets, styleObj) {
         continue;
       }
       log("col: " + prop + " : " + p[prop]);
-
+      //log("setting size for worksheet: " + i + " name: " + worksheets[i].name);
       worksheets[i].Column(prop).Width(p[prop]);
     }
   }
@@ -137,6 +131,7 @@ function setColWidth(worksheets, styleObj) {
 
 function setRowHeight(worksheets, styleObj) {
   for (var i = 0; i < styleObj.data.rowHeight.length; i++) {
+    log("setting row height");
     var p = styleObj.data.rowHeight[i];
     var prop;
     var k = 0;
@@ -147,18 +142,20 @@ function setRowHeight(worksheets, styleObj) {
         continue;
       }
       log("row " + prop + " : " + p[prop]);
-
+      //log("setting size for worksheet: " + i + " name: " + worksheets[i].name);
       worksheets[i].Row(prop).Height(p[prop]);
     }
   }
 }
 
 function getCustomStyles(styleObj, wb) {
+  log("------------Custom Styles------------");
   var styles = [];
-
-  //If there is not style then the data should just be pushed to the file as plain text.
-  //This will only get the custStyles object
   for (var i = 0; i < styleObj.data.custStyles.length; i++) {
+    var style = {};
+    style.name = styleObj.data.custStyles[i].name;
+    style.data = wb.Style();
+
     var p = styleObj.data.custStyles[i].data;
     var prop;
     var k = 0;
@@ -169,44 +166,69 @@ function getCustomStyles(styleObj, wb) {
         continue;
       }
       log(prop + " : " + p[prop]);
-      var data = wb.Style();
 
-      if (prop === ("bold")) {
+      if (p[prop] === ("bold")) {
         if (p[prop])
-          data.Font.Bold();
+          style.data.Font.Bold();
       }
-      if (prop === ("italics")) {
+      if (p[prop] === ("italics")) {
         if (p[prop])
-          data.Font.Italics();
+          style.data.Font.Italics();
       }
-      if (prop === ("underline")) {
+      if (p[prop] === ("underline")) {
         if (p[prop])
-          data.Font.Underline();
+          style.data.Font.Underline();
       }
 
-      if (prop === ("font.family"))
-        data.Font.Family(p[prop]);
+      if (prop === ("fontFamily"))
+        style.data.Font.Family(p[prop]);
       if (prop === ("colour"))
-        data.Font.Color(p[prop]);
+        style.data.Font.Color(p[prop]);
       if (prop === ("size"))
-        data.Font.Size(p[prop]);
+        style.data.Font.Size(p[prop]);
+      if (prop === ("fillPattern"))
+        style.data.Fill.Pattern(p[prop]);
+      if (prop === ("fillColour"))
+        style.data.Fill.Color(p[prop]);
       if (prop === ("alignmentVertical"))
-        data.Font.Alignment.Vertical(p[prop]);
+        style.data.Font.Alignment.Vertical(p[prop]);
       if (prop === ("alignmentHorizontal"))
-        data.Font.Alignment.Horizontal(p[prop]);
+        style.data.Font.Alignment.Horizontal(p[prop]);
       if (prop === ("wrapText"))
-        data.Font.WrapText(p[prop]);
-
-      var style = {
-        name: styleObj.data.custStyles[i].name,
-        data: data
-      };
+        style.data.Font.WrapText(p[prop]);
     }
     styles.push(style);
   }
-  log("------------Custom Styles Done------------")
+  log("------------Custom Styles Objects Created------------");
   return styles;
 }
+
+function setCustStyles(worksheets, styleObj, custStyles) {
+  for (var i = 0; i < styleObj.data.cells.length; i++) {
+    var ws = styleObj.data.cells[i].ws;
+    var worksheet = worksheets[ws];
+
+    var col = styleObj.data.cells[i].col;
+    var row = styleObj.data.cells[i].row;
+    var style = styleObj.data.cells[i].style;
+    var type = styleObj.data.cells[i].type;
+    var numberFormat = styleObj.data.cells[i].numberFormat;
+
+    logStyles(styleObj.data.cells[i]);
+
+    if (style) {
+      var custStyle = findFromName(custStyles, style).data;
+      log("custStyle: " + custStyle.data +
+        "custStyle name: " + custStyle.name);
+      log("worksheet: " + worksheets[ws]);
+      worksheet.Cell(row, col).Style(custStyle);
+    }
+
+    typeCast(type, row, col, worksheet, numberFormat);
+  }
+  log("------------Custom Styles Objects Set------------");
+}
+
 
 function getWorksheets(wb, reports, styleObj) {
   //check if null
@@ -310,6 +332,27 @@ function log(p, prop) {
 function log(str) {
   if (debug)
     console.log("log: " + str);
+}
+
+function logObj(obj) {
+  log("obj: " + obj.name + " " + JSON.stringify(obj))
+}
+
+function logStyles(styleObj) {
+  var ws = styleObj.ws;
+  var col = styleObj.col;
+  var row = styleObj.row;
+  var style = styleObj.style;
+  var type = styleObj.type;
+  var numberFormat = styleObj.numberFormat;
+
+  log("style objs");
+  log("ws: " + ws);
+  log("col: " + col);
+  log("row: " + row);
+  log("style: " + style);
+  log("type: " + type);
+  log("numberFormat " + numberFormat);
 }
 
 function isEmptyObject(obj) {

@@ -1,10 +1,11 @@
 {
   "debug": true,
+  "internalWbLibDebug": false,
   "fileWriter": true,
   "testData": false,
   "dir": "data/",
   "filename": "reports.xlsx",
   "reportsFile": "test-data.json",
   "stylesFile": "test-styles.json",
-  "useStylesHeadings": false
+  "useStylesHeadings": true
 }
