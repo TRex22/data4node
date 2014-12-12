@@ -17,4 +17,4 @@ var styleObj = JSON.parse(fs.readFileSync("" + config.dir + config.stylesFile));
 
 
 console.log("Starting Conversion....");
-var l = xl_xp.create(reports, styleObj, config);
+var l = xl_xp.createReports(reports, styleObj, config);

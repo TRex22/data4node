@@ -1,7 +1,7 @@
 {
   "name": "styles",
   "data": {
-    "headings": [{
+    "headingsText": [{
       "employeeNumber": "Employee Number",
       "surname": "Surname",
       "firstName": "First Name",
@@ -17,7 +17,7 @@
       "motivation": "Motivation"
     }],
     "columnWidth": [{
-      "1": 20,
+      "1": 30,
       "2": 20,
       "3": 20,
       "4": 20,
@@ -30,7 +30,7 @@
       "5": 20
     }],
     "rowHeight": [{
-      "1": 21,
+      "1": 38,
       "2": 21,
       "3": 21,
       "4": 21,
@@ -45,16 +45,46 @@
     "custStyles": [{
       "name": "style1",
       "data": {
-        "bold": true,
-        "italics": false,
-        "underline": false,
+        "fontBold": true,
+        "fontItalics": false,
+        "fontUnderline": false,
         "fontFamily": "Bauhaus 93",
-        "fontColor": "FF0000",
-        "size": 26,
+        "fontColor": "#34DDDD",
+        "fontSize": 20,
         "fillPattern": "solid",
-        "fillColour": "#333333",
+        "fillColor": "#333333",
         "alignmentVertical": "top",
         "alignmentHorizontal": "left",
+        "wrapText": true,
+        "border": {
+          "top": {
+            "style": "thin",
+            "color": "CCCCCC"
+          },
+          "bottom": {
+            "style": "thick"
+          },
+          "left": {
+            "style": "thin"
+          },
+          "right": {
+            "style": "thin"
+          }
+        }
+      }
+    }, {
+      "name": "style2",
+      "data": {
+        "fontBold": true,
+        "fontItalics": true,
+        "fontUnderline": true,
+        "fontFamily": "Copperplate Gothic Bold",
+        "fontColor": "#98fb98",
+        "fontSize": 12,
+        "fillPattern": "lightUp",
+        "fillColor": "#666666",
+        "alignmentVertical": "bottom",
+        "alignmentHorizontal": "right",
         "wrapText": true
       }
     }],
@@ -62,15 +92,34 @@
       "ws": 0,
       "col": 1,
       "row": 2,
-      "style": "style1",
+      "style": "style2",
       "type": "String",
       "numberFormat": ""
+    }, {
+      "ws": 0,
+      "col": 2,
+      "row": 2,
+      "style": "style2",
+      "type": "String",
+      "numberFormat": "$#,##0.00"
     }, {
       "ws": 1,
       "col": 4,
       "row": 2,
       "style": "style1",
       "type": "Number",
+      "numberFormat": "$#,##0.00"
+    }],
+    "headingStyles": [{
+      "ws": 0,
+      "style": "style1",
+      "type": "String",
+      "numberFormat": "$#,##0.00"
+    }],
+    "dataStyle": [{
+      "ws": 0,
+      "style": "style2",
+      "type": "String",
       "numberFormat": "$#,##0.00"
     }],
     "img": [{
