@@ -12,9 +12,6 @@
   cells have a ws prop which is the worksheet number, computer readable
 
   custStyles are linked directly at the cell level
-
-  NB TODO: color is Colour in styles.json perhaps change this to American?
-
 */
 
 //requirements
@@ -29,7 +26,7 @@ helper.log("Excel converter has started.");
 var config;
 var debug = false;
 
-function createReports(reports, styleObj, configuration) {
+function createReports(reports, styles, configuration) {
   if (configuration) {
     config = configuration;
     debug = config.debug;
@@ -47,9 +44,9 @@ function createReports(reports, styleObj, configuration) {
   if (config.testData) {
     /*Test Data*/
     var reports = JSON.parse(fs.readFileSync("" + config.dir + config.reportsFile));
-    var styleObj = JSON.parse(fs.readFileSync("" + config.dir + config.stylesFile));
+    var styles = JSON.parse(fs.readFileSync("" + config.dir + config.stylesFile));
   }
-  return makeExcelDocument(reports, styleObj, file);
+  return makeExcelDocument(reports, styles, file);
 }
 
 
@@ -189,13 +186,16 @@ function getCustomStyles(styleObj, wb) {
           color: styleProp.border.top.color
         },
         bottom: {
-          style: styleProp.border.bottom.style
+          style: styleProp.border.bottom.style,
+          color: styleProp.border.bottom.color
         },
         left: {
-          style: styleProp.border.left.style
+          style: styleProp.border.left.style,
+          color: styleProp.border.left.color
         },
         right: {
-          style: styleProp.border.right.style
+          style: styleProp.border.right.style,
+          color: styleProp.border.right.color
         }
       });
     }
@@ -213,39 +213,71 @@ function setCellStyle(worksheet, col, row, custStyle){
 
 function setCustStyles(worksheets, styleObj, custStyles, cells) {
   //set batch cells first and then follow individual cell mods
-  if (cells.heading.length != 0 && !helper.isEmptyObject(styleObj.headingStyles)) {
+  helper.log("------------Starting Batch Styling------------");
+  helper.log("styleObj.data.headingStyles: "+styleObj.headingStyles);
+  if (cells.heading.length != 0 && styleObj.data.headingStyles) {
     for (var i = 0; i < cells.heading.length; i++) {
       var ws = cells.heading[i].ws;
-      var worksheet = worksheets[ws];
 
-      var col = cells.heading[i].col;
-      var row = cells.heading[i].row;
-      var style = styleObj.headingStyles[ws].style; //refers to style arr index
-      //var type = styleObj.data.cells[i].type;
-      //var numberFormat = styleObj.data.cells[i].numberFormat;
+      if(styleObj.data.headingStyles[ws]){
+        var worksheet = worksheets[ws];
+        var col = cells.heading[i].col;
+        var row = cells.heading[i].row;
+        var style = styleObj.data.headingStyles[ws].style; //refers to style arr index
+        //var type = styleObj.data.cells[i].type;
+        //var numberFormat = styleObj.data.cells[i].numberFormat;
 
-      helper.logStyles(styleObj.data.cells[i]);
-      helper.log("Styles OBJ: " + custStyles);
-      if (style) {
-        var custStyle = helper.findFromName(custStyles, style);
-        if (custStyle) {
-          helper.log("custStyle: " + custStyle.data +
-          " custStyle name: " + custStyle.name);
-          helper.log("worksheet: " + worksheets[ws]);
-          setCellStyle(worksheet, col, row, custStyle);
-        } else {
-          helper.log("No style named: " + style + " found");
+        helper.log("Style: " + style);
+        if (style) {
+          var custStyle = helper.findFromName(custStyles, style);
+          helper.log("custStyle OBJ: " + custStyle);
+          if (custStyle) {
+            helper.log("custStyle: " + custStyle.data +
+            " custStyle name: " + custStyle.name);
+            helper.log("worksheet: " + worksheets[ws]);
+            setCellStyle(worksheet, col, row, custStyle);
+          }
+          else {
+            helper.log("No style named: " + style + " found");
+          }
+        }
+        if(styleObj.data.headingStyles[ws].freezeHeadingsRow){
+          worksheet.Row(2).Freeze(2);
         }
       }
     }
+    helper.log("------------Batch Headings Styles Set------------");
   }
-  helper.log("------------Batch Headings Styles Set------------");
-  if (cells.data.length != 0 && !helper.isEmptyObject(styleObj.dataStyle)) {
+  if (cells.data.length != 0 && styleObj.data.dataStyles) {
     for (var i = 0; i < cells.data.length; i++) {
+      var ws = cells.data[i].ws;
 
+      if(styleObj.data.headingStyles[ws]){
+        var worksheet = worksheets[ws];
+        var col = cells.data[i].col;
+        var row = cells.data[i].row;
+        var style = styleObj.data.dataStyles[ws].style; //refers to style arr index
+        //var type = styleObj.data.cells[i].type;
+        //var numberFormat = styleObj.data.cells[i].numberFormat;
+
+        helper.log("Style: " + style);
+        if (style) {
+          var custStyle = helper.findFromName(custStyles, style);
+          helper.log("custStyle OBJ: " + custStyle);
+          if (custStyle) {
+            helper.log("custStyle: " + custStyle.data +
+            " custStyle name: " + custStyle.name);
+            helper.log("worksheet: " + worksheets[ws]);
+            setCellStyle(worksheet, col, row, custStyle);
+          }
+          else {
+            helper.log("No style named: " + style + " found");
+          }
+        }
+      }
     }
+    helper.log("------------Batch Data Styles Set------------");
   }
-  helper.log("------------Batch Data Styles Set------------");
 
   for (var i = 0; i < styleObj.data.cells.length; i++) {
     if (styleObj.data.cells[i].ws < worksheets.length) {

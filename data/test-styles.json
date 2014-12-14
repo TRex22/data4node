@@ -82,7 +82,40 @@
         "fontColor": "#98fb98",
         "fontSize": 12,
         "fillPattern": "lightUp",
-        "fillColor": "#666666",
+        "fillColor": "B19CD9",
+        "alignmentVertical": "bottom",
+        "alignmentHorizontal": "right",
+        "wrapText": true,
+        "border": {
+          "top": {
+            "style": "thick",
+            "color": "#FFFFFF"
+          },
+          "bottom": {
+            "style": "thick",
+            "color": "#FFFFFF"
+          },
+          "left": {
+            "style": "thick",
+            "color": "#FFFFFF"
+          },
+          "right": {
+            "style": "thick",
+            "color": "#FFFFFF"
+          }
+        }
+      }
+    }, {
+      "name": "style3",
+      "data": {
+        "fontBold": true,
+        "fontItalics": true,
+        "fontUnderline": true,
+        "fontFamily": "Copperplate Gothic Bold",
+        "fontColor": "#98fb98",
+        "fontSize": 12,
+        "fillPattern": "lightUp",
+        "fillColor": "#34DDDD",
         "alignmentVertical": "bottom",
         "alignmentHorizontal": "right",
         "wrapText": true
@@ -111,11 +144,10 @@
       "numberFormat": "$#,##0.00"
     }],
     "headingStyles": [{
-      "ws": 0,
-      "style": "style1"
+      "style": "style1",
+      "freezeHeadingsRow": true
     }],
-    "dataStyle": [{
-      "ws": 0,
+    "dataStyles": [{
       "style": "style2",
       "type": "String",
       "numberFormat": "$#,##0.00"
