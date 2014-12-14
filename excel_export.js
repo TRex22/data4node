@@ -207,47 +207,11 @@ function getCustomStyles(styleObj, wb) {
   return styles;
 }
 
-function setCellStyle(worksheet, col, row, custStyle){
-  worksheet.Cell(row, col).Style(custStyle.data);
-}
-
 function setCustStyles(worksheets, styleObj, custStyles, cells) {
   //set batch cells first and then follow individual cell mods
   helper.log("------------Starting Batch Styling------------");
-  helper.log("styleObj.data.headingStyles: "+styleObj.headingStyles);
-  if (cells.heading.length != 0 && styleObj.data.headingStyles) {
-    for (var i = 0; i < cells.heading.length; i++) {
-      var ws = cells.heading[i].ws;
+  setBatchHeadingStyles(worksheets, styleObj, custStyles, cells);
 
-      if(styleObj.data.headingStyles[ws]){
-        var worksheet = worksheets[ws];
-        var col = cells.heading[i].col;
-        var row = cells.heading[i].row;
-        var style = styleObj.data.headingStyles[ws].style; //refers to style arr index
-        //var type = styleObj.data.cells[i].type;
-        //var numberFormat = styleObj.data.cells[i].numberFormat;
-
-        helper.log("Style: " + style);
-        if (style) {
-          var custStyle = helper.findFromName(custStyles, style);
-          helper.log("custStyle OBJ: " + custStyle);
-          if (custStyle) {
-            helper.log("custStyle: " + custStyle.data +
-            " custStyle name: " + custStyle.name);
-            helper.log("worksheet: " + worksheets[ws]);
-            setCellStyle(worksheet, col, row, custStyle);
-          }
-          else {
-            helper.log("No style named: " + style + " found");
-          }
-        }
-        if(styleObj.data.headingStyles[ws].freezeHeadingsRow){
-          worksheet.Row(2).Freeze(2);
-        }
-      }
-    }
-    helper.log("------------Batch Headings Styles Set------------");
-  }
   if (cells.data.length != 0 && styleObj.data.dataStyles) {
     for (var i = 0; i < cells.data.length; i++) {
       var ws = cells.data[i].ws;
@@ -270,6 +234,7 @@ function setCustStyles(worksheets, styleObj, custStyles, cells) {
             helper.log("worksheet: " + worksheets[ws]);
             setCellStyle(worksheet, col, row, custStyle);
           }
+          //typeCast(type, row, col, worksheet, numberFormat);
           else {
             helper.log("No style named: " + style + " found");
           }
@@ -303,7 +268,6 @@ function setCustStyles(worksheets, styleObj, custStyles, cells) {
           helper.log("No style named: " + style + " found");
         }
       }
-
       //typeCast(type, row, col, worksheet, numberFormat);
     } else {
       helper.log("No worksheet of that number: " + ws);
@@ -312,6 +276,44 @@ function setCustStyles(worksheets, styleObj, custStyles, cells) {
   helper.log("------------Custom Styles Objects Set------------");
 }
 
+function setBatchHeadingStyles(worksheets, styleObj, custStyles, cells){
+  helper.log("styleObj.data.headingStyles: "+styleObj.headingStyles);
+  if (cells.heading.length != 0 && styleObj.data.headingStyles) {
+    for (var i = 0; i < cells.heading.length; i++) {
+      var ws = cells.heading[i].ws;
+
+      if(styleObj.data.headingStyles[ws]){
+        var worksheet = worksheets[ws];
+        var col = cells.heading[i].col;
+        var row = cells.heading[i].row;
+        var style = styleObj.data.headingStyles[ws].style; //refers to style arr index
+
+        helper.log("Style: " + style);
+        if (style) {
+          var custStyle = helper.findFromName(custStyles, style);
+          helper.log("custStyle OBJ: " + custStyle);
+          if (custStyle) {
+            helper.log("custStyle: " + custStyle.data +
+            " custStyle name: " + custStyle.name);
+            helper.log("worksheet: " + worksheets[ws]);
+            setCellStyle(worksheet, col, row, custStyle);
+          }
+          else {
+            helper.log("No style named: " + style + " found");
+          }
+        }
+        if(styleObj.data.headingStyles[ws].freezeHeadingsRow){
+          worksheet.Row(2).Freeze(2);
+        }
+      }
+    }
+    helper.log("------------Batch Headings Styles Set------------");
+  }
+}
+
+function setCellStyle(worksheet, col, row, custStyle){
+  worksheet.Cell(row, col).Style(custStyle.data);
+}
 
 function getWorksheets(wb, reports, styleObj, headingCells, dataCells) {
   //check if null
