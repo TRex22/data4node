@@ -4,12 +4,19 @@
   "description": "use a lib to make xlsx",
   "main": "app.js",
   "scripts": {
-    "test": "node test.js"
+    "test": "node tests/test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/TRex22/json_xl4node.git"
   },
   "author": "Jason Chalom",
   "license": "MIT",
   "dependencies": {
     "excel4node": "^0.1.5",
     "http": "0.0.0"
+  },
+  "bugs": {
+    "url": "https://github.com/TRex22/json_xl4node/issues"
   }
 }
