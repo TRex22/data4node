@@ -211,7 +211,47 @@ function setCustStyles(worksheets, styleObj, custStyles, cells) {
   //set batch cells first and then follow individual cell mods
   helper.log("------------Starting Batch Styling------------");
   setBatchHeadingStyles(worksheets, styleObj, custStyles, cells);
+  setBatchDataStyles(worksheets, styleObj, custStyles, cells);
+  helper.log("------------Batch Styling Done----------------");
+  setCustCellStyles(worksheets, styleObj, custStyles);
+  helper.log("------------Custom Styles Objects Set------------");
+}
 
+function setBatchHeadingStyles(worksheets, styleObj, custStyles, cells){
+  if (cells.heading.length != 0 && styleObj.data.headingStyles) {
+    for (var i = 0; i < cells.heading.length; i++) {
+      var ws = cells.heading[i].ws;
+
+      if(styleObj.data.headingStyles[ws]){
+        var worksheet = worksheets[ws];
+        var col = cells.heading[i].col;
+        var row = cells.heading[i].row;
+        var style = styleObj.data.headingStyles[ws].style; //refers to style arr index
+
+        helper.log("Style: " + style);
+        if (style) {
+          var custStyle = helper.findFromName(custStyles, style);
+          helper.log("custStyle OBJ: " + custStyle);
+          if (custStyle) {
+            helper.log("custStyle: " + custStyle.data +
+            " custStyle name: " + custStyle.name);
+            helper.log("worksheet: " + worksheets[ws]);
+            setCellStyle(worksheet, col, row, custStyle);
+          }
+          else {
+            helper.log("No style named: " + style + " found");
+          }
+        }
+        if(styleObj.data.headingStyles[ws].freezeHeadingsRow){
+          worksheet.Row(2).Freeze(2);
+        }
+      }
+    }
+    helper.log("------------Batch Headings Styles Set------------");
+  }
+}
+
+function setBatchDataStyles(worksheets, styleObj, custStyles, cells){
   if (cells.data.length != 0 && styleObj.data.dataStyles) {
     for (var i = 0; i < cells.data.length; i++) {
       var ws = cells.data[i].ws;
@@ -243,7 +283,9 @@ function setCustStyles(worksheets, styleObj, custStyles, cells) {
     }
     helper.log("------------Batch Data Styles Set------------");
   }
+}
 
+function setCustCellStyles(worksheets, styleObj, custStyles){
   for (var i = 0; i < styleObj.data.cells.length; i++) {
     if (styleObj.data.cells[i].ws < worksheets.length) {
       var ws = styleObj.data.cells[i].ws;
@@ -272,42 +314,6 @@ function setCustStyles(worksheets, styleObj, custStyles, cells) {
     } else {
       helper.log("No worksheet of that number: " + ws);
     }
-  }
-  helper.log("------------Custom Styles Objects Set------------");
-}
-
-function setBatchHeadingStyles(worksheets, styleObj, custStyles, cells){
-  helper.log("styleObj.data.headingStyles: "+styleObj.headingStyles);
-  if (cells.heading.length != 0 && styleObj.data.headingStyles) {
-    for (var i = 0; i < cells.heading.length; i++) {
-      var ws = cells.heading[i].ws;
-
-      if(styleObj.data.headingStyles[ws]){
-        var worksheet = worksheets[ws];
-        var col = cells.heading[i].col;
-        var row = cells.heading[i].row;
-        var style = styleObj.data.headingStyles[ws].style; //refers to style arr index
-
-        helper.log("Style: " + style);
-        if (style) {
-          var custStyle = helper.findFromName(custStyles, style);
-          helper.log("custStyle OBJ: " + custStyle);
-          if (custStyle) {
-            helper.log("custStyle: " + custStyle.data +
-            " custStyle name: " + custStyle.name);
-            helper.log("worksheet: " + worksheets[ws]);
-            setCellStyle(worksheet, col, row, custStyle);
-          }
-          else {
-            helper.log("No style named: " + style + " found");
-          }
-        }
-        if(styleObj.data.headingStyles[ws].freezeHeadingsRow){
-          worksheet.Row(2).Freeze(2);
-        }
-      }
-    }
-    helper.log("------------Batch Headings Styles Set------------");
   }
 }
 
