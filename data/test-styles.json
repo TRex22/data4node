@@ -112,9 +112,7 @@
     }],
     "headingStyles": [{
       "ws": 0,
-      "style": "style1",
-      "type": "String",
-      "numberFormat": "$#,##0.00"
+      "style": "style1"
     }],
     "dataStyle": [{
       "ws": 0,

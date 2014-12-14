@@ -207,18 +207,45 @@ function getCustomStyles(styleObj, wb) {
   return styles;
 }
 
+function setCellStyle(worksheet, col, row, custStyle){
+  worksheet.Cell(row, col).Style(custStyle.data);
+}
+
 function setCustStyles(worksheets, styleObj, custStyles, cells) {
   //set batch cells first and then follow individual cell mods
-  if (cells.heading.length != 0) {
+  if (cells.heading.length != 0 && !helper.isEmptyObject(styleObj.headingStyles)) {
     for (var i = 0; i < cells.heading.length; i++) {
+      var ws = cells.heading[i].ws;
+      var worksheet = worksheets[ws];
 
+      var col = cells.heading[i].col;
+      var row = cells.heading[i].row;
+      var style = styleObj.headingStyles[ws].style; //refers to style arr index
+      //var type = styleObj.data.cells[i].type;
+      //var numberFormat = styleObj.data.cells[i].numberFormat;
+
+      helper.logStyles(styleObj.data.cells[i]);
+      helper.log("Styles OBJ: " + custStyles);
+      if (style) {
+        var custStyle = helper.findFromName(custStyles, style);
+        if (custStyle) {
+          helper.log("custStyle: " + custStyle.data +
+          " custStyle name: " + custStyle.name);
+          helper.log("worksheet: " + worksheets[ws]);
+          setCellStyle(worksheet, col, row, custStyle);
+        } else {
+          helper.log("No style named: " + style + " found");
+        }
+      }
     }
   }
-  if (cells.data.length != 0) {
+  helper.log("------------Batch Headings Styles Set------------");
+  if (cells.data.length != 0 && !helper.isEmptyObject(styleObj.dataStyle)) {
     for (var i = 0; i < cells.data.length; i++) {
 
     }
   }
+  helper.log("------------Batch Data Styles Set------------");
 
   for (var i = 0; i < styleObj.data.cells.length; i++) {
     if (styleObj.data.cells[i].ws < worksheets.length) {
@@ -239,7 +266,7 @@ function setCustStyles(worksheets, styleObj, custStyles, cells) {
           helper.log("custStyle: " + custStyle.data +
             " custStyle name: " + custStyle.name);
           helper.log("worksheet: " + worksheets[ws]);
-          worksheet.Cell(row, col).Style(custStyle.data);
+          setCellStyle(worksheet, col, row, custStyle);
         } else {
           helper.log("No style named: " + style + " found");
         }
@@ -269,7 +296,7 @@ function getWorksheets(wb, reports, styleObj, headingCells, dataCells) {
     var k = 0;
 
     //do headings override from styles json
-    if (helper.isEmptyObject(p) || config.useStylesHeadings == false) {
+    if (helper.isEmptyObject(p) || config.useStyleHeadings == false) {
       //take heading names from reports property names
       p = reports[i].data[0]; //only need the first data point
       for (prop in p) {
@@ -287,6 +314,7 @@ function getWorksheets(wb, reports, styleObj, headingCells, dataCells) {
         //typeCast
         ws.Cell(1, col).String("" + prop); //fix for r c going from 1,1
         headingCells.push({
+          "ws": i,
           "col": col,
           "row": 1
         });
@@ -309,6 +337,7 @@ function getWorksheets(wb, reports, styleObj, headingCells, dataCells) {
         //typeCast
         ws.Cell(1, col).String("" + p[prop]); //fix for r c going from 1,1
         headingCells.push({
+          "ws": i,
           "col": col,
           "row": 1
         });
@@ -337,6 +366,7 @@ function getWorksheets(wb, reports, styleObj, headingCells, dataCells) {
         }
         ws.Cell(row, col).String("" + p[prop]);
         dataCells.push({
+          "ws": i,
           "col": col,
           "row": row
         });
