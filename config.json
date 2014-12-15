@@ -6,7 +6,5 @@
   "dir": "data/",
   "filename": "reports.xlsx",
   "reportsFile": "test-data.json",
-  "stylesFile": "test-styles.json",
-  "useStyleHeadings": false,
-  "useAutoFit": true
+  "stylesFile": "test-styles.json"
 }

@@ -4,7 +4,7 @@ This will take some test json data and convert to xlsx using desired styling and
 https://github.com/natergj/excel4node
 */
 "use strict";
-var xl_xp = require('../excel_export.js');
+var xl_xp = require('../lib/excel_export.js');
 var fs = require('fs');
 
 var config = JSON.parse(fs.readFileSync("config.json"));

@@ -48,7 +48,7 @@
         "fontBold": true,
         "fontItalics": false,
         "fontUnderline": false,
-        "fontFamily": "Bauhaus 93",
+        "fontFamily": "Britannic Bold",
         "fontColor": "#34DDDD",
         "fontSize": 20,
         "fillPattern": "solid",
@@ -78,7 +78,7 @@
         "fontBold": true,
         "fontItalics": true,
         "fontUnderline": true,
-        "fontFamily": "Copperplate Gothic Bold",
+        "fontFamily": "Eras Bold ITC",
         "fontColor": "#000000",
         "fontSize": 12,
         "fillPattern": "solid",
@@ -111,7 +111,40 @@
         "fontBold": true,
         "fontItalics": true,
         "fontUnderline": true,
-        "fontFamily": "Copperplate Gothic Bold",
+        "fontFamily": "Eras Bold ITC",
+        "fontColor": "#98fb98",
+        "fontSize": 12,
+        "fillPattern": "solid",
+        "fillColor": "#132247",
+        "alignmentVertical": "bottom",
+        "alignmentHorizontal": "right",
+        "wrapText": true,
+        "border": {
+          "top": {
+            "style": "thick",
+            "color": "#FFFFFF"
+          },
+          "bottom": {
+            "style": "thick",
+            "color": "#FFFFFF"
+          },
+          "left": {
+            "style": "thick",
+            "color": "#FFFFFF"
+          },
+          "right": {
+            "style": "thick",
+            "color": "#FFFFFF"
+          }
+        }
+      }
+    }, {
+      "name": "style4",
+      "data": {
+        "fontBold": true,
+        "fontItalics": true,
+        "fontUnderline": true,
+        "fontFamily": "Eras Bold ITC",
         "fontColor": "#98fb98",
         "fontSize": 12,
         "fillPattern": "lightUp",
@@ -123,12 +156,23 @@
     }],
     "headingStyles": [{
       "style": "style1",
-      "freezeHeadingsRow": true
+      "freezeHeadingsRow": true,
+      "useStyleHeadingsText": true
     }],
     "dataStyles": [{
       "style": "style2",
       "type": "String",
       "numberFormat": ""
+    }],
+    "colStyles": [{
+      "ws": 0,
+      "col": 4,
+      "style": "style3",
+      "type": "Number",
+      "numberFormat": "0.00",
+      "freezeCol": true,
+      "enforceHeadingStyle": true,
+      "useAutoFit": true
     }],
     "cells": [{
       "ws": 0,
