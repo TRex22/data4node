@@ -173,6 +173,15 @@
       "freezeCol": true,
       "enforceHeadingStyle": true,
       "useAutoFit": true
+    }, {
+      "ws": 0,
+      "col": 5,
+      "style": "style3",
+      "type": "Number",
+      "numberFormat": "0.00",
+      "freezeCol": false,
+      "enforceHeadingStyle": true,
+      "useAutoFit": true
     }],
     "cells": [{
       "ws": 0,
