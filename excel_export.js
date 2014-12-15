@@ -26,7 +26,17 @@ helper.log("Excel converter has started.");
 var config;
 var debug = false;
 
+var exposed = {
+  createReports: createReports
+};
+module.exports = exposed;
+
 function createReports(reports, styles, configuration) {
+  var file = setConfig(reports, styles, configuration);
+  return makeExcelDocument(reports, styles, file);
+}
+
+function setConfig(reports, styles, configuration) {
   if (configuration) {
     config = configuration;
     debug = config.debug;
@@ -34,19 +44,21 @@ function createReports(reports, styles, configuration) {
     config = JSON.parse(fs.readFileSync("excel_export/config.json"));
     debug = config.debug;
   }
+
   helper.setDebug(debug);
 
   if (config.fileWriter) {
     /*Save directory for files*/
-    var file = config.dir + config.filename;
+    return config.dir + config.filename;
   }
 
+  /*Test Data*/
   if (config.testData) {
-    /*Test Data*/
-    var reports = JSON.parse(fs.readFileSync("" + config.dir + config.reportsFile));
-    var styles = JSON.parse(fs.readFileSync("" + config.dir + config.stylesFile));
+    reports = JSON.parse(fs.readFileSync("" + config.dir + config.reportsFile));
+    styles = JSON.parse(fs.readFileSync("" + config.dir + config.stylesFile));
   }
-  return makeExcelDocument(reports, styles, file);
+
+  return null;
 }
 
 
@@ -59,13 +71,12 @@ function makeExcelDocument(reports, styleObj, file) {
   cells.heading = [];
   cells.data = [];
 
-  var worksheets = getWorksheets(wb, reports, styleObj, cells.heading,
-    cells.data);
+  var worksheets = getWorksheets(wb, reports, styleObj, cells);
 
   helper.log("------------Raw Data Done------------");
 
   // run stylizer
-  if (!helper.isEmptyObject(styleObj)) {
+  if (styleObj) {
     stylizer(styleObj, wb, worksheets, cells);
   } else {
     helper.log("Styles Object is Empty."); //TODO JMC add try-catches
@@ -95,15 +106,21 @@ function stylizer(styleObj, wb, worksheets, cells) {
   helper.log("------------Stylizer Complete------------");
 }
 
-function typeCast(type, row, col, worksheet, numberFormat) {
+function typeCast(type, row, col, worksheet, numberFormat, cells) {
   //types - string already implicitly set
+  var value;
+  if (row === 0)
+    value = cells.heading[col].value;
+  if (row > 1)
+    value = helper.findCell(cells, row, col); //cells.data[col].value
+
   if (type === "Number") {
     helper.log("Type is Number.");
-    worksheet.Cell(row, col).Number();
+    worksheet.Cell(row, col).Number(value);
   }
   if (type === "Formula") {
     helper.log("Type is Formula.");
-    worksheet.Cell(row, col).Formula();
+    worksheet.Cell(row, col).Formula(value);
   }
   //if (type === "Date") //special
   if (numberFormat) {
@@ -119,13 +136,7 @@ function setColWidth(worksheets, styleObj) {
     var prop;
     var k = 0;
     for (prop in p) {
-      if (!p.hasOwnProperty(prop)) {
-        //The current property is not a direct property of p
-        helper.log("alert! " + prop + " -> " + p[prop]);
-        continue;
-      }
       helper.log("col: " + prop + " : " + p[prop]);
-      //helper.log("setting size for worksheet: " + i + " name: " + worksheets[i].name);
       worksheets[i].Column(prop).Width(p[prop]);
     }
   }
@@ -138,13 +149,7 @@ function setRowHeight(worksheets, styleObj) {
     var prop;
     var k = 0;
     for (prop in p) {
-      if (!p.hasOwnProperty(prop)) {
-        //The current property is not a direct property of p
-        helper.log("alert! " + prop + " -> " + p[prop]);
-        continue;
-      }
       helper.log("row " + prop + " : " + p[prop]);
-      //helper.log("setting size for worksheet: " + i + " name: " + worksheets[i].name);
       worksheets[i].Row(prop).Height(p[prop]);
     }
   }
@@ -213,16 +218,16 @@ function setCustStyles(worksheets, styleObj, custStyles, cells) {
   setBatchHeadingStyles(worksheets, styleObj, custStyles, cells);
   setBatchDataStyles(worksheets, styleObj, custStyles, cells);
   helper.log("------------Batch Styling Done----------------");
-  setCustCellStyles(worksheets, styleObj, custStyles);
+  setCustCellStyles(worksheets, styleObj, custStyles, cells);
   helper.log("------------Custom Styles Objects Set------------");
 }
 
-function setBatchHeadingStyles(worksheets, styleObj, custStyles, cells){
-  if (cells.heading.length != 0 && styleObj.data.headingStyles) {
+function setBatchHeadingStyles(worksheets, styleObj, custStyles, cells) {
+  if (cells.heading.length !== 0 && styleObj.data.headingStyles) {
     for (var i = 0; i < cells.heading.length; i++) {
       var ws = cells.heading[i].ws;
 
-      if(styleObj.data.headingStyles[ws]){
+      if (styleObj.data.headingStyles[ws]) {
         var worksheet = worksheets[ws];
         var col = cells.heading[i].col;
         var row = cells.heading[i].row;
@@ -234,15 +239,14 @@ function setBatchHeadingStyles(worksheets, styleObj, custStyles, cells){
           helper.log("custStyle OBJ: " + custStyle);
           if (custStyle) {
             helper.log("custStyle: " + custStyle.data +
-            " custStyle name: " + custStyle.name);
+              " custStyle name: " + custStyle.name);
             helper.log("worksheet: " + worksheets[ws]);
             setCellStyle(worksheet, col, row, custStyle);
-          }
-          else {
+          } else {
             helper.log("No style named: " + style + " found");
           }
         }
-        if(styleObj.data.headingStyles[ws].freezeHeadingsRow){
+        if (styleObj.data.headingStyles[ws].freezeHeadingsRow) {
           worksheet.Row(2).Freeze(2);
         }
       }
@@ -251,18 +255,18 @@ function setBatchHeadingStyles(worksheets, styleObj, custStyles, cells){
   }
 }
 
-function setBatchDataStyles(worksheets, styleObj, custStyles, cells){
-  if (cells.data.length != 0 && styleObj.data.dataStyles) {
+function setBatchDataStyles(worksheets, styleObj, custStyles, cells) {
+  if (cells.data.length !== 0 && styleObj.data.dataStyles) {
     for (var i = 0; i < cells.data.length; i++) {
       var ws = cells.data[i].ws;
 
-      if(styleObj.data.headingStyles[ws]){
+      if (styleObj.data.headingStyles[ws]) {
         var worksheet = worksheets[ws];
         var col = cells.data[i].col;
         var row = cells.data[i].row;
         var style = styleObj.data.dataStyles[ws].style; //refers to style arr index
-        //var type = styleObj.data.cells[i].type;
-        //var numberFormat = styleObj.data.cells[i].numberFormat;
+        var type = styleObj.data.dataStyles[ws].type;
+        var numberFormat = styleObj.data.dataStyles[ws].numberFormat;
 
         helper.log("Style: " + style);
         if (style) {
@@ -270,12 +274,11 @@ function setBatchDataStyles(worksheets, styleObj, custStyles, cells){
           helper.log("custStyle OBJ: " + custStyle);
           if (custStyle) {
             helper.log("custStyle: " + custStyle.data +
-            " custStyle name: " + custStyle.name);
+              " custStyle name: " + custStyle.name);
             helper.log("worksheet: " + worksheets[ws]);
             setCellStyle(worksheet, col, row, custStyle);
-          }
-          //typeCast(type, row, col, worksheet, numberFormat);
-          else {
+            typeCast(type, row, col, worksheet, numberFormat, cells);
+          } else {
             helper.log("No style named: " + style + " found");
           }
         }
@@ -285,7 +288,7 @@ function setBatchDataStyles(worksheets, styleObj, custStyles, cells){
   }
 }
 
-function setCustCellStyles(worksheets, styleObj, custStyles){
+function setCustCellStyles(worksheets, styleObj, custStyles, cells) {
   for (var i = 0; i < styleObj.data.cells.length; i++) {
     if (styleObj.data.cells[i].ws < worksheets.length) {
       var ws = styleObj.data.cells[i].ws;
@@ -306,122 +309,107 @@ function setCustCellStyles(worksheets, styleObj, custStyles){
             " custStyle name: " + custStyle.name);
           helper.log("worksheet: " + worksheets[ws]);
           setCellStyle(worksheet, col, row, custStyle);
+          typeCast(type, row, col, worksheet, numberFormat, cells);
         } else {
           helper.log("No style named: " + style + " found");
         }
       }
-      //typeCast(type, row, col, worksheet, numberFormat);
     } else {
       helper.log("No worksheet of that number: " + ws);
     }
   }
 }
 
-function setCellStyle(worksheet, col, row, custStyle){
+function setCellStyle(worksheet, col, row, custStyle) {
   worksheet.Cell(row, col).Style(custStyle.data);
 }
 
-function getWorksheets(wb, reports, styleObj, headingCells, dataCells) {
+function getWorksheets(wb, reports, styleObj, cells) {
   //check if null
   var worksheets = [];
-  if (helper.isEmptyObject(reports))
+  if (!reports)
     return worksheets; //TODO JMC Error reporting
 
   for (var i = 0; i < reports.length; i++) {
     var ws = wb.WorkSheet(reports[i].name);
     helper.log(reports[i].name);
 
-    var p = styleObj.data.headingsText[i];
-    var prop;
-    var k = 0;
-
-    //do headings override from styles json
-    if (helper.isEmptyObject(p) || config.useStyleHeadings == false) {
-      //take heading names from reports property names
-      p = reports[i].data[0]; //only need the first data point
-      for (prop in p) {
-        if (!p.hasOwnProperty(prop)) {
-          //The current property is not a direct property of p
-          helper.log("alert! " + prop + " -> " + p[prop]);
-          continue;
-        }
-        var col;
-        if (i == 0) { //j+2 to leave space for headings
-          col = i + k + 1;
-        } else {
-          col = i + k;
-        }
-        //typeCast
-        ws.Cell(1, col).String("" + prop); //fix for r c going from 1,1
-        headingCells.push({
-          "ws": i,
-          "col": col,
-          "row": 1
-        });
-        k++;
-      }
-    } else {
-      for (prop in p) {
-        if (!p.hasOwnProperty(prop)) {
-          //The current property is not a direct property of p
-          helper.log("alert! " + prop + " -> " + p[prop]);
-          continue;
-        }
-        helper.log(prop + " : " + p[prop]);
-        var col;
-        if (i == 0) { //j+2 to leave space for headings
-          col = i + k + 1;
-        } else {
-          col = i + k;
-        }
-        //typeCast
-        ws.Cell(1, col).String("" + p[prop]); //fix for r c going from 1,1
-        headingCells.push({
-          "ws": i,
-          "col": col,
-          "row": 1
-        });
-        k++;
-      }
-    }
-
-    //insert data will be string for now. The typecasting will happen in styling
-    for (var j = 0; j < reports[i].data.length; j++) {
-      var p = reports[i].data[j];
-      var prop; //property in p
-      var k = 0;
-      for (prop in p) {
-        if (!p.hasOwnProperty(prop)) {
-          //The current property is not a direct property of p
-          helper.log("alert! " + prop + " -> " + p[prop]);
-          continue;
-        }
-        helper.log(prop + " : " + p[prop]);
-        var row = j + 2;
-        var col;
-        if (i == 0) { //j+2 to leave space for headings
-          col = i + k + 1;
-        } else {
-          col = i + k;
-        }
-        ws.Cell(row, col).String("" + p[prop]);
-        dataCells.push({
-          "ws": i,
-          "col": col,
-          "row": row
-        });
-        k++;
-      }
-    }
-    worksheets.push(ws);
+    getHeadings(ws, worksheets, reports, styleObj, cells, i);
+    getData(ws, worksheets, reports, cells, i);
   }
   return worksheets;
 }
 
+function getHeadings(ws, worksheets, reports, styleObj, cells, i) {
+  var p = styleObj.data.headingsText[i];
+  var prop;
+  var k = 0;
 
+  //do headings override from styles json
+  if (p || config.useStyleHeadings === false) {
+    //take heading names from reports property names
+    p = reports[i].data[0]; //only need the first data point
+    for (prop in p) {
+      var col;
+      if (i === 0) { //j+2 to leave space for headings
+        col = i + k + 1;
+      } else {
+        col = i + k;
+      }
+      ws.Cell(1, col).String("" + prop); //fix for r c going from 1,1
+      cells.heading.push({
+        "ws": i,
+        "col": col,
+        "row": 1,
+        "value": p[prop]
+      });
+      k++;
+    }
+  } else {
+    for (prop in p) {
+      helper.log(prop + " : " + p[prop]);
+      var col;
+      if (i === 0) { //j+2 to leave space for headings
+        col = i + k + 1;
+      } else {
+        col = i + k;
+      }
+      ws.Cell(1, col).String("" + prop); //fix for r c going from 1,1
+      cells.heading.push({
+        "ws": i,
+        "col": col,
+        "row": 1,
+        "value": p[prop]
+      });
+      k++;
+    }
+  }
+}
 
-var exposed = {
-  createReports: createReports
-};
-
-module.exports = exposed;
+function getData(ws, worksheets, reports, cells, i) {
+  //insert data will be string for now. The typecasting will happen in styling
+  for (var j = 0; j < reports[i].data.length; j++) {
+    var p = reports[i].data[j];
+    var prop; //property in p
+    var k = 0;
+    for (prop in p) {
+      helper.log(prop + " : " + p[prop]);
+      var row = j + 2;
+      var col;
+      if (i === 0) { //j+2 to leave space for headings
+        col = i + k + 1;
+      } else {
+        col = i + k;
+      }
+      ws.Cell(row, col).String("" + p[prop]);
+      cells.data.push({
+        "ws": i,
+        "col": col,
+        "row": row,
+        "value": p[prop]
+      });
+      k++;
+    }
+  }
+  worksheets.push(ws);
+}

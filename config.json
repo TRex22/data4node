@@ -2,7 +2,7 @@
   "debug": true,
   "internalWbLibDebug": false,
   "fileWriter": true,
-  "testData": false,
+  "testData": true,
   "dir": "data/",
   "filename": "reports.xlsx",
   "reportsFile": "test-data.json",

@@ -79,7 +79,7 @@
         "fontItalics": true,
         "fontUnderline": true,
         "fontFamily": "Copperplate Gothic Bold",
-        "fontColor": "#98fb98",
+        "fontColor": "#000000",
         "fontSize": 12,
         "fillPattern": "solid",
         "fillColor": "#A2A9AF",
@@ -121,6 +121,15 @@
         "wrapText": true
       }
     }],
+    "headingStyles": [{
+      "style": "style1",
+      "freezeHeadingsRow": true
+    }],
+    "dataStyles": [{
+      "style": "style2",
+      "type": "String",
+      "numberFormat": ""
+    }],
     "cells": [{
       "ws": 0,
       "col": 1,
@@ -141,15 +150,6 @@
       "row": 2,
       "style": "style1",
       "type": "Number",
-      "numberFormat": "$#,##0.00"
-    }],
-    "headingStyles": [{
-      "style": "style1",
-      "freezeHeadingsRow": true
-    }],
-    "dataStyles": [{
-      "style": "style2",
-      "type": "String",
       "numberFormat": "$#,##0.00"
     }],
     "img": [{

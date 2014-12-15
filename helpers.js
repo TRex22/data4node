@@ -1,3 +1,15 @@
+var exposed = {
+  saveFile: saveFile,
+  makeAFile: makeAFile,
+  log: log,
+  logObj: logObj,
+  logStyles: logStyles,
+  findFromName: findFromName,
+  findCell: findCell,
+  setDebug: setDebug
+};
+module.exports = exposed;
+
 var debug = false;
 
 function setDebug(flag) {
@@ -51,27 +63,17 @@ function logStyles(styleObj) {
   log("numberFormat " + numberFormat);
 }
 
-function isEmptyObject(obj) {
-  return !Object.keys(obj).length;
-}
-
 function findFromName(arr, name) {
   for (var i = 0; i < arr.length; i++) {
-    log("arr[i]: =  " + arr[i].name);
-    log("[i]: = " + [i]);
     if (arr[i].name === name) return arr[i];
   }
   return null;
 }
 
-var exposed = {
-  saveFile: saveFile,
-  makeAFile: makeAFile,
-  log: log,
-  logObj: logObj,
-  logStyles: logStyles,
-  isEmptyObject: isEmptyObject,
-  findFromName: findFromName,
-  setDebug: setDebug
+function findCell(cells, row, col) {
+  for (var i = 0; i < cells.length; i++) {
+    if (cells[i].col === col && cells[i].row === row)
+      return cells[i];
+  }
+  return null;
 }
-module.exports = exposed;
