@@ -1,5 +1,5 @@
 {
-  "name": "Json-To-Excel",
+  "name": "data4node",
   "version": "0.0.1",
   "description": "use a lib to make xlsx",
   "main": "app.js",
