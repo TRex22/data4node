@@ -4,7 +4,7 @@
   "description": "use a lib to make xlsx",
   "main": "app.js",
   "scripts": {
-    "test": "node tests/test_create.js"
+    "test": "node test/test_create.js"
   },
   "repository": {
     "type": "git",
@@ -18,5 +18,9 @@
   },
   "bugs": {
     "url": "https://github.com/TRex22/json_xl4node/issues"
+  },
+  "devDependencies": {
+    "chai": "^1.10.0",
+    "mocha": "^2.0.1"
   }
 }
