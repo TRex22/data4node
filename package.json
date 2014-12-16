@@ -1,10 +1,10 @@
 {
   "name": "Json-To-Excel",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "use a lib to make xlsx",
   "main": "app.js",
   "scripts": {
-    "test": "node tests/test.js"
+    "test": "node tests/test_create.js"
   },
   "repository": {
     "type": "git",
