@@ -5,7 +5,7 @@ var fs = require('fs');
 var xl = require('excel4node');
 var util = require('util');
 
-var fn = require('./customtestFunctions.js');
+var fn = require('./customTestFunctions.js');
 
 /*js to test*/
 var xl_xp = require('../lib/excel_export.js');
@@ -44,7 +44,7 @@ describe('#helpers', function() {
     obj.name = 'test object';
     obj.data = {};
     obj.data.test1 = 'test1';
-    helper.logObj(obj).should.equal("" + "obj: " + obj.name + " " + JSON.stringify(obj));
+    helper.logObj(obj).should.equal("" + "obj: " + obj.name + " " + util.inspect(obj, false, null));
   });
 
   it('finds obj', function() {
@@ -97,12 +97,30 @@ describe('#helpers', function() {
     helper.getDebug().should.equal(true);
   });
 
-  //quickCompare: quickCompare,
-  //deepCompare: deepCompare,
+  it('quickCompare', function() {
+    var obj1 = {};
+    obj1.name = "test";
+    var obj2 = {};
+    obj2.name = "test";
+    helper.quickCompare(obj1, obj2).should.equal(true);
+  });
+
+  it('deepCompare', function() {
+    var obj1 = {};
+    obj1.name = "test";
+    var obj2 = {};
+    obj2.name = "test";
+    helper.deepCompare(obj1, obj2).should.equal(true);
+  });
+
+  it('dumpObjToFile', function() {
+    var obj1 = { name: 'test' };
+
+    helper.dumpObjToFile(obj1, "test/dumpObj.test");
+    //fn.quickCompare(obj1, obj2).should.equal(true);
+  });
+
   //removeLineFromFile: removeLineFromFile,
   //removeLineFromFile: removeLineFromFile,
   //appendFile: appendFile
-  //logObj
-  //dumpObjToFile(obj, outputFile)
-
 });

@@ -24,6 +24,10 @@ var exposed = {
 };
 module.exports = exposed;
 
+function dumpObjToFile(obj, outputFile){
+  saveFile(util.inspect(obj, false, null), outputFile);
+}
+
 function returnFile(file) {
   fs.readFile(file, {
     encoding: 'utf-8'
