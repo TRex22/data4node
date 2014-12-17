@@ -31,3 +31,5 @@ TODOs: see Waffle.io or Github issues
 npm test
 
 Any file *.test is ignored by git. By convention these are the test files where test data is dumped to drive.
+
+The object compares instead of the should.equals in some unit tests is not ensure that the endpoint tests dont crash mocha
