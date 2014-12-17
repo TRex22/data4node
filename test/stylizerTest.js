@@ -177,7 +177,7 @@ describe('#stylizer', function() {
     fn.removeLineFromFile("test/resultantBatchDataStyles.test", "'@Id'", 22); //line 4145
     fn.removeLineFromFile("test/resultantBatchDataStyles.test", "'@Id'", 22); //line 4152
 
-    result = fs.readFileSync("test/resultantBatchHeadingStyles.test");
+    result = fs.readFileSync("test/resultantBatchDataStyles.test");
     fn.deepCompare(result, expected).should.equal(true);
   });
 
