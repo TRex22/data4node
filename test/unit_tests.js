@@ -10,7 +10,7 @@ var tester = require("./test_lib.js");
 var xl_xp = require('../lib/excel_export.js');
 var fs = require('fs');
 
-var config = JSON.parse(fs.readFileSync("tests/test_config.json"));
+var config = JSON.parse(fs.readFileSync("test/test_config.json"));
 
 var reports = JSON.parse(fs.readFileSync("" + config.dir + config.reportsFile));
 var styleObj = JSON.parse(fs.readFileSync("" + config.dir + config.stylesFile));
@@ -41,7 +41,7 @@ styleObj.ws = 0;
 styleObj.col = 1;
 styleObj.row = 1;
 styleObj.style = "style1";
-styelObj.type = "Number";
+//styelObj.type = "Number";
 styleObj.numberFormat = "$#.00";
 helper.logStyles(styleObj);
 

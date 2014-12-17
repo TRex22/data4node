@@ -1,10 +1,10 @@
 {
   "name": "data4node",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "use a lib to make xlsx",
   "main": "app.js",
   "scripts": {
-    "test": "node test/test_create.js"
+    "test": "make test"
   },
   "repository": {
     "type": "git",
