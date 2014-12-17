@@ -29,3 +29,5 @@ node_modules
 
 # generated files
 reports.xlsx
+*.test
+resultantWorksheets

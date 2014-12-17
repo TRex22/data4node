@@ -4,7 +4,7 @@
   "description": "use a lib to make xlsx",
   "main": "app.js",
   "scripts": {
-    "test": "make test"
+    "test": "./node_modules/.bin/mocha --reporter spec"
   },
   "repository": {
     "type": "git",
@@ -21,6 +21,7 @@
   },
   "devDependencies": {
     "chai": "^1.10.0",
-    "mocha": "^2.0.1"
+    "mocha": "^2.0.1",
+    "util": "^0.10.3"
   }
 }
