@@ -5,7 +5,7 @@ var fs = require('fs');
 var xl = require('excel4node');
 var util = require('util');
 
-var fn = require('./customtestFunctions.js');
+var fn = require('./customTestFunctions.js');
 
 /*js to test*/
 var xl_xp = require('../lib/excel_export.js');

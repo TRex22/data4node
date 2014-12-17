@@ -2037,18 +2037,18 @@
            { Relationships: 
               [ { '@xmlns': 'http://schemas.openxmlformats.org/package/2006/relationships' },
                 { Relationship: 
-                   { '@Id': 'RIZ3EYL8G7ywdTbRn',
+                   { 
                      '@Target': 'sharedStrings.xml',
                      '@Type': 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/sharedStrings' } },
                 { Relationship: 
-                   { '@Id': 'RyVzCdSYj6CKovrqI',
+                   { 
                      '@Target': 'styles.xml',
                      '@Type': 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles' } } ] },
           global_rels: 
            { Relationships: 
               [ { '@xmlns': 'http://schemas.openxmlformats.org/package/2006/relationships' },
                 { Relationship: 
-                   { '@Id': 'RKQl5KmLVOt0CYv8n',
+                   { 
                      '@Target': 'xl/workbook.xml',
                      '@Type': 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument' } } ] },
           Content_Types: 
@@ -4138,18 +4138,18 @@
            { Relationships: 
               [ { '@xmlns': 'http://schemas.openxmlformats.org/package/2006/relationships' },
                 { Relationship: 
-                   { '@Id': 'RIZ3EYL8G7ywdTbRn',
+                   { 
                      '@Target': 'sharedStrings.xml',
                      '@Type': 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/sharedStrings' } },
                 { Relationship: 
-                   { '@Id': 'RyVzCdSYj6CKovrqI',
+                   { 
                      '@Target': 'styles.xml',
                      '@Type': 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles' } } ] },
           global_rels: 
            { Relationships: 
               [ { '@xmlns': 'http://schemas.openxmlformats.org/package/2006/relationships' },
                 { Relationship: 
-                   { '@Id': 'RKQl5KmLVOt0CYv8n',
+                   { 
                      '@Target': 'xl/workbook.xml',
                      '@Type': 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument' } } ] },
           Content_Types: 

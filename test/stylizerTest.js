@@ -18,8 +18,6 @@ var styleObj = JSON.parse(fs.readFileSync("" + config.dir + config.stylesFile));
 
 //_private.
 
-
-
 // setBatchHeadingStyles: setBatchHeadingStyles,
 // setBatchDataStyles: setBatchDataStyles,
 // setColProperties: setColProperties,
@@ -172,15 +170,15 @@ describe('#stylizer', function() {
     stylizer._private.setBatchDataStyles(worksheets, styleObj, custStyles, cells);
     fn.dumpObjToFile(worksheets, "test/resultantBatchDataStyles.test");
 
-    // fn.removeLineFromFile("test/resultantBatchDataStyles.test", "'@Id'", 22); //line 2040
-    // fn.removeLineFromFile("test/resultantBatchDataStyles.test", "'@Id'", 22); //line 2044
-    // fn.removeLineFromFile("test/resultantBatchDataStyles.test", "'@Id'", 22); //line 2051
-    // fn.removeLineFromFile("test/resultantBatchDataStyles.test", "'@Id'", 22); //line 4141
-    // fn.removeLineFromFile("test/resultantBatchDataStyles.test", "'@Id'", 22); //line 4145
-    // fn.removeLineFromFile("test/resultantBatchDataStyles.test", "'@Id'", 22); //line 4152
+    fn.removeLineFromFile("test/resultantBatchDataStyles.test", "'@Id'", 22); //line 2040
+    fn.removeLineFromFile("test/resultantBatchDataStyles.test", "'@Id'", 22); //line 2044
+    fn.removeLineFromFile("test/resultantBatchDataStyles.test", "'@Id'", 22); //line 2051
+    fn.removeLineFromFile("test/resultantBatchDataStyles.test", "'@Id'", 22); //line 4141
+    fn.removeLineFromFile("test/resultantBatchDataStyles.test", "'@Id'", 22); //line 4145
+    fn.removeLineFromFile("test/resultantBatchDataStyles.test", "'@Id'", 22); //line 4152
 
     result = fs.readFileSync("test/resultantBatchHeadingStyles.test");
-    //fn.deepCompare(result, expected).should.equal(true);
+    fn.deepCompare(result, expected).should.equal(true);
   });
 
 });

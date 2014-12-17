@@ -1,5 +1,4 @@
 var should = require('chai').should();
-//var assert = require("assert");
 
 var fs = require('fs');
 var xl = require('excel4node');
@@ -199,7 +198,6 @@ describe('#mrData', function() {
     };
 
     mrData._private.getData(ws, [], data, cells, i);
-    //fn.dumpObjToFile(cells, "test/expectedCells.test");
 
     should.exist(cells);
     should.exist(cells.heading);
