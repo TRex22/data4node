@@ -10,6 +10,8 @@ A JSON wrapper for excel4node
 By Jason Chalom 2014, Entelect Software
 Under the MIT License
 
+I have other commitments at the moment but I will come back and finish this library at some point.
+
 This will take some test json data and convert to xlsx using desired styling and formatting
 https://github.com/natergj/excel4node is the excel parser
 
