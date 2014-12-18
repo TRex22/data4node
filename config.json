@@ -5,6 +5,6 @@
   "testData": true,
   "dir": "data/",
   "filename": "reports.xlsx",
-  "reportsFile": "test-managers.test",
+  "reportsFile": "test-data.json",
   "stylesFile": "test-styles.json"
 }
