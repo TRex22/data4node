@@ -7,7 +7,7 @@ var util = require('util');
 
 
 /*js to test*/
-var xl_xp = require('../lib/excel_export.js');
+var xl_xp = require('../lib/data4node.js');
 var helper = require('../lib/helpers.js');
 var mrData = require('../lib/mrData.js');
 var stylizer = require('../lib/stylizer.js');
