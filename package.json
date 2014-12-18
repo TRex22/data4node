@@ -1,7 +1,7 @@
 {
   "name": "data4node",
   "version": "0.0.3",
-  "description": "use a lib to make xlsx",
+  "description": "A set of libraries and wrappers to handle modern filetypes from within nodejs",
   "main": "app.js",
   "scripts": {
     "test": "./node_modules/.bin/mocha --reporter spec"
