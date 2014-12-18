@@ -25,7 +25,10 @@ arr.push(obj);
 describe('#helpers', function() {
   it('makeAFile', function() {
     helper.makeAFile("test/file.test");
-    //returnFile("test/file.test").should.equal("");
+  });
+
+  it('isEmpty', function() {
+    helper.isEmpty([]).should.equal(true);
   });
 
   it('saveAFile', function() {
@@ -41,7 +44,7 @@ describe('#helpers', function() {
     obj.name = 'test object';
     obj.data = {};
     obj.data.test1 = 'test1';
-    helper.logObj(obj).should.equal("" + "obj: " + obj.name + " " + util.inspect(obj, false, null));
+    helper.logObj(obj).should.equal("obj: " + util.inspect(obj, false, null));
   });
 
   it('finds obj', function() {
