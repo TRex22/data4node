@@ -1,4 +1,4 @@
-data4node [![Build Status](https://travis-ci.org/TRex22/json_xl4node.svg)](https://travis-ci.org/TRex22/json_xl4node) [![Stories in Ready](https://badge.waffle.io/TRex22/json_xl4node.png?label=ready&title=Ready)](https://waffle.io/TRex22/json_xl4node)
+data4node [![Build Status](https://travis-ci.org/TRex22/data4node.svg)](https://travis-ci.org/TRex22/data4node) [![Stories in Ready](https://badge.waffle.io/TRex22/data4node.png?label=ready&title=Ready)](https://waffle.io/TRex22/data4node)
 ============
 A set of libraries and wrappers to handle modern filetypes from within nodejs
 
@@ -25,3 +25,11 @@ custStyles are linked directly at the cell level
 Documentation is coming soon.
 
 TODOs: see Waffle.io or Github issues
+
+## Tests
+
+npm test
+
+Any file *.test is ignored by git. By convention these are the test files where test data is dumped to drive.
+
+The object compares instead of the should.equals in some unit tests is not ensure that the endpoint tests dont crash mocha

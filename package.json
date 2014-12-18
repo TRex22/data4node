@@ -1,10 +1,10 @@
 {
   "name": "data4node",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "use a lib to make xlsx",
   "main": "app.js",
   "scripts": {
-    "test": "node tests/test_create.js"
+    "test": "./node_modules/.bin/mocha --reporter spec"
   },
   "repository": {
     "type": "git",
@@ -14,9 +14,15 @@
   "license": "MIT",
   "dependencies": {
     "excel4node": "0.1.5",
-    "http": "0.0.0"
+    "http": "0.0.0",
+    "util": "0.10.3"
   },
   "bugs": {
     "url": "https://github.com/TRex22/json_xl4node/issues"
+  },
+  "devDependencies": {
+    "chai": "^1.10.0",
+    "mocha": "^2.0.1",
+    "util": "^0.10.3"
   }
 }
