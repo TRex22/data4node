@@ -9,8 +9,8 @@ var util = require('util');
 /*js to test*/
 var xl_xp = require('../lib/data4node.js');
 var helper = require('../lib/helpers.js');
-var mrData = require('../lib/mrData.js');
-var stylizer = require('../lib/stylizer.js');
+var mrData = require('../lib/excel_export/mrData.js');
+var stylizer = require('../lib/excel_export/stylizer.js');
 
 var config = JSON.parse(fs.readFileSync("test/test_config.json"));
 var reports = JSON.parse(fs.readFileSync("" + config.dir + config.reportsFile));

@@ -4,7 +4,7 @@
   "description": "A set of libraries and wrappers to handle modern filetypes from within nodejs",
   "main": "app.js",
   "scripts": {
-    "test": "./node_modules/.bin/mocha --reporter spec"
+    "test": "./node_modules/.bin/mocha --reporter nyan"
   },
   "repository": {
     "type": "git",
