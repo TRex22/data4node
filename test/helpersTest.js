@@ -120,6 +120,21 @@ describe('#helpers', function() {
     //fn.quickCompare(obj1, obj2).should.equal(true);
   });
 
+  it('pseudoRandGen', function() {
+    var a = new helper.pseudoRandGen(); //force two different objs in memory
+    helper.pseudoRandGen().should.not.equal(a);
+
+  });
+
+  it('removeLineEndings', function() {
+    helper.removeLineEndings("sd\n").should.equal("sd");
+  });
+
+  //
+  // readFile: readFile,
+  // readFileLinesArr: readFileLinesArr
+  //readFileStreamLines
+
   //removeLineFromFile: removeLineFromFile,
   //removeLineFromFile: removeLineFromFile,
   //appendFile: appendFile
