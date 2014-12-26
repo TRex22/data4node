@@ -17,6 +17,6 @@ var styleObj = JSON.parse(fs.readFileSync("" + config.dir + config.stylesFile));
 
 
 console.log("Starting Conversion....");
-//var l = xl_xp.createExcelReports(reports, styleObj, config);
-for (var i = 0; i < 1000; i++)
-console.log(helper.pseudoRandGen());
+var l = xl_xp.createExcelReports(reports, styleObj, config);
+//for (var i = 0; i < 1000; i++)
+//console.log(helper.pseudoRandGen());
