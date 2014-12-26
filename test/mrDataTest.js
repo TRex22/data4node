@@ -237,6 +237,6 @@ describe('#mrData', function() {
     fn.removeLineFromFile("test/resultantWorksheets.test", "'@Id'", 22); //line 4000
 
     result = fs.readFileSync("test/resultantWorksheets.test");
-    fn.deepCompare(result, expected).should.equal(true);
+    fn.deepCompare(removeNewLinesFromString(result), removeNewLinesFromString(expected)).should.equal(true);
   });
 });
