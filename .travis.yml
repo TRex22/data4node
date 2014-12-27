@@ -1,13 +1,12 @@
 language: node_js
-node_js: 
+node_js:
 - "0.11"
 - "0.10"
-deploy: 
+deploy:
   provider: npm
   email: contact@jasonchalom.com
-  api_key: 
+  api_key:
     secure: UpfXe7iWqOBuHoQALuZEIp6cPYGx75AXprccGAdwBChNWHa4T6yrmZviev1EAS29Y/muK8agei6aCj4oI3hlZIsfvNK23uwnyYqkZ40oHrUg6gP1qD/aEJoO2wgEvbOG4FqLfFGCPykyKu8tFW41owVX6WEL21eqKGFbg4SaQ8g=
-  "on": 
+  "on":
     tags: true
     repo: TRex22/data4node
-    branch: master 
