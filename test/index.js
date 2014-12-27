@@ -17,11 +17,11 @@ var reports = JSON.parse(fs.readFileSync("" + config.dir + config.reportsFile));
 var styleObj = JSON.parse(fs.readFileSync("" + config.dir + config.stylesFile));
 
 describe('#xl_xp', function() {
-  // it('createReports', function(){
-  //   config.internalWbLibDebug = false;
-  //   config.debug = false;
-  //   config.fileWriter = true;
-  //   xl_xp.createReports(reports, styleObj, config);
-  // });
+  it('createReports', function(){
+    config.internalWbLibDebug = false;
+    config.debug = false;
+    config.fileWriter = false; //todo make a report and run a check on it
+    xl_xp.createExcelReports(reports, styleObj, config);
+  });
 
 });

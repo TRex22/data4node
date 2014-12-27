@@ -138,4 +138,17 @@ describe('#helpers', function() {
   //removeLineFromFile: removeLineFromFile,
   //removeLineFromFile: removeLineFromFile,
   //appendFile: appendFile
+
+  // removeLineEndings: removeLineEndings,
+  // readFile: readFile,
+  // readFileLinesArr: readFileLinesArr,
+  // readFileStreamLines: readFileStreamLines,
+  // strRegexSplit: strRegexSplit,
+  // strNoLines: strNoLines,
+  // strCommaSplit: strCommaSplit
+  // commaConcat: commaConcat
+  // strSplitLines: strSplitLines
+  // strCommaSplitNoLine: strCommaSplitNoLine
+  // strSemiColonSplitNoLine: strSemiColonSplitNoLine,
+  // semiColonConcat: semiColonConcat
 });
