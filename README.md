@@ -2,6 +2,11 @@ data4node [![Build Status](https://travis-ci.org/TRex22/data4node.svg)](https://
 ============
 A set of libraries and wrappers to handle modern filetypes from within nodejs
 
+csv_parser
+==========
+A parser for CSV (Comma-seperated values), also a SCSV (Semi-Colon seperated values) parser.
+A future enhancement is to have an regex delimiter on a generic function or base-function.
+
 json_xl4node
 ============
 A JSON wrapper for excel4node
