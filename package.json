@@ -2,13 +2,13 @@
   "name": "data4node",
   "version": "0.0.7",
   "description": "A set of libraries and wrappers to handle modern filetypes from within nodejs",
-  "main": "app.js",
+  "main": "./lib/data4node.js",
   "scripts": {
     "test": "./node_modules/.bin/mocha --reporter spec"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/TRex22/json_xl4node.git"
+    "url": "git://github.com/TRex22/data4node.git"
   },
   "author": "Jason Chalom",
   "license": "MIT",
@@ -17,7 +17,6 @@
     "http": "0.0.0",
     "util": "0.10.3"
   },
-  "main": "./lib/data4node.js",
   "bugs": {
     "url": "https://github.com/TRex22/json_xl4node/issues"
   },
