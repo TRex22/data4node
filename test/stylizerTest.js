@@ -8,9 +8,9 @@ var util = require('util');
 var fn = require('./customTestFunctions.js');
 
 /*js to test*/
-var stylizer = require('../lib/stylizer.js');
+var stylizer = require('../lib/excel_export/stylizer.js');
 var helper = require('../lib/helpers.js');
-var mrData = require('../lib/mrData.js');
+var mrData = require('../lib/excel_export/mrData.js');
 
 var config = JSON.parse(fs.readFileSync("test/test_config.json"));
 var reports = JSON.parse(fs.readFileSync("" + config.dir + config.reportsFile));

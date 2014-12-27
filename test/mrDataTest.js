@@ -7,7 +7,7 @@ var util = require('util');
 var fn = require('./customTestFunctions.js');
 
 /*js to test*/
-var mrData = require('../lib/mrData.js');
+var mrData = require('../lib/excel_export/mrData.js');
 var helper = require('../lib/helpers.js');
 
 var config = JSON.parse(fs.readFileSync("test/test_config.json"));
