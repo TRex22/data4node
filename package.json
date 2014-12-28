@@ -1,6 +1,6 @@
 {
   "name": "data4node",
-  "version": "0.0.9",
+  "version": "0.1.0",
   "description": "A set of libraries and wrappers to handle modern filetypes from within nodejs",
   "main": "./lib/data4node.js",
   "scripts": {
