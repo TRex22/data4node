@@ -1,1 +1,0 @@
-doxx --source lib/ --target docs
