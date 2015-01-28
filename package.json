@@ -1,6 +1,6 @@
 {
   "name": "data4node",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "A set of libraries and wrappers to handle modern filetypes from within nodejs",
   "main": "./lib/data4node.js",
   "scripts": {
@@ -22,5 +22,15 @@
     "chai": "^1.10.0",
     "mocha": "^2.0.1",
     "util": "^0.10.3"
-  }
+  },
+  "keywords": [
+    "excel",
+    "excel4node",
+    "csv",
+    "data",
+    "data parser",
+    "parser",
+    "json",
+    "babelfish"
+  ]
 }
