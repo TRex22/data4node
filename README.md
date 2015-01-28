@@ -1,5 +1,8 @@
 data4node [![Build Status](https://travis-ci.org/TRex22/data4node.svg)](https://travis-ci.org/TRex22/data4node) [![Stories in Ready](https://badge.waffle.io/TRex22/data4node.png?label=ready&title=Ready)](https://waffle.io/TRex22/data4node)
 ============
+
+TODO are done on Waffle.io: https://waffle.io/trex22/data4node
+
 A set of libraries and wrappers to handle modern filetypes from within nodejs
 
 csv_parser

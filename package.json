@@ -13,9 +13,7 @@
   "author": "Jason Chalom",
   "license": "MIT",
   "dependencies": {
-    "excel4node": "0.1.5",
-    "http": "0.0.0",
-    "util": "0.10.3"
+    "excel4node": "0.1.5"
   },
   "bugs": {
     "url": "https://github.com/TRex22/json_xl4node/issues"

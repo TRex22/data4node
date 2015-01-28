@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width" charset="utf-8">
+    <title>data4node</title>
+    <link rel="stylesheet" href="http://getbootstrap.com/2.3.2/assets/css/bootstrap.css">
+    <link rel="stylesheet" href="http://getbootstrap.com/2.3.2/assets/css/bootstrap-responsive.css">
+    <link rel="stylesheet" href="http://getbootstrap.com/2.3.2/assets/css/docs.css">
+    <style>
+      body > .navbar .brand {
+        float:left;
+        text-shadow: rgba(255, 255, 255, 0.0980392) 0px 1px 0px, rgba(255, 255, 255, 0.4) 0px 0px 30px;
+        color: white;
+        margin-left:0px;
+        font-weight:normal;
+      }
+      
+      .bs-docs-sidenav.affix {
+        box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.5);
+        z-index: 10;
+      }
+      
+      .bs-docs-sidenav i{
+        width: 8px;
+        height: 8px;
+        padding: 0px;
+        margin: 0px;
+        display: inline-block;
+        margin-right:0.5em;
+      }
+      
+      .bs-docs-sidenav > li > a {
+          word-wrap: break-word;
+      }
+      
+      .bs-docs-sidenav > li:first-child > a {
+        border-top-right-radius: 6px;
+        border-top-left-radius: 6px;
+      }
+      
+      code[class*="language-"],pre[class*="language-"]{color:black;text-shadow:0 1px white;font-family:Consolas,Monaco,'Andale Mono',monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none}pre[class*="language-"]{padding:1em;margin:.5em 0;overflow:auto}:not(pre)>code[class*="language-"],pre[class*="language-"]{background:#f5f2f0}:not(pre)>code[class*="language-"]{padding:.1em;border-radius:.3em}.token.comment,.token.prolog,.token.doctype,.token.cdata{color:slategray}.token.punctuation{color:#999}.namespace{opacity:.7}.token.property,.token.tag,.token.boolean,.token.number{color:#905}.token.selector,.token.attr-name,.token.string{color:#690}.token.operator,.token.entity,.token.url,.language-css .token.string,.style .token.string{color:#a67f59;background:hsla(0,0%,100%,.5)}.token.atrule,.token.attr-value,.token.keyword{color:#07a}.token.regex,.token.important{color:#e90}.token.important{font-weight:bold}.token.entity{cursor:help}
+      div.description {margin: 14px 0; padding-top: 14px; border-bottom:1px solid #eee; }
+      .tags {}
+      .ctx-type {
+        display:inline-block;
+        margin-right:0.5em;
+        //- float:right; margin-top:8px
+      }
+      
+      footer iframe{vertical-align:middle;}
+      
+    </style>
+  </head>
+  <body data-spy="scroll" data-target=".scrollspy">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container"><a class="brand">Doxx</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav pull-right sponsored"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <header id="overview" class="jumbotron subhead">
+      <div class="container">
+        <h1>data4node</h1>
+        <p class="lead"></p>
+      </div>
+    </header>
+    <div class="container">
+      <div class="row">
+        <div class="span3 bs-docs-sidebar">
+          <ul class="nav nav-list bs-docs-sidenav affix-top">
+            <li><a href="index.html">Main</a></li>
+            <li><a href="data4node.js.html">data4node.js</a></li>
+            <li><a href="excel_export\excelData.js.html">excel_export\excelData.js</a></li>
+            <li><a href="excel_export\excel_export.js.html">excel_export\excel_export.js</a></li>
+            <li><a href="excel_export\stylizer.js.html">excel_export\stylizer.js</a></li>
+            <li><a href="excel_export\typeCast.js.html">excel_export\typeCast.js</a></li>
+            <li class="active"><a href="helpers.js.html">helpers.js</a></li>
+            <li><a href="mrData\mrData.js.html">mrData\mrData.js</a></li>
+            <li><a href="parser\babelFish.js.html">parser\babelFish.js</a></li>
+            <li><a href="parser\csv.js.html">parser\csv.js</a></li>
+            <li><a href="parser\jsonParser.js.html">parser\jsonParser.js</a></li>
+            <li><a href="parser\scsv.js.html">parser\scsv.js</a></li>
+          </ul>
+          <div class="scrollspy">
+            <ul class="nav nav-list bs-docs-sidenav affix-top">
+              <li><a href="#exposed"><i class="alert alert-success"></i><span>exposed</span></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="span9">
+          <section id="exposed">
+            <h1>exposed</h1>
+            <h5 class="subheader"></h5>
+            <p>
+              <div class="label label-success radius ctx-type">declaration</div><span>exposed</span>
+            </p>
+          </section>
+          <div class="description"><p>By Jason Chalom 2014, Entelect Software<br />Under the MIT License</p><p>This contains all helper functions</p> </div>
+          <pre><code class="language-javascript">var exposed = {
+  saveFile: saveFile,
+  makeAFile: makeAFile,
+  log: log,
+  logObj: logObj,
+  findArrObj: findArrObj,
+  findArrObjFromName: findArrObjFromName,
+  findCell: findCell,
+  setDebug: setDebug,
+  getDebug: getDebug,
+  quickCompare: quickCompare,
+  deepCompare: deepCompare,
+  removeLineFromFile: removeLineFromFile,
+  appendFile: appendFile,
+  dumpObjToFile: dumpObjToFile,
+  isEmpty: isEmpty,
+  pseudoRandGen: pseudoRandGen,
+  removeLineEndings: removeLineEndings,
+  readFile: readFile,
+  readFileLinesArr: readFileLinesArr,
+  readFileStreamLines: readFileStreamLines,
+  strRegexSplit: strRegexSplit,
+  strNoLines: strNoLines,
+  strCommaSplit: strCommaSplit,
+  commaConcat: commaConcat,
+  strSplitLines: strSplitLines,
+  strCommaSplitNoLine: strCommaSplitNoLine,
+  concat: concat,
+  strSemiColonSplitNoLine: strSemiColonSplitNoLine,
+  semiColonConcat: semiColonConcat
+};
+module.exports = exposed;
+
+var debug = false;
+
+var fs = require('fs');
+var util = require('util');
+
+function concat(val1, val2){
+  return &quot;&quot; + val1 + val2;
+}
+
+function commaConcat(val1, val2) {
+  return val1 + &quot;,&quot; + val2;
+}
+
+function semiColonConcat(val1, val2) {
+  return val1 + &quot;;&quot; + val2;
+}
+
+function strSplitLines(str){
+  return strRegexSplit(str, /\r\n|\r|\n/);
+}
+
+function strNoLines(str){
+  return strRegexSplit(str, /\r\n|\r|\n/).length;
+}
+
+function strCommaSplit(str){
+  return strRegexSplit(str, /;/);
+}
+
+function strCommaSplitNoLine(str){
+  return strRegexSplit(str, /,|\n|\r|\r\n|\n\r/);
+}
+
+function strSemiColonSplitNoLine(str){
+  return strRegexSplit(str, /;|\n|\r|\r\n|\n\r/);
+}
+
+function strRegexSplit(str, regex){
+  return str.split(regex);
+}
+
+function removeNewLinesFromString(str){
+  str = removeLineEndings(str);
+}
+
+function readFile(file) {
+  fs.readFile(file, function (err, data) {
+    if (err)
+      return err;
+    return data.toString();
+  });
+}
+
+function readFileLinesArr(file, regex) {
+  fs.readFile(file, function (err, data) {
+    if (err)
+      return err;
+    var ds = data.toString();
+    if (!regex)
+      regex = &quot;\n&quot;;
+    return ds.split(regex);;
+    });
+}
+
+function readFileStreamLines(file, func) {//http://jesusjzp.github.io/blog/2014/04/15/nodejs-read-file/
+  var input = fs.createReadStream(file);
+  var remaining = '';
+
+  input.on('data', function(data) {
+    remaining += data;
+    var index = remaining.indexOf('\n');
+    while (index &gt; -1) {
+      var line = remaining.substring(0, index);
+      remaining = remaining.substring(index + 1);
+      func(line);
+      index = remaining.indexOf('\n');
+    }
+  });
+
+  input.on('end', function() {
+    if (remaining.length &gt; 0) {
+      func(remaining);
+    }
+  });
+}
+
+function removeLineEndings(str){
+  return str.replace(/\n|\r|\n\r|\r\n/g, '');
+}
+
+function pseudoRandGen(a, b, m){//predicatble pseudo rnd number
+  var high = 999;
+  var low = 0;
+
+  var now = new Date();
+
+  a = (now*44)%999; //arbitrary numbers, could use some kind of seed there as well
+  b = (now*876)%999;
+  m = (now*78)%999;
+
+  return Math.floor(((a*now+b) % m) + Math.random() * (high - low) + low);
+}
+
+function isEmpty(obj) {
+
+  // null and undefined are &quot;empty&quot;
+  if (obj === null) return true;
+
+  // Assume if it has a length property with a non-zero value
+  // that that property is correct.
+  if (obj.length &gt; 0)    return false;
+  if (obj.length === 0)  return true;
+
+  // Otherwise, does it have any properties of its own?
+  // Note that this doesn't handle
+  // toString and valueOf enumeration bugs in IE &lt; 9
+  for (var key in obj) {
+    if (hasOwnProperty.call(obj, key)) return false;
+  }
+
+  return true;
+}
+
+function setDebug(flag) {
+  debug = flag;
+}
+
+function getDebug() {
+  return debug;
+}
+
+function saveFile(buf, outputFile) {
+  // build file
+  makeAFile(outputFile);
+  fs.writeFileSync(outputFile, buf);
+}
+
+function makeAFile(file) {
+  fs.writeFile(file, &quot;&quot;, function(err) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log(&quot;The file was created!&quot;);
+    }
+  });
+}
+
+function dumpObjToFile(obj, outputFile){
+  saveFile(util.inspect(obj, false, null), outputFile);
+}
+
+function appendFile(file, search, line) {
+  line = line || 0;
+
+  var body = fs.readFileSync(file).toString();
+
+  if (body.indexOf(search) &lt; 0 ) {
+
+    body = body.split('\n');
+    body.splice(line + 1,0,search);
+    body = body.filter(function(str){ return str; }); // remove empty lines
+    var output = body.join('\n');
+    fs.writeFileSync('example.js', output);
+  }
+}
+
+function removeLineFromFile(file, search) {
+  var body = fs.readFileSync(file).toString();
+  var idx = body.indexOf(search);
+
+  if (idx &gt;= 0 ) {
+    var output = body.substr(0, idx) + body.substr(idx + search.length);
+    fs.writeFileSync(file, output);
+  }
+}
+
+function removeLineFromFile(file, search, addIndex) {
+  var body = fs.readFileSync(file).toString();
+  var idx = body.indexOf(search);
+
+  if (idx &gt;= 0 ) {
+    var output = body.substr(0, idx) + body.substr(idx + search.length + addIndex);
+    fs.writeFileSync(file, output);
+  }
+}
+
+function log(p, prop) {
+  if (debug)
+    log(prop + &quot; : &quot; + p[prop]);
+  return &quot;&quot; + prop + &quot; : &quot; + p[prop];
+}
+
+function log(str) {
+  if (debug)
+    console.log(&quot;log: &quot; + str);
+  return &quot;log: &quot; + str;
+}
+
+function logObj(obj) {
+  log(&quot;obj: &quot; + util.inspect(obj, false, null));
+  return &quot;obj: &quot; + util.inspect(obj, false, null);
+}
+
+function findArrObj(arr, obj) {
+  for (var i = 0; i &lt; arr.length; i++) {
+    if (arr[i] === obj) return arr[i];
+  }
+  return null;
+}
+
+function findArrObjFromName(arr, name) {
+  for (var i = 0; i &lt; arr.length; i++) {
+    if (arr[i].name === name) return arr[i];
+  }
+  return null;
+}
+
+function findCell(cells, ws, col, row) {
+  for (var i = 0; i &lt; cells.length; i++) {
+    if (cells[i].col === col &amp;&amp; cells[i].row === row &amp;&amp; cells[i].ws === ws)
+      return cells[i];
+  }
+  return null;
+}
+
+function quickCompare(x, y) {
+  var xObj = JSON.stringify(x);
+  var yObj = JSON.stringify(y);
+  if (xObj === yObj)
+    return true;
+  return false;
+}
+
+function deepCompare() {
+  var i, l, leftChain, rightChain;
+
+  function compare2Objects(x, y) {
+    var p;
+
+    // remember that NaN === NaN returns false
+    // and isNaN(undefined) returns true
+    if (isNaN(x) &amp;&amp; isNaN(y) &amp;&amp; typeof x === 'number' &amp;&amp; typeof y === 'number') {
+      return true;
+    }
+
+    // Compare primitives and functions.
+    // Check if both arguments link to the same object.
+    // Especially useful on step when comparing prototypes
+    if (x === y) {
+      return true;
+    }
+
+    // Works in case when functions are created in constructor.
+    // Comparing dates is a common scenario. Another built-ins?
+    // We can even handle functions passed across iframes
+    if ((typeof x === 'function' &amp;&amp; typeof y === 'function') ||
+      (x instanceof Date &amp;&amp; y instanceof Date) ||
+      (x instanceof RegExp &amp;&amp; y instanceof RegExp) ||
+      (x instanceof String &amp;&amp; y instanceof String) ||
+      (x instanceof Number &amp;&amp; y instanceof Number)) {
+      return x.toString() === y.toString();
+    }
+
+    // At last checking prototypes as good a we can
+    if (!(x instanceof Object &amp;&amp; y instanceof Object)) {
+      return false;
+    }
+
+    if (x.isPrototypeOf(y) || y.isPrototypeOf(x)) {
+      return false;
+    }
+
+    if (x.constructor !== y.constructor) {
+      return false;
+    }
+
+    if (x.prototype !== y.prototype) {
+      return false;
+    }
+
+    // Check for infinitive linking loops
+    if (leftChain.indexOf(x) &gt; -1 || rightChain.indexOf(y) &gt; -1) {
+      return false;
+    }
+
+    // Quick checking of one object beeing a subset of another.
+    // todo: cache the structure of arguments[0] for performance
+    for (p in y) {
+      if (y.hasOwnProperty(p) !== x.hasOwnProperty(p)) {
+        return false;
+      } else if (typeof y[p] !== typeof x[p]) {
+        return false;
+      }
+    }
+
+    for (p in x) {
+      if (y.hasOwnProperty(p) !== x.hasOwnProperty(p)) {
+        return false;
+      } else if (typeof y[p] !== typeof x[p]) {
+        return false;
+      }
+
+      switch (typeof(x[p])) {
+        case 'object':
+        case 'function':
+
+          leftChain.push(x);
+          rightChain.push(y);
+
+          if (!compare2Objects(x[p], y[p])) {
+            return false;
+          }
+
+          leftChain.pop();
+          rightChain.pop();
+          break;
+
+        default:
+          if (x[p] !== y[p]) {
+            return false;
+          }
+          break;
+      }
+    }
+
+    return true;
+  }
+
+  if (arguments.length &lt; 1) {
+    return true; //Die silently? Don't know how to handle such case, please help...
+    // throw &quot;Need two or more arguments to compare&quot;;
+  }
+
+  for (i = 1, l = arguments.length; i &lt; l; i++) {
+
+    leftChain = []; //Todo: this can be cached
+    rightChain = [];
+
+    if (!compare2Objects(arguments[0], arguments[i])) {
+      return false;
+    }
+  }
+
+  return true;
+}</code></pre>
+        </div>
+      </div>
+    </div>
+    <footer class="footer">
+      <div class="container">
+        <p>Documentation generated with <a href="https://github.com/FGRibreau/doxx">Doxx </a> created by <a href="https://twitter.com/FGRibreau" data-show-count="false" class="twitter-follow-button">Francois-Guillaume Ribreau </a></p>
+        <p>Doxx is sponsored by <a href="http://bringr.net/?btt" title="Outil d'analyse des réseaux sociaux" class="bringr">Bringr </a> and <a href="https://redsmin.com/?btt" title="Full Redis GUI" class="redsmin">Redsmin</a></p>
+        <p>Theme borrowed from Twitter Bootstrap</p>
+      </div>
+    </footer>
+    <script src="http://platform.twitter.com/widgets.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+    <script src="http://leaverou.github.com/prefixfree/prefixfree.js"></script>
+    <script src="http://getbootstrap.com/2.3.2/assets/js/bootstrap-transition.js"></script>
+    <script src="http://getbootstrap.com/2.3.2/assets/js/bootstrap-scrollspy.js"></script>
+    <script src="http://getbootstrap.com/2.3.2/assets/js/bootstrap-dropdown.js"></script>
+    <script src="http://getbootstrap.com/2.3.2/assets/js/bootstrap-collapse.js"></script>
+    <script src="http://getbootstrap.com/2.3.2/assets/js/bootstrap-affix.js"></script>
+    <script>
+      /**
+       * Prism: Lightweight, robust, elegant syntax highlighting
+       * MIT license http://www.opensource.org/licenses/mit-license.php/
+       * @author Lea Verou http://lea.verou.me
+       */(function(){var e=/\blang(?:uage)?-(?!\*)(\w+)\b/i,t=self.Prism={util:{type:function(e){return Object.prototype.toString.call(e).match(/\[object (\w+)\]/)[1]},clone:function(e){var n=t.util.type(e);switch(n){case"Object":var r={};for(var i in e)e.hasOwnProperty(i)&&(r[i]=t.util.clone(e[i]));return r;case"Array":return e.slice()}return e}},languages:{extend:function(e,n){var r=t.util.clone(t.languages[e]);for(var i in n)r[i]=n[i];return r},insertBefore:function(e,n,r,i){i=i||t.languages;var s=i[e],o={};for(var u in s)if(s.hasOwnProperty(u)){if(u==n)for(var a in r)r.hasOwnProperty(a)&&(o[a]=r[a]);o[u]=s[u]}return i[e]=o},DFS:function(e,n){for(var r in e){n.call(e,r,e[r]);t.util.type(e)==="Object"&&t.languages.DFS(e[r],n)}}},highlightAll:function(e,n){var r=document.querySelectorAll('code[class*="language-"], [class*="language-"] code, code[class*="lang-"], [class*="lang-"] code');for(var i=0,s;s=r[i++];)t.highlightElement(s,e===!0,n)},highlightElement:function(r,i,s){var o,u,a=r;while(a&&!e.test(a.className))a=a.parentNode;if(a){o=(a.className.match(e)||[,""])[1];u=t.languages[o]}if(!u)return;r.className=r.className.replace(e,"").replace(/\s+/g," ")+" language-"+o;a=r.parentNode;/pre/i.test(a.nodeName)&&(a.className=a.className.replace(e,"").replace(/\s+/g," ")+" language-"+o);var f=r.textContent;if(!f)return;f=f.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/\u00a0/g," ");var l={element:r,language:o,grammar:u,code:f};t.hooks.run("before-highlight",l);if(i&&self.Worker){var c=new Worker(t.filename);c.onmessage=function(e){l.highlightedCode=n.stringify(JSON.parse(e.data));l.element.innerHTML=l.highlightedCode;s&&s.call(l.element);t.hooks.run("after-highlight",l)};c.postMessage(JSON.stringify({language:l.language,code:l.code}))}else{l.highlightedCode=t.highlight(l.code,l.grammar);l.element.innerHTML=l.highlightedCode;s&&s.call(r);t.hooks.run("after-highlight",l)}},highlight:function(e,r){return n.stringify(t.tokenize(e,r))},tokenize:function(e,n){var r=t.Token,i=[e],s=n.rest;if(s){for(var o in s)n[o]=s[o];delete n.rest}e:for(var o in n){if(!n.hasOwnProperty(o)||!n[o])continue;var u=n[o],a=u.inside,f=!!u.lookbehind||0;u=u.pattern||u;for(var l=0;l<i.length;l++){var c=i[l];if(i.length>e.length)break e;if(c instanceof r)continue;u.lastIndex=0;var h=u.exec(c);if(h){f&&(f=h[1].length);var p=h.index-1+f,h=h[0].slice(f),d=h.length,v=p+d,m=c.slice(0,p+1),g=c.slice(v+1),y=[l,1];m&&y.push(m);var b=new r(o,a?t.tokenize(h,a):h);y.push(b);g&&y.push(g);Array.prototype.splice.apply(i,y)}}}return i},hooks:{all:{},add:function(e,n){var r=t.hooks.all;r[e]=r[e]||[];r[e].push(n)},run:function(e,n){var r=t.hooks.all[e];if(!r||!r.length)return;for(var i=0,s;s=r[i++];)s(n)}}},n=t.Token=function(e,t){this.type=e;this.content=t};n.stringify=function(e){if(typeof e=="string")return e;if(Object.prototype.toString.call(e)=="[object Array]"){for(var r=0;r<e.length;r++)e[r]=n.stringify(e[r]);return e.join("")}var i={type:e.type,content:n.stringify(e.content),tag:"span",classes:["token",e.type],attributes:{}};i.type=="comment"&&(i.attributes.spellcheck="true");t.hooks.run("wrap",i);var s="";for(var o in i.attributes)s+=o+'="'+(i.attributes[o]||"")+'"';return"<"+i.tag+' class="'+i.classes.join(" ")+'" '+s+">"+i.content+"</"+i.tag+">"};if(!self.document){self.addEventListener("message",function(e){var n=JSON.parse(e.data),r=n.language,i=n.code;self.postMessage(JSON.stringify(t.tokenize(i,t.languages[r])));self.close()},!1);return}var r=document.getElementsByTagName("script");r=r[r.length-1];if(r){t.filename=r.src;document.addEventListener&&!r.hasAttribute("data-manual")&&document.addEventListener("DOMContentLoaded",t.highlightAll)}})();;
+      Prism.languages.markup={comment:/&lt;!--[\w\W]*?--(&gt;|&gt;)/g,prolog:/&lt;\?.+?\?&gt;/,doctype:/&lt;!DOCTYPE.+?&gt;/,cdata:/&lt;!\[CDATA\[[\w\W]+?]]&gt;/i,tag:{pattern:/&lt;\/?[\w:-]+\s*(?:\s+[\w:-]+(?:=(?:("|')(\\?[\w\W])*?\1|\w+))?\s*)*\/?&gt;/gi,inside:{tag:{pattern:/^&lt;\/?[\w:-]+/i,inside:{punctuation:/^&lt;\/?/,namespace:/^[\w-]+?:/}},"attr-value":{pattern:/=(?:('|")[\w\W]*?(\1)|[^\s>]+)/gi,inside:{punctuation:/=|&gt;|"/g}},punctuation:/\/?&gt;/g,"attr-name":{pattern:/[\w:-]+/g,inside:{namespace:/^[\w-]+?:/}}}},entity:/&amp;#?[\da-z]{1,8};/gi};Prism.hooks.add("wrap",function(e){e.type==="entity"&&(e.attributes.title=e.content.replace(/&amp;/,"&"))});;
+      Prism.languages.css={comment:/\/\*[\w\W]*?\*\//g,atrule:/@[\w-]+?(\s+[^;{]+)?(?=\s*{|\s*;)/gi,url:/url\((["']?).*?\1\)/gi,selector:/[^\{\}\s][^\{\}]*(?=\s*\{)/g,property:/(\b|\B)[a-z-]+(?=\s*:)/ig,string:/("|')(\\?.)*?\1/g,important:/\B!important\b/gi,ignore:/&(lt|gt|amp);/gi,punctuation:/[\{\};:]/g};Prism.languages.markup&&Prism.languages.insertBefore("markup","tag",{style:{pattern:/(&lt;|<)style[\w\W]*?(>|&gt;)[\w\W]*?(&lt;|<)\/style(>|&gt;)/ig,inside:{tag:{pattern:/(&lt;|<)style[\w\W]*?(>|&gt;)|(&lt;|<)\/style(>|&gt;)/ig,inside:Prism.languages.markup.tag.inside},rest:Prism.languages.css}}});;
+      Prism.languages.clike={comment:{pattern:/(^|[^\\])(\/\*[\w\W]*?\*\/|\/\/.*?(\r?\n|$))/g,lookbehind:!0},string:/("|')(\\?.)*?\1/g,keyword:/\b(if|else|while|do|for|return|in|instanceof|function|new|try|catch|finally|null|break|continue)\b/g,"boolean":/\b(true|false)\b/g,number:/\b-?(0x)?\d*\.?[\da-f]+\b/g,operator:/[-+]{1,2}|!|=?&lt;|=?&gt;|={1,2}|(&amp;){1,2}|\|?\||\?|\*|\//g,ignore:/&(lt|gt|amp);/gi,punctuation:/[{}[\];(),.:]/g};;
+      Prism.languages.javascript=Prism.languages.extend("clike",{keyword:/\b(var|let|if|else|while|do|for|return|in|instanceof|function|new|with|typeof|try|catch|finally|null|break|continue)\b/g,number:/\b(-?(0x)?\d*\.?[\da-f]+|NaN|-?Infinity)\b/g});Prism.languages.insertBefore("javascript","keyword",{regex:{pattern:/(^|[^/])\/(?!\/)(\[.+?]|\\.|[^/\r\n])+\/[gim]{0,3}(?=\s*($|[\r\n,.;})]))/g,lookbehind:!0}});Prism.languages.markup&&Prism.languages.insertBefore("markup","tag",{script:{pattern:/(&lt;|<)script[\w\W]*?(>|&gt;)[\w\W]*?(&lt;|<)\/script(>|&gt;)/ig,inside:{tag:{pattern:/(&lt;|<)script[\w\W]*?(>|&gt;)|(&lt;|<)\/script(>|&gt;)/ig,inside:Prism.languages.markup.tag.inside},rest:Prism.languages.javascript}}});;
+      
+    </script>
+    <!-- App js-->
+    <script>
+      $(function(){
+        var $window = $(window);
+        $('.scrollspy .nav').affix({
+          offset: {
+            top: function () { return $window.width() <= 980 ? 480 : 400 }
+          , bottom: 50
+          }
+        });
+      })
+    </script>
+  </body>
+</html>
