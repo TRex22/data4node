@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width" charset="utf-8">
+    <title>data4node</title>
+    <link rel="stylesheet" href="http://getbootstrap.com/2.3.2/assets/css/bootstrap.css">
+    <link rel="stylesheet" href="http://getbootstrap.com/2.3.2/assets/css/bootstrap-responsive.css">
+    <link rel="stylesheet" href="http://getbootstrap.com/2.3.2/assets/css/docs.css">
+    <style>
+      body > .navbar .brand {
+        float:left;
+        text-shadow: rgba(255, 255, 255, 0.0980392) 0px 1px 0px, rgba(255, 255, 255, 0.4) 0px 0px 30px;
+        color: white;
+        margin-left:0px;
+        font-weight:normal;
+      }
+      
+      .bs-docs-sidenav.affix {
+        box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.5);
+        z-index: 10;
+      }
+      
+      .bs-docs-sidenav i{
+        width: 8px;
+        height: 8px;
+        padding: 0px;
+        margin: 0px;
+        display: inline-block;
+        margin-right:0.5em;
+      }
+      
+      .bs-docs-sidenav > li > a {
+          word-wrap: break-word;
+      }
+      
+      .bs-docs-sidenav > li:first-child > a {
+        border-top-right-radius: 6px;
+        border-top-left-radius: 6px;
+      }
+      
+      code[class*="language-"],pre[class*="language-"]{color:black;text-shadow:0 1px white;font-family:Consolas,Monaco,'Andale Mono',monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none}pre[class*="language-"]{padding:1em;margin:.5em 0;overflow:auto}:not(pre)>code[class*="language-"],pre[class*="language-"]{background:#f5f2f0}:not(pre)>code[class*="language-"]{padding:.1em;border-radius:.3em}.token.comment,.token.prolog,.token.doctype,.token.cdata{color:slategray}.token.punctuation{color:#999}.namespace{opacity:.7}.token.property,.token.tag,.token.boolean,.token.number{color:#905}.token.selector,.token.attr-name,.token.string{color:#690}.token.operator,.token.entity,.token.url,.language-css .token.string,.style .token.string{color:#a67f59;background:hsla(0,0%,100%,.5)}.token.atrule,.token.attr-value,.token.keyword{color:#07a}.token.regex,.token.important{color:#e90}.token.important{font-weight:bold}.token.entity{cursor:help}
+      div.description {margin: 14px 0; padding-top: 14px; border-bottom:1px solid #eee; }
+      .tags {}
+      .ctx-type {
+        display:inline-block;
+        margin-right:0.5em;
+        //- float:right; margin-top:8px
+      }
+      
+      footer iframe{vertical-align:middle;}
+      
+    </style>
+  </head>
+  <body data-spy="scroll" data-target=".scrollspy">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container"><a class="brand">Doxx</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav pull-right sponsored"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <header id="overview" class="jumbotron subhead">
+      <div class="container">
+        <h1>data4node</h1>
+        <p class="lead"></p>
+      </div>
+    </header>
+    <div class="container">
+      <div class="row">
+        <div class="span3 bs-docs-sidebar">
+          <ul class="nav nav-list bs-docs-sidenav affix-top">
+            <li><a href="../index.html">Main</a></li>
+            <li><a href="../data4node.js.html">data4node.js</a></li>
+            <li><a href="../excel_export\excelData.js.html">excel_export\excelData.js</a></li>
+            <li><a href="../excel_export\excel_export.js.html">excel_export\excel_export.js</a></li>
+            <li class="active"><a href="../excel_export\stylizer.js.html">excel_export\stylizer.js</a></li>
+            <li><a href="../excel_export\typeCast.js.html">excel_export\typeCast.js</a></li>
+            <li><a href="../helpers.js.html">helpers.js</a></li>
+            <li><a href="../mrData\mrData.js.html">mrData\mrData.js</a></li>
+            <li><a href="../parser\babelFish.js.html">parser\babelFish.js</a></li>
+            <li><a href="../parser\csv.js.html">parser\csv.js</a></li>
+            <li><a href="../parser\jsonParser.js.html">parser\jsonParser.js</a></li>
+            <li><a href="../parser\scsv.js.html">parser\scsv.js</a></li>
+          </ul>
+          <div class="scrollspy">
+            <ul class="nav nav-list bs-docs-sidenav affix-top">
+              <li><a href="#util"><i class="alert alert-success"></i><span>util</span></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="span9">
+          <section id="util">
+            <h1>util</h1>
+            <h5 class="subheader"></h5>
+            <p>
+              <div class="label label-success radius ctx-type">declaration</div><span>util</span>
+            </p>
+          </section>
+          <div class="description"><p>By Jason Chalom 2014, Entelect Software<br />Under the MIT License</p><p>This handles the styling</p> </div>
+          <pre><code class="language-javascript">var util = require('util');
+var helper = require('../helpers.js');
+var typeCast = require('./typeCast.js');
+
+var exposed = {
+  shazam: shazam
+};
+module.exports = exposed;
+
+if (process.env.NODE_ENV === 'test') {
+  module.exports._private = {
+    getCustomStyles: getCustomStyles,
+    setCustStyles: setCustStyles,
+    setBatchHeadingStyles: setBatchHeadingStyles,
+    setBatchDataStyles: setBatchDataStyles,
+    setColProperties: setColProperties,
+    setCellStyle: setCellStyle,
+    setCustCellStyles: setCustCellStyles,
+    setColWidth: setColWidth,
+    setRowHeight: setRowHeight
+  };
+}
+
+function shazam(reports, styleObj, wb, worksheets, cells) {
+  //if no type is specified assume string
+  //TODO update when excel4node has more type capabilities
+
+  var custStyles = getCustomStyles(styleObj, wb);
+  setCustStyles(worksheets, reports, styleObj, custStyles, cells);
+
+  setColWidth(worksheets, styleObj);
+  setRowHeight(worksheets, styleObj);
+
+  helper.log(&quot;------------Stylizer Complete------------&quot;);
+}
+
+function createTable(reports, styleObj, wb, worksheets, cells){
+  var custStyles = getCustomStyles(styleObj, wb);
+  setCustStyles(worksheets, reports, styleObj, custStyles, cells);
+
+  setColWidth(worksheets, styleObj);
+  setRowHeight(worksheets, styleObj);
+
+  helper.log(&quot;------------Stylizer Complete------------&quot;);
+}
+
+function getCustomStyles(styleObj, wb) {
+  helper.log(&quot;------------Custom Styles------------&quot;);
+  var styles = [];
+  //debugg(styleObj);
+  for (var i = 0; i &lt; styleObj.data.custStyles.length; i++) {
+    helper.log(&quot;Create Style Count: &quot; + i);
+
+    var style = {};
+    style.name = styleObj.data.custStyles[i].name;
+    style.data = wb.Style();
+    helper.log(&quot;----------------- &quot; + &quot;Style: &quot; + style.name);
+    var styleProp = styleObj.data.custStyles[i].data;
+
+    if (styleProp.fontBold)
+      style.data.Font.Bold();
+
+    if (styleProp.fontItalics)
+      style.data.Font.Italics();
+
+    if (styleProp.fontUnderline)
+      style.data.Font.Underline();
+
+    style.data.Font.Family(styleProp.fontFamily);
+    style.data.Font.Color(styleProp.fontColor);
+    style.data.Font.Size(styleProp.fontSize);
+    style.data.Fill.Pattern(styleProp.fillPattern);
+    style.data.Fill.Color(styleProp.fillColor);
+    style.data.Font.Alignment.Vertical(styleProp.alignmentVertical);
+    style.data.Font.Alignment.Horizontal(styleProp.alignmentHorizontal);
+    style.data.Font.WrapText(styleProp.wrapText);
+    if (styleProp.border) {
+      style.data.Border({
+        top: {
+          style: styleProp.border.top.style,
+          color: styleProp.border.top.color
+        },
+        bottom: {
+          style: styleProp.border.bottom.style,
+          color: styleProp.border.bottom.color
+        },
+        left: {
+          style: styleProp.border.left.style,
+          color: styleProp.border.left.color
+        },
+        right: {
+          style: styleProp.border.right.style,
+          color: styleProp.border.right.color
+        }
+      });
+    }
+
+    styles.push(style);
+  }
+  helper.log(&quot;------------Custom Styles Objects Created------------&quot;);
+  helper.log(&quot;Styles OBJ: &quot; + styles);
+  //debugg(styles);
+  return styles;
+}
+
+function setCustStyles(worksheets, reports, styleObj, custStyles, cells) {
+  //set batch cells first and then follow individual cell mods
+  helper.log(&quot;------------Starting Batch Styling------------&quot;);
+  setBatchHeadingStyles(worksheets, styleObj, custStyles, cells);
+  setBatchDataStyles(worksheets, styleObj, custStyles, cells);
+  setColProperties(worksheets, reports, styleObj, custStyles, cells);
+  helper.log(&quot;------------Batch Styling Done----------------&quot;);
+  setCustCellStyles(worksheets, styleObj, custStyles, cells);
+  helper.log(&quot;------------Custom Styles Objects Set------------&quot;);
+}
+
+function setBatchHeadingStyles(worksheets, styleObj, custStyles, cells) {
+  if (cells.heading.length !== 0 &amp;&amp; styleObj.data.headingStyles) {
+    for (var i = 0; i &lt; cells.heading.length; i++) {
+      var ws = cells.heading[i].ws;
+
+      if (styleObj.data.headingStyles[ws]) {
+        var worksheet = worksheets[ws];
+        var col = cells.heading[i].col;
+        var row = cells.heading[i].row;
+        var style = styleObj.data.headingStyles[ws].style; //refers to style arr index
+
+        helper.log(&quot;Style: &quot; + style);
+        if (style) {
+          var custStyle = helper.findArrObjFromName(custStyles, style);
+          helper.log(&quot;custStyle OBJ: &quot; + custStyle);
+          if (custStyle) {
+            helper.log(&quot;custStyle: &quot; + custStyle.data +
+              &quot; custStyle name: &quot; + custStyle.name);
+            helper.log(&quot;worksheet: &quot; + worksheets[ws]);
+            setCellStyle(worksheet, col, row, custStyle);
+          } else {
+            helper.log(&quot;No style named: &quot; + style + &quot; found&quot;);
+          }
+        }
+        if (styleObj.data.headingStyles[ws].freezeHeadingsRow) {
+          worksheet.Row(2).Freeze(2);
+        }
+      }
+    }
+    helper.log(&quot;------------Batch Headings Styles Set------------&quot;);
+  }
+}
+
+function setBatchDataStyles(worksheets, styleObj, custStyles, cells) {
+  if (cells.data.length !== 0 &amp;&amp; styleObj.data.dataStyles) { //TODO JMC check if needed, empty data still has meta-data
+    for (var i = 0; i &lt; cells.data.length; i++) {
+      var ws = cells.data[i].ws;
+
+      if (styleObj.data.headingStyles[ws]) {
+        var worksheet = worksheets[ws];
+        var col = cells.data[i].col;
+        var row = cells.data[i].row;
+        var style = styleObj.data.dataStyles[ws].style; //refers to style arr index
+        var type = styleObj.data.dataStyles[ws].type;
+        var numberFormat = styleObj.data.dataStyles[ws].numberFormat;
+
+        helper.log(&quot;Style: &quot; + style);
+        if (style) {
+          var custStyle = helper.findArrObjFromName(custStyles, style);
+          helper.log(&quot;custStyle OBJ: &quot; + custStyle);
+          if (custStyle) {
+            helper.log(&quot;custStyle: &quot; + custStyle.data +
+              &quot; custStyle name: &quot; + custStyle.name);
+            helper.log(&quot;worksheet: &quot; + worksheets[ws]);
+            setCellStyle(worksheet, col, row, custStyle);
+          } else {
+            helper.log(&quot;No style named: &quot; + style + &quot; found&quot;);
+          }
+        }
+        if (type)
+          typeCast.convert(type, col, row, ws, worksheets, numberFormat,
+            cells);
+      }
+    }
+    helper.log(&quot;------------Batch Data Styles Set------------&quot;);
+  }
+}
+
+function setColProperties(worksheets, reports, styleObj, custStyles, cells) {
+  //check if there are specific col settings
+  if (styleObj.data.colStyles) {
+    for (var i = 0; i &lt; styleObj.data.colStyles.length; i++) {
+      var ws = styleObj.data.colStyles[i].ws;
+      var worksheet = worksheets[ws];
+
+      var col = styleObj.data.colStyles[i].col;
+      var style = styleObj.data.colStyles[i].style;
+      var type = styleObj.data.colStyles[i].type;
+      var numberFormat = styleObj.data.colStyles[i].numberFormat;
+      var freezeCol = styleObj.data.colStyles[i].freezeCol;
+      var enforceHeadingStyle = styleObj.data.colStyles[i].enforceHeadingStyle;
+
+      if (style) {
+        var custStyle = helper.findArrObjFromName(custStyles, style);
+        if (custStyle) {
+          //loop the row for number of data points that way keep things from crashing
+          for (var j = 0; j &lt; reports[ws].data.length; j++) { //TODO FIX ws wrong
+            var row = (j + 1);
+            if (enforceHeadingStyle)
+              row++;
+            setCellStyle(worksheet, col, row, custStyle); //hack to count last row
+          }
+        } else {
+          helper.log(&quot;No style named: &quot; + style + &quot; found&quot;);
+        }
+      }
+      if (type) {
+        for (var j = 0; j &lt; reports[ws].data.length; j++) {
+          var row = (j + 2);
+          typeCast.convert(type, col, row, ws, worksheets, numberFormat,
+            cells);
+        }
+      }
+    }
+    helper.log(&quot;------------Batch Col Styles Set------------&quot;);
+  }
+}
+
+function setCellStyle(worksheet, col, row, custStyle) {
+  worksheet.Cell(row, col).Style(custStyle.data);
+}
+
+function setCustCellStyles(worksheets, styleObj, custStyles, cells) {
+  for (var i = 0; i &lt; styleObj.data.cells.length; i++) {
+    if (styleObj.data.cells[i].ws &lt; worksheets.length) {
+      var ws = styleObj.data.cells[i].ws;
+      var worksheet = worksheets[ws];
+
+      var col = styleObj.data.cells[i].col;
+      var row = styleObj.data.cells[i].row;
+      var style = styleObj.data.cells[i].style; //refers to style arr index
+      var type = styleObj.data.cells[i].type;
+      var numberFormat = styleObj.data.cells[i].numberFormat;
+
+      helper.log(&quot;Styles OBJ: &quot; + custStyles);
+      if (style) {
+        var custStyle = helper.findArrObjFromName(custStyles, style);
+        if (custStyle) {
+          helper.log(&quot;custStyle: &quot; + custStyle.data +
+            &quot; custStyle name: &quot; + custStyle.name);
+          helper.log(&quot;worksheet: &quot; + worksheets[ws]);
+          setCellStyle(worksheet, col, row, custStyle);
+        } else {
+          helper.log(&quot;No style named: &quot; + style + &quot; found&quot;);
+        }
+      }
+      if (type) {
+        typeCast.convert(type, col, row, ws, worksheets, numberFormat, cells);
+      }
+    } else {
+      helper.log(&quot;No worksheet of that number: &quot; + styleObj.data.cells[i].ws);
+    }
+  }
+}
+
+function setColWidth(worksheets, styleObj) {
+  for (var i = 0; i &lt; styleObj.data.columnWidth.length; i++) {
+    helper.log(&quot;setting col width&quot;);
+    var p = styleObj.data.columnWidth[i];
+    var prop;
+    var k = 0;
+    for (prop in p) {
+      helper.log(&quot;col: &quot; + prop + &quot; : &quot; + p[prop]);
+      worksheets[i].Column(prop).Width(p[prop]);
+    }
+  }
+}
+
+function setRowHeight(worksheets, styleObj) {
+  for (var i = 0; i &lt; styleObj.data.rowHeight.length; i++) {
+    helper.log(&quot;setting row height&quot;);
+    var p = styleObj.data.rowHeight[i];
+    var prop;
+    var k = 0;
+    for (prop in p) {
+      helper.log(&quot;row &quot; + prop + &quot; : &quot; + p[prop]);
+      worksheets[i].Row(prop).Height(p[prop]);
+    }
+  }
+}</code></pre>
+        </div>
+      </div>
+    </div>
+    <footer class="footer">
+      <div class="container">
+        <p>Documentation generated with <a href="https://github.com/FGRibreau/doxx">Doxx </a> created by <a href="https://twitter.com/FGRibreau" data-show-count="false" class="twitter-follow-button">Francois-Guillaume Ribreau </a></p>
+        <p>Doxx is sponsored by <a href="http://bringr.net/?btt" title="Outil d'analyse des réseaux sociaux" class="bringr">Bringr </a> and <a href="https://redsmin.com/?btt" title="Full Redis GUI" class="redsmin">Redsmin</a></p>
+        <p>Theme borrowed from Twitter Bootstrap</p>
+      </div>
+    </footer>
+    <script src="http://platform.twitter.com/widgets.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+    <script src="http://leaverou.github.com/prefixfree/prefixfree.js"></script>
+    <script src="http://getbootstrap.com/2.3.2/assets/js/bootstrap-transition.js"></script>
+    <script src="http://getbootstrap.com/2.3.2/assets/js/bootstrap-scrollspy.js"></script>
+    <script src="http://getbootstrap.com/2.3.2/assets/js/bootstrap-dropdown.js"></script>
+    <script src="http://getbootstrap.com/2.3.2/assets/js/bootstrap-collapse.js"></script>
+    <script src="http://getbootstrap.com/2.3.2/assets/js/bootstrap-affix.js"></script>
+    <script>
+      /**
+       * Prism: Lightweight, robust, elegant syntax highlighting
+       * MIT license http://www.opensource.org/licenses/mit-license.php/
+       * @author Lea Verou http://lea.verou.me
+       */(function(){var e=/\blang(?:uage)?-(?!\*)(\w+)\b/i,t=self.Prism={util:{type:function(e){return Object.prototype.toString.call(e).match(/\[object (\w+)\]/)[1]},clone:function(e){var n=t.util.type(e);switch(n){case"Object":var r={};for(var i in e)e.hasOwnProperty(i)&&(r[i]=t.util.clone(e[i]));return r;case"Array":return e.slice()}return e}},languages:{extend:function(e,n){var r=t.util.clone(t.languages[e]);for(var i in n)r[i]=n[i];return r},insertBefore:function(e,n,r,i){i=i||t.languages;var s=i[e],o={};for(var u in s)if(s.hasOwnProperty(u)){if(u==n)for(var a in r)r.hasOwnProperty(a)&&(o[a]=r[a]);o[u]=s[u]}return i[e]=o},DFS:function(e,n){for(var r in e){n.call(e,r,e[r]);t.util.type(e)==="Object"&&t.languages.DFS(e[r],n)}}},highlightAll:function(e,n){var r=document.querySelectorAll('code[class*="language-"], [class*="language-"] code, code[class*="lang-"], [class*="lang-"] code');for(var i=0,s;s=r[i++];)t.highlightElement(s,e===!0,n)},highlightElement:function(r,i,s){var o,u,a=r;while(a&&!e.test(a.className))a=a.parentNode;if(a){o=(a.className.match(e)||[,""])[1];u=t.languages[o]}if(!u)return;r.className=r.className.replace(e,"").replace(/\s+/g," ")+" language-"+o;a=r.parentNode;/pre/i.test(a.nodeName)&&(a.className=a.className.replace(e,"").replace(/\s+/g," ")+" language-"+o);var f=r.textContent;if(!f)return;f=f.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/\u00a0/g," ");var l={element:r,language:o,grammar:u,code:f};t.hooks.run("before-highlight",l);if(i&&self.Worker){var c=new Worker(t.filename);c.onmessage=function(e){l.highlightedCode=n.stringify(JSON.parse(e.data));l.element.innerHTML=l.highlightedCode;s&&s.call(l.element);t.hooks.run("after-highlight",l)};c.postMessage(JSON.stringify({language:l.language,code:l.code}))}else{l.highlightedCode=t.highlight(l.code,l.grammar);l.element.innerHTML=l.highlightedCode;s&&s.call(r);t.hooks.run("after-highlight",l)}},highlight:function(e,r){return n.stringify(t.tokenize(e,r))},tokenize:function(e,n){var r=t.Token,i=[e],s=n.rest;if(s){for(var o in s)n[o]=s[o];delete n.rest}e:for(var o in n){if(!n.hasOwnProperty(o)||!n[o])continue;var u=n[o],a=u.inside,f=!!u.lookbehind||0;u=u.pattern||u;for(var l=0;l<i.length;l++){var c=i[l];if(i.length>e.length)break e;if(c instanceof r)continue;u.lastIndex=0;var h=u.exec(c);if(h){f&&(f=h[1].length);var p=h.index-1+f,h=h[0].slice(f),d=h.length,v=p+d,m=c.slice(0,p+1),g=c.slice(v+1),y=[l,1];m&&y.push(m);var b=new r(o,a?t.tokenize(h,a):h);y.push(b);g&&y.push(g);Array.prototype.splice.apply(i,y)}}}return i},hooks:{all:{},add:function(e,n){var r=t.hooks.all;r[e]=r[e]||[];r[e].push(n)},run:function(e,n){var r=t.hooks.all[e];if(!r||!r.length)return;for(var i=0,s;s=r[i++];)s(n)}}},n=t.Token=function(e,t){this.type=e;this.content=t};n.stringify=function(e){if(typeof e=="string")return e;if(Object.prototype.toString.call(e)=="[object Array]"){for(var r=0;r<e.length;r++)e[r]=n.stringify(e[r]);return e.join("")}var i={type:e.type,content:n.stringify(e.content),tag:"span",classes:["token",e.type],attributes:{}};i.type=="comment"&&(i.attributes.spellcheck="true");t.hooks.run("wrap",i);var s="";for(var o in i.attributes)s+=o+'="'+(i.attributes[o]||"")+'"';return"<"+i.tag+' class="'+i.classes.join(" ")+'" '+s+">"+i.content+"</"+i.tag+">"};if(!self.document){self.addEventListener("message",function(e){var n=JSON.parse(e.data),r=n.language,i=n.code;self.postMessage(JSON.stringify(t.tokenize(i,t.languages[r])));self.close()},!1);return}var r=document.getElementsByTagName("script");r=r[r.length-1];if(r){t.filename=r.src;document.addEventListener&&!r.hasAttribute("data-manual")&&document.addEventListener("DOMContentLoaded",t.highlightAll)}})();;
+      Prism.languages.markup={comment:/&lt;!--[\w\W]*?--(&gt;|&gt;)/g,prolog:/&lt;\?.+?\?&gt;/,doctype:/&lt;!DOCTYPE.+?&gt;/,cdata:/&lt;!\[CDATA\[[\w\W]+?]]&gt;/i,tag:{pattern:/&lt;\/?[\w:-]+\s*(?:\s+[\w:-]+(?:=(?:("|')(\\?[\w\W])*?\1|\w+))?\s*)*\/?&gt;/gi,inside:{tag:{pattern:/^&lt;\/?[\w:-]+/i,inside:{punctuation:/^&lt;\/?/,namespace:/^[\w-]+?:/}},"attr-value":{pattern:/=(?:('|")[\w\W]*?(\1)|[^\s>]+)/gi,inside:{punctuation:/=|&gt;|"/g}},punctuation:/\/?&gt;/g,"attr-name":{pattern:/[\w:-]+/g,inside:{namespace:/^[\w-]+?:/}}}},entity:/&amp;#?[\da-z]{1,8};/gi};Prism.hooks.add("wrap",function(e){e.type==="entity"&&(e.attributes.title=e.content.replace(/&amp;/,"&"))});;
+      Prism.languages.css={comment:/\/\*[\w\W]*?\*\//g,atrule:/@[\w-]+?(\s+[^;{]+)?(?=\s*{|\s*;)/gi,url:/url\((["']?).*?\1\)/gi,selector:/[^\{\}\s][^\{\}]*(?=\s*\{)/g,property:/(\b|\B)[a-z-]+(?=\s*:)/ig,string:/("|')(\\?.)*?\1/g,important:/\B!important\b/gi,ignore:/&(lt|gt|amp);/gi,punctuation:/[\{\};:]/g};Prism.languages.markup&&Prism.languages.insertBefore("markup","tag",{style:{pattern:/(&lt;|<)style[\w\W]*?(>|&gt;)[\w\W]*?(&lt;|<)\/style(>|&gt;)/ig,inside:{tag:{pattern:/(&lt;|<)style[\w\W]*?(>|&gt;)|(&lt;|<)\/style(>|&gt;)/ig,inside:Prism.languages.markup.tag.inside},rest:Prism.languages.css}}});;
+      Prism.languages.clike={comment:{pattern:/(^|[^\\])(\/\*[\w\W]*?\*\/|\/\/.*?(\r?\n|$))/g,lookbehind:!0},string:/("|')(\\?.)*?\1/g,keyword:/\b(if|else|while|do|for|return|in|instanceof|function|new|try|catch|finally|null|break|continue)\b/g,"boolean":/\b(true|false)\b/g,number:/\b-?(0x)?\d*\.?[\da-f]+\b/g,operator:/[-+]{1,2}|!|=?&lt;|=?&gt;|={1,2}|(&amp;){1,2}|\|?\||\?|\*|\//g,ignore:/&(lt|gt|amp);/gi,punctuation:/[{}[\];(),.:]/g};;
+      Prism.languages.javascript=Prism.languages.extend("clike",{keyword:/\b(var|let|if|else|while|do|for|return|in|instanceof|function|new|with|typeof|try|catch|finally|null|break|continue)\b/g,number:/\b(-?(0x)?\d*\.?[\da-f]+|NaN|-?Infinity)\b/g});Prism.languages.insertBefore("javascript","keyword",{regex:{pattern:/(^|[^/])\/(?!\/)(\[.+?]|\\.|[^/\r\n])+\/[gim]{0,3}(?=\s*($|[\r\n,.;})]))/g,lookbehind:!0}});Prism.languages.markup&&Prism.languages.insertBefore("markup","tag",{script:{pattern:/(&lt;|<)script[\w\W]*?(>|&gt;)[\w\W]*?(&lt;|<)\/script(>|&gt;)/ig,inside:{tag:{pattern:/(&lt;|<)script[\w\W]*?(>|&gt;)|(&lt;|<)\/script(>|&gt;)/ig,inside:Prism.languages.markup.tag.inside},rest:Prism.languages.javascript}}});;
+      
+    </script>
+    <!-- App js-->
+    <script>
+      $(function(){
+        var $window = $(window);
+        $('.scrollspy .nav').affix({
+          offset: {
+            top: function () { return $window.width() <= 980 ? 480 : 400 }
+          , bottom: 50
+          }
+        });
+      })
+    </script>
+  </body>
+</html>

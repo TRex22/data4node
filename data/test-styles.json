@@ -1,0 +1,215 @@
+{
+  "name": "styles",
+  "data": {
+    "headingsText": [{
+      "employeeNumber": "Employee Number",
+      "surname": "Surname",
+      "firstName": "First Name",
+      "totalAchievements": "Total Achievements",
+      "totalKudos": "Total Kudos"
+    }, {
+      "employeeNumber": "Employee Number",
+      "surname": "Surname",
+      "firstName": "First Name",
+      "date": "Date",
+      "quality": "Quality",
+      "kudos": "Kudos",
+      "motivation": "Motivation"
+    }],
+    "columnWidth": [{
+      "1": 30,
+      "2": 20,
+      "3": 20,
+      "4": 20,
+      "5": 20
+    }, {
+      "1": 20,
+      "2": 20,
+      "3": 20,
+      "4": 20,
+      "5": 20
+    }],
+    "rowHeight": [{
+      "1": 38,
+      "2": 21,
+      "3": 21,
+      "4": 21,
+      "5": 21
+    }, {
+      "1": 21,
+      "2": 21,
+      "3": 21,
+      "4": 21,
+      "5": 21
+    }],
+    "custStyles": [{
+      "name": "style1",
+      "data": {
+        "fontBold": true,
+        "fontItalics": false,
+        "fontUnderline": false,
+        "fontFamily": "Britannic Bold",
+        "fontColor": "#34DDDD",
+        "fontSize": 20,
+        "fillPattern": "solid",
+        "fillColor": "#333333",
+        "alignmentVertical": "top",
+        "alignmentHorizontal": "left",
+        "wrapText": true,
+        "border": {
+          "top": {
+            "style": "thin",
+            "color": "CCCCCC"
+          },
+          "bottom": {
+            "style": "thick"
+          },
+          "left": {
+            "style": "thin"
+          },
+          "right": {
+            "style": "thin"
+          }
+        }
+      }
+    }, {
+      "name": "style2",
+      "data": {
+        "fontBold": true,
+        "fontItalics": true,
+        "fontUnderline": true,
+        "fontFamily": "Eras Bold ITC",
+        "fontColor": "#000000",
+        "fontSize": 12,
+        "fillPattern": "solid",
+        "fillColor": "#A2A9AF",
+        "alignmentVertical": "bottom",
+        "alignmentHorizontal": "right",
+        "wrapText": true,
+        "border": {
+          "top": {
+            "style": "thick",
+            "color": "#FFFFFF"
+          },
+          "bottom": {
+            "style": "thick",
+            "color": "#FFFFFF"
+          },
+          "left": {
+            "style": "thick",
+            "color": "#FFFFFF"
+          },
+          "right": {
+            "style": "thick",
+            "color": "#FFFFFF"
+          }
+        }
+      }
+    }, {
+      "name": "style3",
+      "data": {
+        "fontBold": true,
+        "fontItalics": true,
+        "fontUnderline": true,
+        "fontFamily": "Eras Bold ITC",
+        "fontColor": "#98fb98",
+        "fontSize": 12,
+        "fillPattern": "solid",
+        "fillColor": "#132247",
+        "alignmentVertical": "bottom",
+        "alignmentHorizontal": "right",
+        "wrapText": true,
+        "border": {
+          "top": {
+            "style": "thick",
+            "color": "#FFFFFF"
+          },
+          "bottom": {
+            "style": "thick",
+            "color": "#FFFFFF"
+          },
+          "left": {
+            "style": "thick",
+            "color": "#FFFFFF"
+          },
+          "right": {
+            "style": "thick",
+            "color": "#FFFFFF"
+          }
+        }
+      }
+    }, {
+      "name": "style4",
+      "data": {
+        "fontBold": true,
+        "fontItalics": true,
+        "fontUnderline": true,
+        "fontFamily": "Eras Bold ITC",
+        "fontColor": "#98fb98",
+        "fontSize": 12,
+        "fillPattern": "lightUp",
+        "fillColor": "#34DDDD",
+        "alignmentVertical": "bottom",
+        "alignmentHorizontal": "right",
+        "wrapText": true
+      }
+    }],
+    "headingStyles": [{
+      "style": "style1",
+      "freezeHeadingsRow": true,
+      "useStyleHeadingsText": true
+    }],
+    "dataStyles": [{
+      "style": "style2",
+      "type": "String",
+      "numberFormat": ""
+    }],
+    "colStyles": [{
+      "ws": 0,
+      "col": 4,
+      "style": "style3",
+      "type": "Number",
+      "numberFormat": "0.00",
+      "freezeCol": true,
+      "enforceHeadingStyle": true,
+      "useAutoFit": true
+    }, {
+      "ws": 0,
+      "col": 5,
+      "style": "style3",
+      "type": "Number",
+      "numberFormat": "0.00",
+      "freezeCol": false,
+      "enforceHeadingStyle": true,
+      "useAutoFit": true
+    }],
+    "cells": [{
+      "ws": 0,
+      "col": 1,
+      "row": 2,
+      "style": "style2",
+      "type": "String",
+      "numberFormat": ""
+    }, {
+      "ws": 0,
+      "col": 2,
+      "row": 2,
+      "style": "style2",
+      "type": "String",
+      "numberFormat": "$#,##0.00"
+    }, {
+      "ws": 1,
+      "col": 4,
+      "row": 2,
+      "style": "style1",
+      "type": "Number",
+      "numberFormat": "$#,##0.00"
+    }],
+    "img": [{
+      "name": "img1",
+      "path": "/",
+      "row": 20,
+      "col": 20
+    }]
+  }
+}
