@@ -197,8 +197,10 @@ describe('#mrData', function() {
         value: 10
       }]
     };
-
-    excelData._private.getData(ws, [], data, cells, i).should.equal(expectedCells);
+    var dataCells = {};
+    dataCells.heading = [];
+    dataCells.data = data;
+    excelData._private.getData(ws, dataCells,  i).should.equal(expectedCells);
   });
 
   it('getWorksheets should return empty array', function() {
