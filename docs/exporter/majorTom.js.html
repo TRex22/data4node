@@ -73,16 +73,18 @@
           <ul class="nav nav-list bs-docs-sidenav affix-top">
             <li><a href="../index.html">Main</a></li>
             <li><a href="../data4node.js.html">data4node.js</a></li>
-            <li class="active"><a href="../excel_export\excelData.js.html">excel_export\excelData.js</a></li>
-            <li><a href="../excel_export\excel_export.js.html">excel_export\excel_export.js</a></li>
-            <li><a href="../excel_export\stylizer.js.html">excel_export\stylizer.js</a></li>
-            <li><a href="../excel_export\typeCast.js.html">excel_export\typeCast.js</a></li>
+            <li><a href="../exporter\excel_export\excelData.js.html">exporter\excel_export\excelData.js</a></li>
+            <li><a href="../exporter\excel_export\excel_export.js.html">exporter\excel_export\excel_export.js</a></li>
+            <li><a href="../exporter\excel_export\typeCast.js.html">exporter\excel_export\typeCast.js</a></li>
+            <li class="active"><a href="../exporter\majorTom.js.html">exporter\majorTom.js</a></li>
+            <li><a href="../exporter\objToHtmlExport.js.html">exporter\objToHtmlExport.js</a></li>
             <li><a href="../helpers.js.html">helpers.js</a></li>
             <li><a href="../mrData\mrData.js.html">mrData\mrData.js</a></li>
             <li><a href="../parser\babelFish.js.html">parser\babelFish.js</a></li>
             <li><a href="../parser\csv.js.html">parser\csv.js</a></li>
             <li><a href="../parser\jsonParser.js.html">parser\jsonParser.js</a></li>
             <li><a href="../parser\scsv.js.html">parser\scsv.js</a></li>
+            <li><a href="../stylizer\stylizer.js.html">stylizer\stylizer.js</a></li>
           </ul>
           <div class="scrollspy">
             <ul class="nav nav-list bs-docs-sidenav affix-top">
@@ -92,6 +94,7 @@
           </div>
         </div>
         <div class="span9">
+          <div class="description"><p>majorTom is the main hook for the exporter module</p> </div>
           <section id="helper">
             <h1>helper</h1>
             <h5 class="subheader"></h5>
@@ -99,123 +102,19 @@
               <div class="label label-success radius ctx-type">declaration</div><span>helper</span>
             </p>
           </section>
-          <div class="description"><p>By Jason Chalom 2014, Entelect Software<br />  Under the MIT License</p><p>  This handles the ws data input from cells obj</p> </div>
+          <div class="description"><p>By Jason Chalom 2014, Entelect Software<br />Under the MIT License</p> </div>
           <pre><code class="language-javascript">var helper = require('../helpers.js');
+var objToHtmlExport = require('./objToHtmlExport.js');
 
 var exposed = {
-  getWorksheets: getWorksheets
+  objToHtmlExport : objToHtmlExport
 };
 module.exports = exposed;
 
 if (process.env.NODE_ENV === 'test') {
   module.exports._private = {
-    getHeadings: getHeadings,
-    getData: getData
+
   };
-}
-
-function getWorksheets(wb, dataCells) {
-  //check if null
-  var worksheets = [];
-  if (!reports)
-    return worksheets; //TODO JMC Error reporting
-
-  for (var i = 0; i &lt; dataCells.data.length; i++) {
-    var ws = wb.WorkSheet(dataCells.data[i].name);
-    helper.log(dataCells.data[i].name);
-
-    getHeadings(ws, cells, i);
-    var data = getData(ws, cells, i);
-
-    worksheets.push(ws);
-  }
-  return worksheets;
-}
-
-function getHeadings(ws, dataCells, i) {
-  var useStyleHeadingsText = false;
-  var p;
-
-  if (styleObj.data.headingStyles[i]) {
-    useStyleHeadingsText = styleObj.data.headingStyles[i].useStyleHeadingsText;
-    p = styleObj.data.headingsText[i];
-  }
-
-  var prop;
-  var k = 0;
-
-  //do headings override from styles json
-  if (!p || useStyleHeadingsText === false) {
-    //take heading names from reports property names
-    p = reports[i].data[0]; //only need the first data point
-    for (prop in p) {
-      var col;
-      if (i === 0) { //j+2 to leave space for headings
-        col = i + k + 1;
-      } else {
-        col = i + k;
-      }
-      ws.Cell(1, col).String(&quot;&quot; + prop); //fix for r c going from 1,1
-      cells.heading.push({
-        &quot;ws&quot;: i,
-        &quot;col&quot;: col,
-        &quot;row&quot;: 1,
-        &quot;value&quot;: prop
-      });
-      k++;
-    }
-  } else {
-    for (prop in p) {
-      helper.log(prop + &quot; : &quot; + p[prop]);
-      var col;
-      if (i === 0) { //j+2 to leave space for headings
-        col = i + k + 1;
-      } else {
-        col = i + k;
-      }
-      ws.Cell(1, col).String(&quot;&quot; + p[prop]); //fix for r c going from 1,1
-      cells.heading.push({
-        &quot;ws&quot;: i,
-        &quot;col&quot;: col,
-        &quot;row&quot;: 1,
-        &quot;value&quot;: p[prop]
-      });
-      k++;
-    }
-  }
-}
-
-function getData(ws, dataCells, i) {
-  if (reports[i].data.length &gt; 0) {
-    //insert data will be string for now. The typecasting will happen in styling
-    for (var j = 0; j &lt; dataCells.data[i].length; j++) {
-      
-
-      var p = reports[i].data[j];
-      var prop; //property in p
-      var k = 0;
-      for (prop in p) {
-        helper.log(prop + &quot; : &quot; + p[prop]);
-        var row = j + 2;
-        var col;
-        if (i === 0) { //j+2 to leave space for headings
-          col = i + k + 1;
-        } else {
-          col = i + k;
-        }
-        ws.Cell(row, col).String(dataCells.data[i].value);
-        cells.data.push({
-          &quot;ws&quot;: i,
-          &quot;col&quot;: col,
-          &quot;row&quot;: row,
-          &quot;value&quot;: p[prop]
-        });
-        k++;
-      }
-    }
-  }
-  else
-    ws.Cell(2, 1).String(&quot;no data.&quot;);
 }</code></pre>
         </div>
       </div>

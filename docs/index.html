@@ -73,16 +73,18 @@
           <ul class="nav nav-list bs-docs-sidenav affix-top">
             <li class="active"><a href="index.html">Main</a></li>
             <li><a href="data4node.js.html">data4node.js</a></li>
-            <li><a href="excel_export\excelData.js.html">excel_export\excelData.js</a></li>
-            <li><a href="excel_export\excel_export.js.html">excel_export\excel_export.js</a></li>
-            <li><a href="excel_export\stylizer.js.html">excel_export\stylizer.js</a></li>
-            <li><a href="excel_export\typeCast.js.html">excel_export\typeCast.js</a></li>
+            <li><a href="exporter\excel_export\excelData.js.html">exporter\excel_export\excelData.js</a></li>
+            <li><a href="exporter\excel_export\excel_export.js.html">exporter\excel_export\excel_export.js</a></li>
+            <li><a href="exporter\excel_export\typeCast.js.html">exporter\excel_export\typeCast.js</a></li>
+            <li><a href="exporter\majorTom.js.html">exporter\majorTom.js</a></li>
+            <li><a href="exporter\objToHtmlExport.js.html">exporter\objToHtmlExport.js</a></li>
             <li><a href="helpers.js.html">helpers.js</a></li>
             <li><a href="mrData\mrData.js.html">mrData\mrData.js</a></li>
             <li><a href="parser\babelFish.js.html">parser\babelFish.js</a></li>
             <li><a href="parser\csv.js.html">parser\csv.js</a></li>
             <li><a href="parser\jsonParser.js.html">parser\jsonParser.js</a></li>
             <li><a href="parser\scsv.js.html">parser\scsv.js</a></li>
+            <li><a href="stylizer\stylizer.js.html">stylizer\stylizer.js</a></li>
           </ul>
           <div class="scrollspy">
             <ul class="nav nav-list bs-docs-sidenav affix-top">
@@ -91,10 +93,10 @@
         </div>
         <div class="span9">
           <section id="Main"><h1>data4node <a href="https://travis-ci.org/TRex22/data4node"><img src="https://travis-ci.org/TRex22/data4node.svg" alt="Build Status"></a> <a href="https://waffle.io/TRex22/data4node"><img src="https://badge.waffle.io/TRex22/data4node.png?label=ready&amp;title=Ready" alt="Stories in Ready"></a></h1>
-<p>TODO are done on Waffle.io: <a href="https://waffle.io/trex22/data4node">https://waffle.io/trex22/data4node</a></p><p>A set of libraries and wrappers to handle modern filetypes from within nodejs</p><h1>csv_parser</h1>
+<p><a href="https://nodei.co/npm/data4node/"><img src="https://nodei.co/npm/data4node.png?downloads=true&amp;downloadRank=true&amp;stars=true" alt="NPM"></a><br />Documentation is found at: <a href="http://jasonchalom.com/data4node/">http://jasonchalom.com/data4node/</a></p><p>TODOs are done on Waffle.io: <a href="https://waffle.io/trex22/data4node">https://waffle.io/trex22/data4node</a></p><p>A set of libraries and wrappers to handle modern filetypes from within nodejs</p><h1>csv_parser</h1>
 <p>A parser for CSV (Comma-seperated values), also a SCSV (Semi-Colon seperated values) parser.<br />A future enhancement is to have an regex delimiter on a generic function or base-function.</p><h1>json_xl4node</h1>
 <h2>A JSON wrapper for excel4node</h2>
-<p>By Jason Chalom 2014, Entelect Software<br />Under the MIT License</p><p>I have other commitments at the moment but I will come back and finish this library at some point.</p><p>This will take some test json data and convert to xlsx using desired styling and formatting<br /><a href="https://github.com/natergj/excel4node">https://github.com/natergj/excel4node</a> is the excel parser</p><p>to use a stream and not write to file, just use buildExcelDataFromJson and push where-ever its the base-64 string<br />always save as xlsx the other formats may not work correctly.</p><p>Styles must have headings<br />Styles all have arrays for each main object. This corresponds to specific worksheets<br />Sub-object arrays sometimes correspond to headings, or image number or cell locations.</p><p>custStyles are linked directly at the cell level</p><p>Documentation is coming soon.</p><p>TODOs: see Waffle.io or Github issues</p><h2>Tests</h2>
+<p>By Jason Chalom 2014, Entelect Software<br />Under the MIT License</p><p>I have other commitments at the moment but I will come back and finish this library at some point.</p><p>This will take some test json data and convert to xlsx using desired styling and formatting<br /><a href="https://github.com/natergj/excel4node">https://github.com/natergj/excel4node</a> is the excel parser</p><p>to use a stream and not write to file, just use buildExcelDataFromJson and push where-ever its the base-64 string<br />always save as xlsx the other formats may not work correctly.</p><p>Styles must have headings<br />Styles all have arrays for each main object. This corresponds to specific worksheets<br />Sub-object arrays sometimes correspond to headings, or image number or cell locations.</p><p>custStyles are linked directly at the cell level</p><p>TODOs: see Waffle.io or Github issues</p><h2>Tests</h2>
 <p>npm test</p><p>Any file *.test is ignored by git. By convention these are the test files where test data is dumped to drive.</p><p>The object compares instead of the should.equals in some unit tests is not ensure that the endpoint tests dont crash mocha</p></section>
         </div>
       </div>

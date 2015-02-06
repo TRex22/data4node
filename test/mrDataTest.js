@@ -8,6 +8,7 @@ var fn = require('./customTestFunctions.js');
 
 /*js to test*/
 var mrData = require('../lib/mrData/mrData.js');
+var excelData = require('../lib/exporter/excel_export/excelData.js');
 var helper = require('../lib/helpers.js');
 
 var config = JSON.parse(fs.readFileSync("test/test_config.json"));
@@ -69,7 +70,7 @@ describe('#mrData', function() {
       "data": []
     };
 
-    mrData._private.getHeadings(ws, data, styleObj, cells, i);
+    excelData._private.getHeadings(ws, data, styleObj, cells, i);
 
     should.exist(cells);
     should.exist(cells.heading);
@@ -133,7 +134,7 @@ describe('#mrData', function() {
       "data": []
     };
 
-    mrData._private.getHeadings(ws, data, styleObj, cells, i);
+    excelData._private.getHeadings(ws, data, styleObj, cells, i);
 
     should.exist(cells);
     should.exist(cells.heading);
@@ -197,17 +198,11 @@ describe('#mrData', function() {
       }]
     };
 
-    mrData._private.getData(ws, [], data, cells, i);
-
-    should.exist(cells);
-    should.exist(cells.heading);
-    should.exist(cells.data);
-
-    fn.deepCompare(cells, expectedCells).should.equal(true);
+    excelData._private.getData(ws, [], data, cells, i).should.equal(expectedCells);
   });
 
   it('getWorksheets should return empty array', function() {
-    var result = mrData.getWorksheets();
+    var result = excelData.getWorksheets();
     should.exist(result);
     result.should.be.empty();
   });
@@ -224,7 +219,7 @@ describe('#mrData', function() {
     styleObj.data.headingStyles[0].useStyleHeadingsText = true;
 
     var expected = fs.readFileSync("test/expectedWorksheets");
-    var result = util.inspect(mrData.getWorksheets(wb, reports, styleObj, cells), false, null);
+    var result = util.inspect(excelData.getWorksheets(wb, reports, styleObj, cells), false, null);
     should.exist(result);
     fn.saveFile(result, "test/resultantWorksheets.test");
 

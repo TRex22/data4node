@@ -71,20 +71,20 @@
       <div class="row">
         <div class="span3 bs-docs-sidebar">
           <ul class="nav nav-list bs-docs-sidenav affix-top">
-            <li><a href="../index.html">Main</a></li>
-            <li><a href="../data4node.js.html">data4node.js</a></li>
-            <li><a href="../exporter\excel_export\excelData.js.html">exporter\excel_export\excelData.js</a></li>
-            <li><a href="../exporter\excel_export\excel_export.js.html">exporter\excel_export\excel_export.js</a></li>
-            <li><a href="../exporter\excel_export\typeCast.js.html">exporter\excel_export\typeCast.js</a></li>
-            <li><a href="../exporter\majorTom.js.html">exporter\majorTom.js</a></li>
-            <li><a href="../exporter\objToHtmlExport.js.html">exporter\objToHtmlExport.js</a></li>
-            <li><a href="../helpers.js.html">helpers.js</a></li>
-            <li><a href="../mrData\mrData.js.html">mrData\mrData.js</a></li>
-            <li class="active"><a href="../parser\babelFish.js.html">parser\babelFish.js</a></li>
-            <li><a href="../parser\csv.js.html">parser\csv.js</a></li>
-            <li><a href="../parser\jsonParser.js.html">parser\jsonParser.js</a></li>
-            <li><a href="../parser\scsv.js.html">parser\scsv.js</a></li>
-            <li><a href="../stylizer\stylizer.js.html">stylizer\stylizer.js</a></li>
+            <li><a href="../../index.html">Main</a></li>
+            <li><a href="../../data4node.js.html">data4node.js</a></li>
+            <li><a href="../../exporter\excel_export\excelData.js.html">exporter\excel_export\excelData.js</a></li>
+            <li><a href="../../exporter\excel_export\excel_export.js.html">exporter\excel_export\excel_export.js</a></li>
+            <li class="active"><a href="../../exporter\excel_export\typeCast.js.html">exporter\excel_export\typeCast.js</a></li>
+            <li><a href="../../exporter\majorTom.js.html">exporter\majorTom.js</a></li>
+            <li><a href="../../exporter\objToHtmlExport.js.html">exporter\objToHtmlExport.js</a></li>
+            <li><a href="../../helpers.js.html">helpers.js</a></li>
+            <li><a href="../../mrData\mrData.js.html">mrData\mrData.js</a></li>
+            <li><a href="../../parser\babelFish.js.html">parser\babelFish.js</a></li>
+            <li><a href="../../parser\csv.js.html">parser\csv.js</a></li>
+            <li><a href="../../parser\jsonParser.js.html">parser\jsonParser.js</a></li>
+            <li><a href="../../parser\scsv.js.html">parser\scsv.js</a></li>
+            <li><a href="../../stylizer\stylizer.js.html">stylizer\stylizer.js</a></li>
           </ul>
           <div class="scrollspy">
             <ul class="nav nav-list bs-docs-sidenav affix-top">
@@ -94,7 +94,6 @@
           </div>
         </div>
         <div class="span9">
-          <div class="description"><p>BabelFish is the main parser hook</p> </div>
           <section id="helper">
             <h1>helper</h1>
             <h5 class="subheader"></h5>
@@ -102,21 +101,53 @@
               <div class="label label-success radius ctx-type">declaration</div><span>helper</span>
             </p>
           </section>
-          <div class="description"><p>By Jason Chalom 2014, Entelect Software<br />  Under the MIT License</p> </div>
+          <div class="description"><p>By Jason Chalom 2014, Entelect Software<br />Under the MIT License</p><p>This handles the typecasting of cells</p> </div>
           <pre><code class="language-javascript">var helper = require('../helpers.js');
-var csv = require('./csv.js');
-var scsv = require('./scsv.js');
 
 var exposed = {
-  csv: csv,
-  scsv: scsv
+  convert: convert
 };
 module.exports = exposed;
 
-if (process.env.NODE_ENV === 'test') {
-  module.exports._private = {
-
+function convert(type, col, row, ws, worksheets, numberFormat, cells) {
+  //types - string already implicitly set
+  var object = {
+    row: row,
+    col: col,
+    type: type
   };
+  //debugg(object);
+  var worksheet = worksheets[ws];
+  var cell;
+
+  if (row === 1)
+    cell = cells.heading[ws];
+  else if (row &gt; 1)
+    cell = helper.findCell(cells.data, ws, col, row); //cells.data[col].value
+  else {
+    var err =
+      &quot;*******************Something is wrong with row typecasting.*******************&quot;;
+    helper.log(err);
+    throw err;
+  }
+
+  if(worksheet &amp;&amp; cell){
+    if (type === &quot;Number&quot;) {
+      helper.log(&quot;Type is Number.&quot;);
+      helper.log(&quot;**Value: &quot; + cell.value);
+      helper.log(&quot;fix and implement this.&quot;);
+      //worksheet.Cell(row, col).Number(cell.value); //TODO JMC Fix
+    }
+    if (type === &quot;Formula&quot;) {
+      helper.log(&quot;Type is Formula.&quot;);
+      worksheet.Cell(row, col).Formula(cell.value);
+    }
+    //if (type === &quot;Date&quot;) //special
+    if (numberFormat) {
+      helper.log(&quot;Setting number format&quot;);
+      worksheet.Cell(row, col).Format.Number(numberFormat);
+    }
+  }
 }</code></pre>
         </div>
       </div>

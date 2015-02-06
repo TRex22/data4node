@@ -1,6 +1,7 @@
 data4node [![Build Status](https://travis-ci.org/TRex22/data4node.svg)](https://travis-ci.org/TRex22/data4node) [![Stories in Ready](https://badge.waffle.io/TRex22/data4node.png?label=ready&title=Ready)](https://waffle.io/TRex22/data4node)
 ============
 [![NPM](https://nodei.co/npm/data4node.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/data4node/)
+Documentation is found at: http://jasonchalom.com/data4node/
 
 TODOs are done on Waffle.io: https://waffle.io/trex22/data4node
 
@@ -33,7 +34,7 @@ Sub-object arrays sometimes correspond to headings, or image number or cell loca
 
 custStyles are linked directly at the cell level
 
-Documentation is found at: http://jasonchalom.com/data4node/
+
 
 TODOs: see Waffle.io or Github issues
 

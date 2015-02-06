@@ -73,318 +73,88 @@
           <ul class="nav nav-list bs-docs-sidenav affix-top">
             <li><a href="../index.html">Main</a></li>
             <li><a href="../data4node.js.html">data4node.js</a></li>
-            <li><a href="../excel_export\excelData.js.html">excel_export\excelData.js</a></li>
-            <li><a href="../excel_export\excel_export.js.html">excel_export\excel_export.js</a></li>
-            <li class="active"><a href="../excel_export\stylizer.js.html">excel_export\stylizer.js</a></li>
-            <li><a href="../excel_export\typeCast.js.html">excel_export\typeCast.js</a></li>
+            <li><a href="../exporter\excel_export\excelData.js.html">exporter\excel_export\excelData.js</a></li>
+            <li><a href="../exporter\excel_export\excel_export.js.html">exporter\excel_export\excel_export.js</a></li>
+            <li><a href="../exporter\excel_export\typeCast.js.html">exporter\excel_export\typeCast.js</a></li>
+            <li><a href="../exporter\majorTom.js.html">exporter\majorTom.js</a></li>
+            <li class="active"><a href="../exporter\objToHtmlExport.js.html">exporter\objToHtmlExport.js</a></li>
             <li><a href="../helpers.js.html">helpers.js</a></li>
             <li><a href="../mrData\mrData.js.html">mrData\mrData.js</a></li>
             <li><a href="../parser\babelFish.js.html">parser\babelFish.js</a></li>
             <li><a href="../parser\csv.js.html">parser\csv.js</a></li>
             <li><a href="../parser\jsonParser.js.html">parser\jsonParser.js</a></li>
             <li><a href="../parser\scsv.js.html">parser\scsv.js</a></li>
+            <li><a href="../stylizer\stylizer.js.html">stylizer\stylizer.js</a></li>
           </ul>
           <div class="scrollspy">
             <ul class="nav nav-list bs-docs-sidenav affix-top">
-              <li><a href="#util"><i class="alert alert-success"></i><span>util</span></a>
+              <li><a href="#helper"><i class="alert alert-success"></i><span>helper</span></a>
               </li>
             </ul>
           </div>
         </div>
         <div class="span9">
-          <section id="util">
-            <h1>util</h1>
+          <section id="helper">
+            <h1>helper</h1>
             <h5 class="subheader"></h5>
             <p>
-              <div class="label label-success radius ctx-type">declaration</div><span>util</span>
+              <div class="label label-success radius ctx-type">declaration</div><span>helper</span>
             </p>
           </section>
-          <div class="description"><p>By Jason Chalom 2014, Entelect Software<br />Under the MIT License</p><p>This handles the styling</p> </div>
-          <pre><code class="language-javascript">var util = require('util');
-var helper = require('../helpers.js');
-var typeCast = require('./typeCast.js');
+          <div class="description"> </div>
+          <pre><code class="language-javascript">var helper = require('../helpers.js');
+var util = require('util')
 
 var exposed = {
-  shazam: shazam
+  jsonToHtmlList : jsonToHtmlList
 };
 module.exports = exposed;
 
 if (process.env.NODE_ENV === 'test') {
   module.exports._private = {
-    getCustomStyles: getCustomStyles,
-    setCustStyles: setCustStyles,
-    setBatchHeadingStyles: setBatchHeadingStyles,
-    setBatchDataStyles: setBatchDataStyles,
-    setColProperties: setColProperties,
-    setCellStyle: setCellStyle,
-    setCustCellStyles: setCustCellStyles,
-    setColWidth: setColWidth,
-    setRowHeight: setRowHeight
+
   };
 }
 
-function shazam(reports, styleObj, wb, worksheets, cells) {
-  //if no type is specified assume string
-  //TODO update when excel4node has more type capabilities
-
-  var custStyles = getCustomStyles(styleObj, wb);
-  setCustStyles(worksheets, reports, styleObj, custStyles, cells);
-
-  setColWidth(worksheets, styleObj);
-  setRowHeight(worksheets, styleObj);
-
-  helper.log(&quot;------------Stylizer Complete------------&quot;);
+function jsonToHtmlList(json) {
+  return objToHtmlList(json);
 }
-
-function createTable(reports, styleObj, wb, worksheets, cells){
-  var custStyles = getCustomStyles(styleObj, wb);
-  setCustStyles(worksheets, reports, styleObj, custStyles, cells);
-
-  setColWidth(worksheets, styleObj);
-  setRowHeight(worksheets, styleObj);
-
-  helper.log(&quot;------------Stylizer Complete------------&quot;);
-}
-
-function getCustomStyles(styleObj, wb) {
-  helper.log(&quot;------------Custom Styles------------&quot;);
-  var styles = [];
-  //debugg(styleObj);
-  for (var i = 0; i &lt; styleObj.data.custStyles.length; i++) {
-    helper.log(&quot;Create Style Count: &quot; + i);
-
-    var style = {};
-    style.name = styleObj.data.custStyles[i].name;
-    style.data = wb.Style();
-    helper.log(&quot;----------------- &quot; + &quot;Style: &quot; + style.name);
-    var styleProp = styleObj.data.custStyles[i].data;
-
-    if (styleProp.fontBold)
-      style.data.Font.Bold();
-
-    if (styleProp.fontItalics)
-      style.data.Font.Italics();
-
-    if (styleProp.fontUnderline)
-      style.data.Font.Underline();
-
-    style.data.Font.Family(styleProp.fontFamily);
-    style.data.Font.Color(styleProp.fontColor);
-    style.data.Font.Size(styleProp.fontSize);
-    style.data.Fill.Pattern(styleProp.fillPattern);
-    style.data.Fill.Color(styleProp.fillColor);
-    style.data.Font.Alignment.Vertical(styleProp.alignmentVertical);
-    style.data.Font.Alignment.Horizontal(styleProp.alignmentHorizontal);
-    style.data.Font.WrapText(styleProp.wrapText);
-    if (styleProp.border) {
-      style.data.Border({
-        top: {
-          style: styleProp.border.top.style,
-          color: styleProp.border.top.color
-        },
-        bottom: {
-          style: styleProp.border.bottom.style,
-          color: styleProp.border.bottom.color
-        },
-        left: {
-          style: styleProp.border.left.style,
-          color: styleProp.border.left.color
-        },
-        right: {
-          style: styleProp.border.right.style,
-          color: styleProp.border.right.color
-        }
-      });
-    }
-
-    styles.push(style);
-  }
-  helper.log(&quot;------------Custom Styles Objects Created------------&quot;);
-  helper.log(&quot;Styles OBJ: &quot; + styles);
-  //debugg(styles);
-  return styles;
-}
-
-function setCustStyles(worksheets, reports, styleObj, custStyles, cells) {
-  //set batch cells first and then follow individual cell mods
-  helper.log(&quot;------------Starting Batch Styling------------&quot;);
-  setBatchHeadingStyles(worksheets, styleObj, custStyles, cells);
-  setBatchDataStyles(worksheets, styleObj, custStyles, cells);
-  setColProperties(worksheets, reports, styleObj, custStyles, cells);
-  helper.log(&quot;------------Batch Styling Done----------------&quot;);
-  setCustCellStyles(worksheets, styleObj, custStyles, cells);
-  helper.log(&quot;------------Custom Styles Objects Set------------&quot;);
-}
-
-function setBatchHeadingStyles(worksheets, styleObj, custStyles, cells) {
-  if (cells.heading.length !== 0 &amp;&amp; styleObj.data.headingStyles) {
-    for (var i = 0; i &lt; cells.heading.length; i++) {
-      var ws = cells.heading[i].ws;
-
-      if (styleObj.data.headingStyles[ws]) {
-        var worksheet = worksheets[ws];
-        var col = cells.heading[i].col;
-        var row = cells.heading[i].row;
-        var style = styleObj.data.headingStyles[ws].style; //refers to style arr index
-
-        helper.log(&quot;Style: &quot; + style);
-        if (style) {
-          var custStyle = helper.findArrObjFromName(custStyles, style);
-          helper.log(&quot;custStyle OBJ: &quot; + custStyle);
-          if (custStyle) {
-            helper.log(&quot;custStyle: &quot; + custStyle.data +
-              &quot; custStyle name: &quot; + custStyle.name);
-            helper.log(&quot;worksheet: &quot; + worksheets[ws]);
-            setCellStyle(worksheet, col, row, custStyle);
-          } else {
-            helper.log(&quot;No style named: &quot; + style + &quot; found&quot;);
-          }
-        }
-        if (styleObj.data.headingStyles[ws].freezeHeadingsRow) {
-          worksheet.Row(2).Freeze(2);
-        }
+//TODO REPAIR
+function objToHtmlList(obj) {
+  if (obj instanceof Array) {
+    var ol = createHtmlElement('ol');
+    for (var child in obj) {
+      if (obj.hasOwnProperty(child)) {
+        var li = createHtmlElement('li');
+        li.appendChild(objToHtmlList(obj[child]));
+        ol.appendChild(li);
       }
     }
-    helper.log(&quot;------------Batch Headings Styles Set------------&quot;);
+    return ol;
   }
-}
-
-function setBatchDataStyles(worksheets, styleObj, custStyles, cells) {
-  if (cells.data.length !== 0 &amp;&amp; styleObj.data.dataStyles) { //TODO JMC check if needed, empty data still has meta-data
-    for (var i = 0; i &lt; cells.data.length; i++) {
-      var ws = cells.data[i].ws;
-
-      if (styleObj.data.headingStyles[ws]) {
-        var worksheet = worksheets[ws];
-        var col = cells.data[i].col;
-        var row = cells.data[i].row;
-        var style = styleObj.data.dataStyles[ws].style; //refers to style arr index
-        var type = styleObj.data.dataStyles[ws].type;
-        var numberFormat = styleObj.data.dataStyles[ws].numberFormat;
-
-        helper.log(&quot;Style: &quot; + style);
-        if (style) {
-          var custStyle = helper.findArrObjFromName(custStyles, style);
-          helper.log(&quot;custStyle OBJ: &quot; + custStyle);
-          if (custStyle) {
-            helper.log(&quot;custStyle: &quot; + custStyle.data +
-              &quot; custStyle name: &quot; + custStyle.name);
-            helper.log(&quot;worksheet: &quot; + worksheets[ws]);
-            setCellStyle(worksheet, col, row, custStyle);
-          } else {
-            helper.log(&quot;No style named: &quot; + style + &quot; found&quot;);
-          }
-        }
-        if (type)
-          typeCast.convert(type, col, row, ws, worksheets, numberFormat,
-            cells);
+  else if (obj instanceof Object &amp;&amp; !(obj instanceof String)) {
+    var ul = createHtmlElement('ul');
+    for (var child in obj) {
+      if (obj.hasOwnProperty(child)) {
+        var li = createHtmlElement('li');
+        li.appendChild(&quot;&quot;+(child + &quot;: &quot;));
+        li.appendChild(objToHtmlList(obj[child]));
+        ul.appendChild(li);
       }
     }
-    helper.log(&quot;------------Batch Data Styles Set------------&quot;);
+    return ul;
+  }
+  else {
+    return obj;
   }
 }
 
-function setColProperties(worksheets, reports, styleObj, custStyles, cells) {
-  //check if there are specific col settings
-  if (styleObj.data.colStyles) {
-    for (var i = 0; i &lt; styleObj.data.colStyles.length; i++) {
-      var ws = styleObj.data.colStyles[i].ws;
-      var worksheet = worksheets[ws];
-
-      var col = styleObj.data.colStyles[i].col;
-      var style = styleObj.data.colStyles[i].style;
-      var type = styleObj.data.colStyles[i].type;
-      var numberFormat = styleObj.data.colStyles[i].numberFormat;
-      var freezeCol = styleObj.data.colStyles[i].freezeCol;
-      var enforceHeadingStyle = styleObj.data.colStyles[i].enforceHeadingStyle;
-
-      if (style) {
-        var custStyle = helper.findArrObjFromName(custStyles, style);
-        if (custStyle) {
-          //loop the row for number of data points that way keep things from crashing
-          for (var j = 0; j &lt; reports[ws].data.length; j++) { //TODO FIX ws wrong
-            var row = (j + 1);
-            if (enforceHeadingStyle)
-              row++;
-            setCellStyle(worksheet, col, row, custStyle); //hack to count last row
-          }
-        } else {
-          helper.log(&quot;No style named: &quot; + style + &quot; found&quot;);
-        }
-      }
-      if (type) {
-        for (var j = 0; j &lt; reports[ws].data.length; j++) {
-          var row = (j + 2);
-          typeCast.convert(type, col, row, ws, worksheets, numberFormat,
-            cells);
-        }
-      }
-    }
-    helper.log(&quot;------------Batch Col Styles Set------------&quot;);
-  }
-}
-
-function setCellStyle(worksheet, col, row, custStyle) {
-  worksheet.Cell(row, col).Style(custStyle.data);
-}
-
-function setCustCellStyles(worksheets, styleObj, custStyles, cells) {
-  for (var i = 0; i &lt; styleObj.data.cells.length; i++) {
-    if (styleObj.data.cells[i].ws &lt; worksheets.length) {
-      var ws = styleObj.data.cells[i].ws;
-      var worksheet = worksheets[ws];
-
-      var col = styleObj.data.cells[i].col;
-      var row = styleObj.data.cells[i].row;
-      var style = styleObj.data.cells[i].style; //refers to style arr index
-      var type = styleObj.data.cells[i].type;
-      var numberFormat = styleObj.data.cells[i].numberFormat;
-
-      helper.log(&quot;Styles OBJ: &quot; + custStyles);
-      if (style) {
-        var custStyle = helper.findArrObjFromName(custStyles, style);
-        if (custStyle) {
-          helper.log(&quot;custStyle: &quot; + custStyle.data +
-            &quot; custStyle name: &quot; + custStyle.name);
-          helper.log(&quot;worksheet: &quot; + worksheets[ws]);
-          setCellStyle(worksheet, col, row, custStyle);
-        } else {
-          helper.log(&quot;No style named: &quot; + style + &quot; found&quot;);
-        }
-      }
-      if (type) {
-        typeCast.convert(type, col, row, ws, worksheets, numberFormat, cells);
-      }
-    } else {
-      helper.log(&quot;No worksheet of that number: &quot; + styleObj.data.cells[i].ws);
-    }
-  }
-}
-
-function setColWidth(worksheets, styleObj) {
-  for (var i = 0; i &lt; styleObj.data.columnWidth.length; i++) {
-    helper.log(&quot;setting col width&quot;);
-    var p = styleObj.data.columnWidth[i];
-    var prop;
-    var k = 0;
-    for (prop in p) {
-      helper.log(&quot;col: &quot; + prop + &quot; : &quot; + p[prop]);
-      worksheets[i].Column(prop).Width(p[prop]);
-    }
-  }
-}
-
-function setRowHeight(worksheets, styleObj) {
-  for (var i = 0; i &lt; styleObj.data.rowHeight.length; i++) {
-    helper.log(&quot;setting row height&quot;);
-    var p = styleObj.data.rowHeight[i];
-    var prop;
-    var k = 0;
-    for (prop in p) {
-      helper.log(&quot;row &quot; + prop + &quot; : &quot; + p[prop]);
-      worksheets[i].Row(prop).Height(p[prop]);
-    }
-  }
+function createHtmlElement(elementTag, dataStr, classStr, id, specialTags){
+  var construct = {};
+  construct.openTag = '&lt;'+elementTag+' class=\''+classStr+'\' id=\''+id+' '+specialTags+' &gt;';
+  construct.data = ''+dataStr;
+  construct.closeTag = '&lt;'+elementTag+'&gt;';
+  return construct;
 }</code></pre>
         </div>
       </div>

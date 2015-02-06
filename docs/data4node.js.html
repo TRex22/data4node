@@ -73,16 +73,18 @@
           <ul class="nav nav-list bs-docs-sidenav affix-top">
             <li><a href="index.html">Main</a></li>
             <li class="active"><a href="data4node.js.html">data4node.js</a></li>
-            <li><a href="excel_export\excelData.js.html">excel_export\excelData.js</a></li>
-            <li><a href="excel_export\excel_export.js.html">excel_export\excel_export.js</a></li>
-            <li><a href="excel_export\stylizer.js.html">excel_export\stylizer.js</a></li>
-            <li><a href="excel_export\typeCast.js.html">excel_export\typeCast.js</a></li>
+            <li><a href="exporter\excel_export\excelData.js.html">exporter\excel_export\excelData.js</a></li>
+            <li><a href="exporter\excel_export\excel_export.js.html">exporter\excel_export\excel_export.js</a></li>
+            <li><a href="exporter\excel_export\typeCast.js.html">exporter\excel_export\typeCast.js</a></li>
+            <li><a href="exporter\majorTom.js.html">exporter\majorTom.js</a></li>
+            <li><a href="exporter\objToHtmlExport.js.html">exporter\objToHtmlExport.js</a></li>
             <li><a href="helpers.js.html">helpers.js</a></li>
             <li><a href="mrData\mrData.js.html">mrData\mrData.js</a></li>
             <li><a href="parser\babelFish.js.html">parser\babelFish.js</a></li>
             <li><a href="parser\csv.js.html">parser\csv.js</a></li>
             <li><a href="parser\jsonParser.js.html">parser\jsonParser.js</a></li>
             <li><a href="parser\scsv.js.html">parser\scsv.js</a></li>
+            <li><a href="stylizer\stylizer.js.html">stylizer\stylizer.js</a></li>
           </ul>
           <div class="scrollspy">
             <ul class="nav nav-list bs-docs-sidenav affix-top">
@@ -96,11 +98,16 @@
               </li>
               <li><a href="#createScsvReport"><i class="alert alert-info"></i><span>createScsvReport</span></a>
               </li>
+              <li><a href="#createHtmlListFromJson"><i class="alert alert-info"></i><span>createHtmlListFromJson</span></a>
+              </li>
             </ul>
           </div>
         </div>
         <div class="span9">
           <div class="description"><p>By Jason Chalom 2014, Entelect Software<br />Under the MIT License<br />This will take some test json data and convert to xlsx using desired styling and formatting<br /><a href="https://github.com/natergj/excel4node">https://github.com/natergj/excel4node</a></p><p>to use a stream and not write to file, just use buildExcelDataFromJson and push where-ever its the base-64 string<br />always save as xlsx the other formats may not work correctly.</p><p>Styles must have headings<br />Styles all have arrays for each main object. This corresponds to specific worksheets<br />Sub-object arrays sometimes correspond to headings, or image number or cell locations.<br />cells have a ws prop which is the worksheet number, computer readable</p><p>custStyles are linked directly at the cell level</p><p>uses doxx documentation see: <a href="https://github.com/FGRibreau/doxx">https://github.com/FGRibreau/doxx</a></p> </div>
+          <div class="description"><p>config</p> </div>
+          <pre><code class="language-javascript">var config;
+var debug = false;</code></pre>
           <section id="xl">
             <h1>xl</h1>
             <h5 class="subheader"></h5>
@@ -114,19 +121,18 @@ var fs = require('fs');
 var http = require('http');
 
 var helper = require('./helpers.js');
-var excel_export = require('./excel_export/excel_export.js');
+var excel_export = require('./exporter/excel_export/excel_export.js');
 var babelFish = require('./parser/babelFish.js'); //an opening for some evil
+var majorTom = require('./exporter/majorTom.js');
 
-helper.log(&quot;Excel converter has started.&quot;);</code></pre>
-          <div class="description"><p>config</p> </div>
-          <pre><code class="language-javascript">var config;
-var debug = false;
+helper.log(&quot;Excel converter has started.&quot;);
 
 var exposed = {
   createExcelReports: createExcelReports,
   createExcelTimeTable: createExcelTimeTable,
   createCsvReport: createCsvReport,
   createScsvReport: createScsvReport,
+  createHtmlListFromJson: createHtmlListFromJson,
   babelFish: babelFish
 };
 module.exports = exposed;</code></pre>
@@ -259,6 +265,33 @@ module.exports = exposed;</code></pre>
           <div class="description"><p>Create an SCSV (Semi-Colon seperated Values) file using a json object for the data input</p> </div>
           <pre><code class="language-javascript">function createScsvReport(data){
   return babelFish.parseToScsv(data);
+}</code></pre>
+          <section id="createHtmlListFromJson">
+            <h1>createHtmlListFromJson</h1>
+            <h5 class="subheader"></h5>
+            <p>
+              <div class="label label-info radius ctx-type">function</div><span>createHtmlListFromJson()</span>
+            </p>
+          </section>
+          <table class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th style="width:20%">Option name</th>
+                <th style="width:20%">Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>reports</td>
+                <td>Object</td>
+                <td>&lt;p&gt;this is the JSON data of reports&lt;/p&gt;</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="description"><p>Create an html file using a json object for the data input</p> </div>
+          <pre><code class="language-javascript">function createHtmlListFromJson(data){
+  return majorTom.objToHtmlExport.jsonToHtmlList(data);
 }</code></pre>
         </div>
       </div>

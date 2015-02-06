@@ -73,16 +73,18 @@
           <ul class="nav nav-list bs-docs-sidenav affix-top">
             <li><a href="../index.html">Main</a></li>
             <li><a href="../data4node.js.html">data4node.js</a></li>
-            <li><a href="../excel_export\excelData.js.html">excel_export\excelData.js</a></li>
-            <li><a href="../excel_export\excel_export.js.html">excel_export\excel_export.js</a></li>
-            <li><a href="../excel_export\stylizer.js.html">excel_export\stylizer.js</a></li>
-            <li><a href="../excel_export\typeCast.js.html">excel_export\typeCast.js</a></li>
+            <li><a href="../exporter\excel_export\excelData.js.html">exporter\excel_export\excelData.js</a></li>
+            <li><a href="../exporter\excel_export\excel_export.js.html">exporter\excel_export\excel_export.js</a></li>
+            <li><a href="../exporter\excel_export\typeCast.js.html">exporter\excel_export\typeCast.js</a></li>
+            <li><a href="../exporter\majorTom.js.html">exporter\majorTom.js</a></li>
+            <li><a href="../exporter\objToHtmlExport.js.html">exporter\objToHtmlExport.js</a></li>
             <li><a href="../helpers.js.html">helpers.js</a></li>
             <li class="active"><a href="../mrData\mrData.js.html">mrData\mrData.js</a></li>
             <li><a href="../parser\babelFish.js.html">parser\babelFish.js</a></li>
             <li><a href="../parser\csv.js.html">parser\csv.js</a></li>
             <li><a href="../parser\jsonParser.js.html">parser\jsonParser.js</a></li>
             <li><a href="../parser\scsv.js.html">parser\scsv.js</a></li>
+            <li><a href="../stylizer\stylizer.js.html">stylizer\stylizer.js</a></li>
           </ul>
           <div class="scrollspy">
             <ul class="nav nav-list bs-docs-sidenav affix-top">
@@ -126,9 +128,9 @@ if (process.env.NODE_ENV === 'test') {
   };
 }
 
-function getJsonData(reports, styleObj){
-  var cells = mrData.createCells();
-  cells = jsonParser.get(reports, styleObj, cells);
+function getJsonData(data, styleObj){
+  var cells = createCells();
+  cells = jsonParser.get(data, styleObj, cells);
   return cells;
 }
 
@@ -137,6 +139,7 @@ function createCells(){
   cells.name = &quot;&quot;; //TODO allow for file name in json?
   cells.heading = [];
   cells.data = [];
+  cells.style = [];
   return cells;
 }</code></pre>
         </div>

@@ -71,125 +71,152 @@
       <div class="row">
         <div class="span3 bs-docs-sidebar">
           <ul class="nav nav-list bs-docs-sidenav affix-top">
-            <li><a href="../index.html">Main</a></li>
-            <li><a href="../data4node.js.html">data4node.js</a></li>
-            <li><a href="../excel_export\excelData.js.html">excel_export\excelData.js</a></li>
-            <li class="active"><a href="../excel_export\excel_export.js.html">excel_export\excel_export.js</a></li>
-            <li><a href="../excel_export\stylizer.js.html">excel_export\stylizer.js</a></li>
-            <li><a href="../excel_export\typeCast.js.html">excel_export\typeCast.js</a></li>
-            <li><a href="../helpers.js.html">helpers.js</a></li>
-            <li><a href="../mrData\mrData.js.html">mrData\mrData.js</a></li>
-            <li><a href="../parser\babelFish.js.html">parser\babelFish.js</a></li>
-            <li><a href="../parser\csv.js.html">parser\csv.js</a></li>
-            <li><a href="../parser\jsonParser.js.html">parser\jsonParser.js</a></li>
-            <li><a href="../parser\scsv.js.html">parser\scsv.js</a></li>
+            <li><a href="../../index.html">Main</a></li>
+            <li><a href="../../data4node.js.html">data4node.js</a></li>
+            <li class="active"><a href="../../exporter\excel_export\excelData.js.html">exporter\excel_export\excelData.js</a></li>
+            <li><a href="../../exporter\excel_export\excel_export.js.html">exporter\excel_export\excel_export.js</a></li>
+            <li><a href="../../exporter\excel_export\typeCast.js.html">exporter\excel_export\typeCast.js</a></li>
+            <li><a href="../../exporter\majorTom.js.html">exporter\majorTom.js</a></li>
+            <li><a href="../../exporter\objToHtmlExport.js.html">exporter\objToHtmlExport.js</a></li>
+            <li><a href="../../helpers.js.html">helpers.js</a></li>
+            <li><a href="../../mrData\mrData.js.html">mrData\mrData.js</a></li>
+            <li><a href="../../parser\babelFish.js.html">parser\babelFish.js</a></li>
+            <li><a href="../../parser\csv.js.html">parser\csv.js</a></li>
+            <li><a href="../../parser\jsonParser.js.html">parser\jsonParser.js</a></li>
+            <li><a href="../../parser\scsv.js.html">parser\scsv.js</a></li>
+            <li><a href="../../stylizer\stylizer.js.html">stylizer\stylizer.js</a></li>
           </ul>
           <div class="scrollspy">
             <ul class="nav nav-list bs-docs-sidenav affix-top">
+              <li><a href="#helper"><i class="alert alert-success"></i><span>helper</span></a>
+              </li>
             </ul>
           </div>
         </div>
         <div class="span9">
-          <div class="description"><p>By Jason Chalom 2014, Entelect Software<br />Under the MIT License<br />This will take some test json data and convert to xlsx using desired styling and formatting<br /><a href="https://github.com/natergj/excel4node">https://github.com/natergj/excel4node</a></p><p>to use a stream and not write to file, just use buildExcelDataFromJson and push where-ever its the base-64 string<br />always save as xlsx the other formats may not work correctly.</p><p>Styles must have headings<br />Styles all have arrays for each main object. This corresponds to specific worksheets<br />Sub-object arrays sometimes correspond to headings, or image number or cell locations.<br />cells have a ws prop which is the worksheet number, computer readable</p><p>custStyles are linked directly at the cell level</p> </div>
-          <pre><code class="language-javascript">//requirements
-var xl = require('excel4node');
-var fs = require('fs');
-var http = require('http');
-//var debugg = require('debug')('xcl');
-
-var helper = require('../helpers.js');
-var mrData = require('../mrData/mrData.js');
-var excelData = require('./excelData.js');
-var stylizer = require('./stylizer.js');
-
-helper.log(&quot;Excel converter has started.&quot;);</code></pre>
-          <div class="description"><p>config</p> </div>
-          <pre><code class="language-javascript">var config;
-var debug = false;
+          <section id="helper">
+            <h1>helper</h1>
+            <h5 class="subheader"></h5>
+            <p>
+              <div class="label label-success radius ctx-type">declaration</div><span>helper</span>
+            </p>
+          </section>
+          <div class="description"><p>By Jason Chalom 2014, Entelect Software<br />  Under the MIT License</p><p>  This handles the ws data input from cells obj</p> </div>
+          <pre><code class="language-javascript">var helper = require('../helpers.js');
+var util = require('util');
 
 var exposed = {
-  setConfig: setConfig,
-  makeExcelDocument: makeExcelDocument
+  getWorksheets: getWorksheets
 };
 module.exports = exposed;
 
-function setConfig(reports, styles, configuration) {
-  if (configuration) {
-    config = configuration;
-    debug = config.debug;
-  } else {
-    config = JSON.parse(fs.readFileSync(&quot;excel_export/config.json&quot;));
-    debug = config.debug;
-  }
-
-  helper.setDebug(debug);</code></pre>
-          <div class="description"><p>Test Data</p> </div>
-          <pre><code class="language-javascript">if (config.testData) {
-  reports = JSON.parse(fs.readFileSync(&quot;&quot; + config.dir + config.reportsFile));
-  styles = JSON.parse(fs.readFileSync(&quot;&quot; + config.dir + config.stylesFile));
+if (process.env.NODE_ENV === 'test') {
+  module.exports._private = {
+    getHeadings: getHeadings,
+    getData: getData
+  };
 }
 
-if (config.fileWriter) {</code></pre>
-          <div class="description"><p>Save directory for files</p> </div>
-          <pre><code class="language-javascript">return config.dir + config.filename;
-  }
+function getWorksheets(wb, dataCells, styleObj) {
+  //check if null
+  var worksheets = [];
+  if (!dataCells)
+    return worksheets; //TODO JMC Error reporting
 
-  return null;
+  for (var i = 0; i &lt; dataCells.data.length; i++) {
+    var ws = wb.WorkSheet(dataCells.data[i].name);
+    helper.log(dataCells.data[i].name);
+
+    getHeadings(ws, dataCells, styleObj, i);
+    getData(ws, dataCells, i);
+
+    worksheets.push(ws);
+  }
+  return worksheets;
 }
 
-function makeExcelDocument(reports, styleObj, file) {
-  var wb = new xl.WorkBook();
-  wb.debug = config.internalWbLibDebug;
+function getHeadings(ws, cells, styleObj, i) {
+  var useStyleHeadingsText = false;
+  var p;
 
-  var dataCells = getJsonData(reports, styleObj);
-  var worksheets = excelData.getWorksheets(wb, dataCells);
+  if (styleObj.data.headingStyles[i]) {
+    useStyleHeadingsText = styleObj.data.headingStyles[i].useStyleHeadingsText;
+    p = styleObj.data.headingsText[i];
+  }
 
-  helper.log(&quot;------------Raw Data Done------------&quot;);
+  var prop;
+  var k = 0;
 
-  // run stylizer
-  if (styleObj) {
-stylizer.shazam(reports, styleObj, wb, worksheets, cells);
+  //do headings override from styles json
+  if (!p || useStyleHeadingsText === false) {
+    //take heading names from reports property names
+    p = cells.data[0]; //only need the first data point
+    for (prop in p) {
+      var col;
+      if (i === 0) { //j+2 to leave space for headings
+        col = i + k + 1;
+      } else {
+        col = i + k;
+      }
+      ws.Cell(1, col).String(&quot;&quot; + prop); //fix for r c going from 1,1
+      cells.heading.push({
+        &quot;ws&quot;: i,
+        &quot;col&quot;: col,
+        &quot;row&quot;: 1,
+        &quot;value&quot;: prop
+      });
+      k++;
+    }
   } else {
-helper.log(&quot;Styles Object is Empty.&quot;); //TODO JMC add try-catches
+    for (prop in p) {
+      helper.log(prop + &quot; : &quot; + p[prop]);
+      var col;
+      if (i === 0) { //j+2 to leave space for headings
+        col = i + k + 1;
+      } else {
+        col = i + k;
+      }
+      ws.Cell(1, col).String(&quot;&quot; + p[prop]); //fix for r c going from 1,1
+      cells.heading.push({
+        &quot;ws&quot;: i,
+        &quot;col&quot;: col,
+        &quot;row&quot;: 1,
+        &quot;value&quot;: p[prop]
+      });
+      k++;
+    }
   }
-
-  if (config.fileWriter) {
-wb.write(file);
-console.log(&quot;file written.&quot;);
-return null;
-  }
-
-  helper.log(&quot;------------Response------------\n&quot; + wb);
-  return wb;
 }
 
-function makeExcelTimeTable(times, styles, file){
-  var wb = new xl.WorkBook();
-  wb.debug = config.internalWbLibDebug;
-
-  var cells = {};
-  cells.heading = [];
-  cells.data = [];
-
-  var worksheets = mrData.getWorksheets(wb, reports, styleObj, cells);
-
-  helper.log(&quot;------------Raw Data Done------------&quot;);
-
-  // run stylizer
-  if (styleObj) {
-stylizer.createTable(reports, styleObj, wb, worksheets, cells);
-  } else {
-helper.log(&quot;Styles Object is Empty.&quot;); //TODO JMC add try-catches
+function getData(ws, dataCells, i) {
+  if (dataCells.data.length &gt; 0) {
+    //insert data will be string for now. The typecasting will happen in styling
+    for (var j = 0; j &lt; dataCells.data[i].length; j++) {
+      var p = dataCells.data[j];
+      var prop; //property in p
+      var k = 0;
+      for (prop in p) {
+        helper.log(prop + &quot; : &quot; + p[prop]);
+        var row = j + 2;
+        var col;
+        if (i === 0) { //j+2 to leave space for headings
+          col = i + k + 1;
+        } else {
+          col = i + k;
+        }
+        ws.Cell(row, col).String(dataCells.data[i].value);
+        dataCells.data.push({
+          &quot;ws&quot;: i,
+          &quot;col&quot;: col,
+          &quot;row&quot;: row,
+          &quot;value&quot;: p[prop]
+        });
+        k++;
+      }
+    }
   }
-
-  if (config.fileWriter) {
-wb.write(file);
-console.log(&quot;file written.&quot;);
-return null;
-  }
-
-  helper.log(&quot;------------Response------------\n&quot; + wb);
-  return wb;
+  else
+    ws.Cell(2, 1).String(&quot;no data.&quot;);
 }</code></pre>
         </div>
       </div>
