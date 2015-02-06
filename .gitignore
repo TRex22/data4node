@@ -36,3 +36,6 @@ resultantWorksheets
 .c9/
 
 .idea/
+
+# Istanbul compiled reports
+coverage/

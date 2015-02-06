@@ -10,3 +10,7 @@ deploy:
   "on":
     tags: true
     repo: TRex22/data4node
+before_script:
+- npm install -g istanbul
+- npm install -g mocha
+script: npm run-script test-on-travis

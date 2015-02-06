@@ -4,7 +4,8 @@
   "description": "A set of libraries and wrappers to handle modern filetypes from within nodejs",
   "main": "./lib/data4node.js",
   "scripts": {
-    "test": "./node_modules/.bin/mocha --reporter spec"
+    "test": "test-script.sh",
+    "test-on-travis": "test-on-travis-script.sh"
   },
   "repository": {
     "type": "git",
@@ -19,9 +20,10 @@
     "url": "https://github.com/TRex22/json_xl4node/issues"
   },
   "devDependencies": {
-    "chai": "^1.10.0",
-    "mocha": "^2.0.1",
-    "util": "^0.10.3"
+    "chai": "1.10.0",
+    "mocha": "2.0.1",
+    "util": "0.10.3",
+    "istanbul": "0.3.5"
   },
   "keywords": [
     "excel",
