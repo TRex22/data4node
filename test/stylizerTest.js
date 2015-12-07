@@ -311,7 +311,7 @@ describe('#stylizer', function() {
 
     result = fs.readFileSync("test/resultantCellStyle.test");
     //console.log(deepCompare(result, expected));
-    fn.deepCompare(result, expected).should.equal(true);
+    fn.deepCompare2(result, expected).should.equal(true);
   });
 
 });
