@@ -269,48 +269,48 @@ describe('#stylizer', function() {
     fn.deepCompare(result, expected).should.equal(true);
   });
 
-  // it('setCellStyle', function() {
-  //   config.debug = false;
-  //   config.internalWbLibDebug = false;
-  //   helper.setDebug(false); //has to be done
-  //   styleObj.data.headingStyles[0].useStyleHeadingsText = true;
-  //   styleObj.data.custStyles = [];
-  //
-  //   var cells = {};
-  //   cells.heading = [];
-  //   cells.data = [];
-  //
-  //   var wb = new xl.WorkBook();
-  //   var ws = wb.WorkSheet("Test Workbook");
-  //   var i = 0;
-  //   var data = [{
-  //     "name": "monthlySummary",
-  //     "data": [{
-  //       "employeeNumber": "x1y2",
-  //       "surname": "Sean",
-  //       "firstName": "None",
-  //       "totalAchievements": 3,
-  //       "totalKudos": 10
-  //     }]
-  //   }];
-  //
-  //   mrData._private.getHeadings(ws, data, styleObj, cells, i);
-  //   var custStyles = fs.readFileSync("test/expectedCustStyles");
-  //
-  //   // var expected = fs.readFileSync("test/expectedCellStyle");
-  //
-  //   stylizer._private.setCellStyle(ws, 1, 1, custStyles[0].data);
-  //   fn.dumpObjToFile(ws, "test/resultantCellStyle.test");
-  //
-  //   // fn.removeLineFromFile("test/resultantCellStyle.test", "'@Id'", 22); //line 6101
-  //   // fn.removeLineFromFile("test/resultantCellStyle.test", "'@Id'", 22); //line 6105
-  //   // fn.removeLineFromFile("test/resultantCellStyle.test", "'@Id'", 22); //line 6112
-  //   // fn.removeLineFromFile("test/resultantCellStyle.test", "'@Id'", 22); //line 12263
-  //   // fn.removeLineFromFile("test/resultantCellStyle.test", "'@Id'", 22); //line 12267
-  //   // fn.removeLineFromFile("test/resultantCellStyle.test", "'@Id'", 22); //line 12274
-  //
-  //   result = fs.readFileSync("test/resultantCellStyle.test");
-  //   fn.deepCompare(result, expected).should.equal(true);
-  // });
+  it('setCellStyle', function() {
+    config.debug = false;
+    config.internalWbLibDebug = false;
+    helper.setDebug(false); //has to be done
+    styleObj.data.headingStyles[0].useStyleHeadingsText = true;
+    styleObj.data.custStyles = [];
+
+    var cells = {};
+    cells.heading = [];
+    cells.data = [];
+
+    var wb = new xl.WorkBook();
+    var ws = wb.WorkSheet("Test Workbook");
+    var i = 0;
+    var data = [{
+      "name": "monthlySummary",
+      "data": [{
+        "employeeNumber": "x1y2",
+        "surname": "Sean",
+        "firstName": "None",
+        "totalAchievements": 3,
+        "totalKudos": 10
+      }]
+    }];
+
+    mrData._private.getHeadings(ws, data, styleObj, cells, i);
+    var custStyles = fs.readFileSync("test/expectedCustStyles");
+
+    var expected = fs.readFileSync("test/expectedCellStyle");
+
+    stylizer._private.setCellStyle(ws, 1, 1, custStyles[0].data);
+    fn.dumpObjToFile(ws, "test/resultantCellStyle.test");
+
+    fn.removeLineFromFile("test/resultantCellStyle.test", "'@Id'", 22); //line 6101
+    fn.removeLineFromFile("test/resultantCellStyle.test", "'@Id'", 22); //line 6105
+    fn.removeLineFromFile("test/resultantCellStyle.test", "'@Id'", 22); //line 6112
+    fn.removeLineFromFile("test/resultantCellStyle.test", "'@Id'", 22); //line 12263
+    fn.removeLineFromFile("test/resultantCellStyle.test", "'@Id'", 22); //line 12267
+    fn.removeLineFromFile("test/resultantCellStyle.test", "'@Id'", 22); //line 12274
+
+    result = fs.readFileSync("test/resultantCellStyle.test");
+    fn.deepCompare(result, expected).should.equal(true);
+  });
 
 });
