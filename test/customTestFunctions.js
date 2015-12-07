@@ -20,7 +20,8 @@ var exposed = {
     appendFile: appendFile,
     removeLineFromFile: removeLineFromFile,
     quickCompare: quickCompare,
-    deepCompare: deepCompare
+    deepCompare: deepCompare,
+    deepCompare2: deepCompare2
 };
 module.exports = exposed;
 
@@ -102,6 +103,9 @@ function removeLineFromFile(file, search, addIndex) {
         fs.writeFileSync(file, output);
     }
 }
+
+//Comparison Functions found here: http://stackoverflow.com/questions/1068834/object-comparison-in-javascript
+//and modified
 
 function quickCompare(x, y) {
     var xObj = JSON.stringify(x);
@@ -223,3 +227,84 @@ function deepCompare() {
 
     return true;
 }
+
+/**
+ * Deep compare of two objects.
+ *
+ * @param {*} x
+ * @param {*} y
+ * @return {Boolean} Whether the two objects are equivalent, that is,
+ *         every property in x is equal to every property in y recursively. Primitives
+ *         must be strictly equal, that is "1" and 1, null an undefined and similar objects
+ *         are considered different
+ */
+function deepCompare2(x, y) {
+  var seen = [];
+
+  return (function equals( x, y ) {
+    // If both x and y are null or undefined and exactly the same
+    if ( x === y ) {
+        return true;
+    }
+
+    // If they are not strictly equal, they both need to be Objects
+    if ( ! ( x instanceof Object ) || ! ( y instanceof Object ) ) {
+        return false;
+    }
+
+    // They must have the exact same prototype chain, the closest we can do is
+    // test the constructor.
+    if ( x.constructor !== y.constructor ) {
+        return false;
+    }
+
+    for ( var p in x ) {
+        // Inherited properties were tested using x.constructor === y.constructor
+        if ( x.hasOwnProperty( p ) ) {
+            // Allows comparing x[ p ] and y[ p ] when set to undefined
+            if ( ! y.hasOwnProperty( p ) ) {
+                return false;
+            }
+
+            // If they have the same strict value or identity then they are equal
+            if ( x[ p ] === y[ p ] ) {
+                continue;
+            }
+
+            // Numbers, Strings, Functions, Booleans must be strictly equal
+            if ( typeof( x[ p ] ) !== "object" ) {
+                return false;
+            }
+
+            // Test cyclicality
+            if ( seen.indexOf( x[ p ] ) !== -1 ) {
+                 throw new Error("Cannot compare some cyclical objects" );
+            }
+            seen.push( x[ p ] );
+
+            // Objects and Arrays must be tested recursively
+            if ( ! equals( x[ p ],  y[ p ] ) ) {
+                return false;
+            }
+        }
+    }
+
+    for ( p in y ) {
+        // allows x[ p ] to be set to undefined
+        if ( y.hasOwnProperty( p ) && ! x.hasOwnProperty( p ) ) {
+            return false;
+        }
+    }
+    return true;
+  } )( x, y );
+};
+
+// var a = [0,1,2,{test:true}], b = [0,1,2,{test:true}];
+// console.log("No cycle: ",Object.equals(a,b));
+// a[3].cycle = a;
+// b[3].cycle = [0,1,2];
+// console.log("Cycle different: ",Object.equals(a,b));
+// b[3].cycle = a;
+// console.log("Cycle same identity: ",Object.equals(a,b));
+// b[3].cycle = [0,1,2,{test:true}];
+// console.log("Cycle different identities: ",Object.equals(a,b));

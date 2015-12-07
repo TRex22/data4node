@@ -310,6 +310,7 @@ describe('#stylizer', function() {
     fn.removeLineFromFile("test/resultantCellStyle.test", "'@Id'", 22); //line 12274
 
     result = fs.readFileSync("test/resultantCellStyle.test");
+    //console.log(deepCompare(result, expected));
     fn.deepCompare(result, expected).should.equal(true);
   });
 
