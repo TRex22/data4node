@@ -1,17 +1,8 @@
-data4node [![Build Status](https://travis-ci.org/TRex22/data4node.svg)](https://travis-ci.org/TRex22/data4node) [![Stories in Ready](https://badge.waffle.io/TRex22/data4node.png?label=ready&title=Ready)](https://waffle.io/TRex22/data4node)
+data4node [![Build Status](https://travis-ci.org/TRex22/data4node.svg)](https://travis-ci.org/TRex22/data4node) [![Stories in Ready](https://badge.waffle.io/TRex22/data4node.png?label=ready&title=Ready)](https://waffle.io/TRex22/data4node) [![Join the chat at https://gitter.im/TRex22/data4node](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/TRex22/data4node?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 ============
-
-[![Join the chat at https://gitter.im/TRex22/data4node](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/TRex22/data4node?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 A set of libraries and wrappers to handle modern filetypes from within nodejs
+At the moment csv, scsv and Excel 2007+ are supported with other filetypes planned to be supported.
 
-csv_parser
-==========
-A parser for CSV (Comma-seperated values), also a SCSV (Semi-Colon seperated values) parser.
-A future enhancement is to have an regex delimiter on a generic function or base-function.
-
-json_xl4node
-============
-A JSON wrapper for excel4node
 -----------------------------
 
 By Jason Chalom 2014, Entelect Software
@@ -31,7 +22,7 @@ Sub-object arrays sometimes correspond to headings, or image number or cell loca
 
 custStyles are linked directly at the cell level
 
-Documentation is coming soon.
+Documentation is coming soon. See: http://jasonchalom.com/data4node
 
 TODOs: see Waffle.io or Github issues
 
