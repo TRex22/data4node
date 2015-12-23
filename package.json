@@ -5,6 +5,7 @@
   "main": "./lib/data4node.js",
   "scripts": {
     "test": "./node_modules/.bin/mocha --reporter spec"
+    "prepublish": "npm version patch"
   },
   "repository": {
     "type": "git",
