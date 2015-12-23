@@ -1,5 +1,7 @@
 sudo: false
 language: node_js
+before_script:
+- ./prebuild.sh
 node_js:
 - '5.0'
 - '4.1'
