@@ -4,8 +4,7 @@
   "description": "A set of libraries and wrappers to handle modern filetypes from within nodejs",
   "main": "./lib/data4node.js",
   "scripts": {
-    "test": "./node_modules/.bin/mocha --reporter spec",
-    "prepublish": "npm version patch"
+    "test": "./node_modules/.bin/mocha --reporter spec"
   },
   "repository": {
     "type": "git",
