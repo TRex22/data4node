@@ -9,7 +9,7 @@ node_js:
 - '0.11'
 - '0.10'
 before_deploy:
-- ./scripts/before_deploy.sh
+- scripts/before_deploy.sh
 deploy:
   api_key:
     secure: "I3DoC5Cjk/uNdAfBs9mN+TX7xof3B/p+uqxdEgvAjeX0Xf7lJBrT/r6znLO8MYyOnuAAu9uOMbMFPlQPCaGx+4j+tsE+3Mx45s1pK3Ap4shWhv5nfNV3Ovz6NU1B7EZF/ejUOflx1tJyhvIjSGrpgoTNbpSyI8489xogYBfbLTA="
@@ -18,4 +18,3 @@ deploy:
     branch: master
   email: contact@jasonchalom.com
   provider: npm
-  
