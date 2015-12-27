@@ -11,14 +11,11 @@ node_js:
 before_deploy:
 - ./scripts/before_deploy.sh
 deploy:
-provider: npm
-  email: contact@jasonchalom.com
   api_key:
     secure: "I3DoC5Cjk/uNdAfBs9mN+TX7xof3B/p+uqxdEgvAjeX0Xf7lJBrT/r6znLO8MYyOnuAAu9uOMbMFPlQPCaGx+4j+tsE+3Mx45s1pK3Ap4shWhv5nfNV3Ovz6NU1B7EZF/ejUOflx1tJyhvIjSGrpgoTNbpSyI8489xogYBfbLTA="
   on:
     repo: TRex22/data4node
     branch: master
-provider: script
-  script: scripts/deploy.sh
-  on:
-  	branch: develop
+  email: contact@jasonchalom.com
+  provider: npm
+  
