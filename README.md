@@ -1,4 +1,4 @@
-data4node [![Build Status](https://travis-ci.org/TRex22/data4node.svg)](https://travis-ci.org/TRex22/data4node) [![Stories in Ready](https://badge.waffle.io/TRex22/data4node.png?label=ready&title=Ready)](https://waffle.io/TRex22/data4node) [![Join the chat at https://gitter.im/TRex22/data4node](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/TRex22/data4node?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+data4node [![Build Status](https://travis-ci.org/TRex22/data4node.svg)](https://travis-ci.org/TRex22/data4node) [![Join the chat at https://gitter.im/TRex22/data4node](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/TRex22/data4node?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 ============
 A set of libraries and wrappers to handle modern filetypes from within nodejs
 At the moment csv, scsv and Excel 2007+ are supported with other filetypes planned to be supported.
